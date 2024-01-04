@@ -1,0 +1,32 @@
+.table_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.admin_table_heading {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 10px;
+	font-size: 120%;
+	width: 100%;
+	height: 35px;
+	margin: 2px 0 8px 0;
+	color: var(--accent-text-color);
+}
+
+.admin_table_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 22px;
+	width: auto;
+}
+
+.icon {
+	margin-left: 7px;
+}

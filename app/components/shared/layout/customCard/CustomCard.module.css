@@ -1,0 +1,10 @@
+.CustomCard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background-card-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a6);
+	padding: 6px 6px 5px 6px;
+	width: fit-content;
+	height: fit-content;
+}

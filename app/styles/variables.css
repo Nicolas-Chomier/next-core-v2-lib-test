@@ -1,0 +1,40 @@
+:root {
+	/* MAIN THEME COLOR */
+	--accent-color: #7b61ff;
+	--second-accent-color: #e93d82;
+	--success-color: #3e9b4f;
+	--warning-color: #ffba18;
+	--danger-color: #e54d2e;
+	--white-color: #ececec;
+	--black-color: #131313;
+	--grey-color: #8d8d8d;
+	--anthracite-color: #303030;
+	/* THEME COLOR LIGHT */
+	--background-color: rgba(255, 255, 255, 0.85);
+	--background-color-mat: rgb(255, 255, 255);
+	--background-color-low-profile: rgba(255, 255, 255, 0.099);
+	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
+	--text-color: rgba(0, 0, 0, 0.9);
+}
+
+.dark-theme {
+	/* MAIN THEME COLOR */
+	--accent-color: #6883f0;
+	--second-accent-color: #e54666;
+	--success-color: #48b65c;
+	--warning-color: #f7cb65;
+	--danger-color: #fc7054;
+	--white-color: #ececec;
+	--black-color: #131313;
+	--grey-color: #606060;
+	--anthracite-color: #3b3b3b;
+	/* THEME COLOR DARK */
+	--background-color: rgba(22, 22, 22, 0.9);
+	--background-color-mat: rgb(20, 20, 20);
+	--background-color-low-profile: rgba(0, 0, 0, 0.099);
+	--background-color-ultra-low-profile: rgba(0, 0, 0, 0.02);
+	--text-color: rgba(255, 255, 255, 0.9);
+}
+
+/* SHARED STYLE */
+/* Border color --gray-a7 */

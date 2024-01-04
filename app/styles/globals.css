@@ -1,0 +1,26 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+	font: inherit;
+	/* border: 1px solid red; */
+}
+
+*:focus {
+	outline: none;
+}
+
+html,
+body {
+	min-height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+a {
+	border: none;
+	outline: none;
+	text-decoration: none;
+	font-family: inherit;
+	color: inherit;
+}

@@ -1,0 +1,199 @@
+/* Input Part */
+.datePicker_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 300px;
+	position: relative;
+	margin: auto;
+}
+
+.inputs_wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	width: 100%;
+	height: 44px;
+	border-radius: 100px;
+	transition: box-shadow 1s ease;
+}
+
+.green_border {
+	box-shadow: inset 0 0 0 1px var(--success-color);
+}
+
+.inputs_wrapper:focus-within {
+	box-shadow: inset 0 0 0 1px var(--accent-color);
+}
+
+/* LOGO */
+.datePicker_input_separator {
+	margin: 1px 8px 0 8px;
+	color: none;
+	transition: color 1s ease;
+}
+
+.inputs_wrapper:focus-within .datePicker_input_separator {
+	color: var(--accent-color);
+}
+
+.datePicker_input_separator_form_valid {
+	margin: 1px 8px 0 8px;
+	color: var(--success-color);
+}
+
+/* Panel Part */
+.datePicker_panel {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: calc(100% - 4px);
+	padding: 2px;
+	background-color: var(--background-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	border-radius: 22px;
+	position: absolute;
+	top: 46px;
+	left: 0;
+	z-index: 99;
+	transition: box-shadow 1s ease;
+}
+.datePicker_panel:hover {
+	box-shadow: inset 0 0 0 1px var(--accent-color);
+}
+/* Button line panel */
+.button_panel {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: 38px;
+	margin: 12px 0 7px 0;
+}
+
+.datePicker_reset_button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	border-radius: 40px;
+	border: none;
+	width: 120px;
+	height: 33px;
+	color: var(--background-color);
+	background-color: var(--danger-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	cursor: pointer;
+}
+
+.datePicker_reset_text {
+	color: var(--white-color);
+	margin-bottom: 2px;
+}
+
+.datePicker_buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	background-color: var(--background-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	border-radius: 33px;
+	width: 33px;
+	height: 33px;
+	cursor: pointer;
+}
+
+/* CALENDAR CSS */
+.calendar_row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.cell {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50px;
+	width: 30px;
+	height: 30px;
+	margin: 3px 5px;
+}
+
+.out_dates {
+	background-color: var(--anthracite-color);
+	color: var(--grey-color);
+	cursor: not-allowed;
+}
+.dates {
+	cursor: pointer;
+}
+.dates:hover {
+	background-color: var(--grey-color);
+}
+.calendar_cell_start_date {
+	background-color: var(--second-accent-color);
+	color: var(--white-color);
+}
+.calendar_cell_end_date {
+	background-color: var(--accent-color);
+	color: var(--white-color);
+}
+.calendar_cell_between {
+	background-color: var(--grey-color);
+}
+.calendar_cell_today {
+	background-color: var(--success-color);
+	color: var(--white-color);
+}
+
+/* INPUT CSS */
+.inputDate {
+	border: none;
+	outline: none;
+	background-color: transparent;
+	text-align: center;
+	font-size: 100%;
+	padding: 1px 1px 1px 1px;
+	margin: 0 12px;
+}
+
+/* DISPLAYER CSS */
+.displayer_container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 40px;
+	margin: 5px 0 -4px 0;
+	text-align: center;
+	font-size: 110%;
+}
+
+.displayer_container_error_message {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 40px;
+	margin: 5px 0 -4px 0;
+	text-align: center;
+	font-size: 100%;
+	font-weight: 600;
+	color: var(--danger-color);
+}

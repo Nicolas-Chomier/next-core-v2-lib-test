@@ -1,0 +1,74 @@
+.switch_base {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	border-radius: 50px;
+	background-color: var(--background-color-mat);
+	cursor: pointer;
+}
+
+.toggle_switch {
+	width: 44px;
+	height: 44px;
+}
+
+.sub_switch {
+	width: 34px;
+	height: 34px;
+}
+
+.multiButtonFrame {
+	height: 100%;
+	position: relative;
+}
+
+.hiddenButton,
+.showButton {
+	position: absolute;
+	right: 0;
+	top: 45px;
+	z-index: 99;
+}
+
+.hiddenButton div {
+	visibility: hidden;
+	opacity: 0;
+	transform: translateX(10px);
+}
+
+.showButton div {
+	visibility: visible;
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.showButton .button_shape {
+	right: 90px;
+	transition-delay: 0.05s;
+}
+
+.link_button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: max-content;
+	padding: 0 13px;
+	height: 40px;
+	margin-top: 10px;
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	border-radius: 50px;
+	background-color: var(--background-color-mat);
+	cursor: pointer;
+}
+
+.text:hover {
+	color: var(--accent-color);
+	cursor: pointer;
+}
+
+.icon_x {
+}
+
+.icon_menu {
+}

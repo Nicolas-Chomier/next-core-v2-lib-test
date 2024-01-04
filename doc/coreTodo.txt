@@ -1,0 +1,14 @@
+TODO LIST:
+1. Revoir la page d'authentification avec le nouveau Styles (pas urgent):
+	- /? Trouver une solution pour l'arboréscence des fichiers, la landing page ne doit pas etre la page d'authentification
+	- /? Creation .env prod et .env dev
+	- Crypter les password dans ChangePasswordForm.tsx car il sont envoyé en clair
+	- /? La font est online 
+	- refaire le design de la page admin
+	- revoir le bouton des pages pour rajouter la props pages list et null si vide
+
+
+2. Gestion du token dans les requetes de type GET ? passer les requetes en POST pour la gestion du token ?
+
+3. Travailler le backend pour:
+	- Expulser un user qui na plus de token valide

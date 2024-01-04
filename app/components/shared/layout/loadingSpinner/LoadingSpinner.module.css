@@ -1,0 +1,28 @@
+.spinner {
+	margin-top: 3px;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	display: inline-block;
+	border-top: 3px solid var(--text-color);
+	border-right: 3px solid transparent;
+	box-sizing: border-box;
+	animation: rotation 0.8s linear infinite;
+	z-index: 99;
+}
+.spinner_white {
+	border-top: 3px solid whitesmoke;
+}
+.spinner_black {
+	border-top: 3px solid rgba(0, 0, 0, 0.8);
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}

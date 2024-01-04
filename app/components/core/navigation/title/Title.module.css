@@ -1,0 +1,7 @@
+.title {
+	padding: 0;
+	margin: 0;
+	font-size: 250%;
+	color: var(--text-color);
+	letter-spacing: -1px;
+}
