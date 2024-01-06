@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 // External modules / Third-party libraries
 import { Check, Search, X } from 'lucide-react';
+import { Virtuoso } from 'react-virtuoso';
 // Styles
 import './SearchBar.css';
 
@@ -12,9 +13,11 @@ type TSearchBarProps = {
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
-	className?: { [key: string]: string };
+	className?: string;
 	onFieldChange: (value: string | undefined) => void;
 };
+// Settings
+const overSizeLimit = 999;
 
 //+++++ SEARCH BAR +++++//
 export const SearchBar: React.FC<TSearchBarProps> = ({
@@ -162,19 +165,91 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 					isPanelVisible && 'searchBar_panel'
 				}`}
 			>
-				<ul className='searchBar_list'>
-					{filteredData.map((item) => (
-						<button
-							key={item}
-							onClick={(event) => handleItemClick(event, item)}
-							className='searchBar_row_button'
-						>
-							{item}
-						</button>
-					))}
-				</ul>
+				{data.length > overSizeLimit ? (
+					<LargeList
+						data={filteredData}
+						handleClick={handleItemClick}
+					></LargeList>
+				) : (
+					<TinyList
+						data={filteredData}
+						handleClick={handleItemClick}
+					></TinyList>
+				)}
 			</div>
 		</div>
+	);
+};
+
+// Sub componenents to display items
+type TSearchBarListProps = {
+	data: string[];
+	handleClick: (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: string,
+	) => void;
+};
+
+type TClickableItemsProps = {
+	item: string;
+	handleClick: (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: string,
+	) => void;
+};
+
+// Virtuoso large list able to display more than 1000 items
+const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
+	const size = data.length;
+
+	return (
+		<Virtuoso
+			className={'searchBar_list'}
+			style={{
+				height: `${size < 13 ? size * 24 : 300}px`,
+			}}
+			totalCount={data.length}
+			itemContent={(index) => {
+				const item = data[index];
+				return (
+					<ClickableItems
+						key={item}
+						item={item}
+						handleClick={handleClick}
+					></ClickableItems>
+				);
+			}}
+		/>
+	);
+};
+
+// Tiny list used to display less than 1000 items
+const TinyList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
+	return (
+		<ul className='searchBar_list'>
+			{data.map((item) => (
+				<ClickableItems
+					key={item}
+					item={item}
+					handleClick={handleClick}
+				></ClickableItems>
+			))}
+		</ul>
+	);
+};
+
+// Clickable items components
+const ClickableItems: React.FC<TClickableItemsProps> = ({
+	item,
+	handleClick,
+}) => {
+	return (
+		<button
+			onClick={(event) => handleClick(event, item)}
+			className='searchBar_row_button'
+		>
+			{item}
+		</button>
 	);
 };
 

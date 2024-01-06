@@ -5,10 +5,9 @@
 	align-items: center;
 	justify-content: center;
 	width: fit-content;
-	position: relative;
-	margin: 10px auto;
+	margin: auto;
 	background-color: transparent;
-
+	position: relative;
 	.searchBar_input_button_wrapper {
 		background-color: transparent;
 	}
@@ -131,4 +130,27 @@
 .searchBar_row_button:hover {
 	background-color: var(--accent-color);
 	color: var(--white-color);
+}
+
+/* OVERSIZE INFORMATION */
+.OverSize_disclamer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 300px;
+	border-radius: 15px;
+	text-align: justify;
+	padding: 15px;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	font-size: 90%;
+	margin: 1px auto;
+
+	.OverSize_disclamer_component_name {
+		margin: 3px 0;
+		font-weight: 700;
+		color: var(--accent-color);
+	}
 }
