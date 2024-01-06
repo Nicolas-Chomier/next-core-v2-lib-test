@@ -2,74 +2,116 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 // External modules / Third-party libraries
 import { Check, Search, X } from 'lucide-react';
-// Local components
-// Hooks and utilities
-
-// Configuration
 // Styles
 import './SearchBar.css';
 
 // Props type for SearchBar component
 type TSearchBarProps = {
 	data: string[];
-	placeHolder?: string;
+	placeholder?: string;
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
+	className?: { [key: string]: string };
 	onFieldChange: (value: string | undefined) => void;
 };
 
+//+++++ SEARCH BAR +++++//
 export const SearchBar: React.FC<TSearchBarProps> = ({
 	data,
-	placeHolder,
-	size = 12,
+	placeholder,
+	size = 31,
 	isSubmit,
 	isValid,
+	className,
 	onFieldChange,
 }) => {
 	const [isPanelVisible, setIsPanelVisible] = useState(false);
 	const [searchValue, setSearchValue] = useState('');
 	const [filteredData, setFilteredData] = useState<string[]>([]);
 
-	// Handler for outside clicks to close the calendar
 	const clickRef = useRef(null);
-	const onClickOutside = () => {
-		setIsPanelVisible(false);
-	};
-	useClickOutside(clickRef, onClickOutside);
 
+	// Handler for outside clicks to close the calendar
+	useClickOutside(clickRef, () => setIsPanelVisible(false));
+
+	// Managing input changes
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(event.target.value);
 		setIsPanelVisible(true);
 	};
 
-	const handleItemClick = (item: string) => {
+	// Clicking on a list item
+	const handleItemClick = (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: string,
+	) => {
 		setSearchValue(item);
 		onFieldChange(item);
-		setIsPanelVisible(false);
+		event.preventDefault();
 	};
 
-	// Reset handler for clearing dates
+	// Reset handler for clearing search field
 	const handleReset = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			setSearchValue('');
 			onFieldChange(undefined);
-			setIsPanelVisible(false);
 			event.preventDefault();
-			console.log('!');
 		},
 		[onFieldChange],
 	);
 
-	// useEffect to clean component after form validation
-	useEffect(() => {
-		if (isSubmit) {
-			setSearchValue('');
-			onFieldChange(undefined);
-			setIsPanelVisible(false);
-		}
-	}, [isSubmit, onFieldChange]);
+	// Panel openning
+	const openPanel = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setIsPanelVisible(true);
+		event.preventDefault();
+	};
 
+	// Display action buttons
+	const displayButtonActions = useCallback(
+		(
+			isValid: boolean | undefined,
+			isPanel: boolean,
+			isSearching: string,
+		) => {
+			if (isValid) {
+				return (
+					<div className={`${'searchBar_icon_wrapper'}`}>
+						<Check
+							size={20}
+							strokeWidth={1.8}
+							className='searchBar_valid_icon'
+						/>
+					</div>
+				);
+			} else if (isPanel || isSearching) {
+				return (
+					<button
+						className={`${'searchBar_icon_wrapper'}`}
+						onClick={handleReset}
+					>
+						<X
+							size={23}
+							strokeWidth={1.6}
+							className='searchBar_reset_icon'
+						/>
+					</button>
+				);
+			}
+			return (
+				<div className={`${'searchBar_icon_wrapper'}`}>
+					<Search
+						size={20}
+						strokeWidth={1.7}
+						className='searchBar_basic_icon'
+					/>
+				</div>
+			);
+		},
+		[handleReset],
+	);
+
+	// Effect to update filtered list
 	useEffect(() => {
 		setFilteredData(
 			data.filter((item) =>
@@ -78,64 +120,65 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 		);
 	}, [searchValue, data]);
 
+	// Effect to reset after submission
+	useEffect(() => {
+		if (isSubmit) {
+			setSearchValue('');
+			onFieldChange(undefined);
+			setIsPanelVisible(false);
+		}
+	}, [isSubmit, onFieldChange]);
+
+	// Effect to reset is field value doesnt exist anymore
+	useEffect(() => {
+		if (!searchValue) {
+			onFieldChange(undefined);
+		}
+	}, [searchValue, onFieldChange]);
+
+	//+ TSX
 	return (
-		<div className='container' ref={clickRef}>
-			<div className='wrapper'>
+		<div className={`searchBar_container ${className}`} ref={clickRef}>
+			<button
+				onClick={openPanel}
+				className='searchBar_input_button_wrapper'
+			>
 				<input
-					className='input'
+					className={`searchBar_input_hidden ${
+						isValid ? 'green_border' : ''
+					} ${isPanelVisible && 'searchBar_input'}`}
 					type='text'
-					size={size}
+					size={size < 10 ? 10 : size}
 					onChange={handleInputChange}
 					value={searchValue}
-					placeholder={placeHolder}
+					placeholder={placeholder}
 				/>
-				<div className='icon_wrapper'>
-					{isValid ? (
-						<Check
-							size={20}
-							strokeWidth={1.6}
-							className='searchBar_icon'
-						/>
-					) : isPanelVisible || searchValue ? (
+			</button>
+
+			{displayButtonActions(isValid, isPanelVisible, searchValue)}
+
+			<div
+				className={`searchBar_panel_hidden ${
+					isPanelVisible && 'searchBar_panel'
+				}`}
+			>
+				<ul className='searchBar_list'>
+					{filteredData.map((item) => (
 						<button
-							className='searchBar_reset_button'
-							onClick={handleReset}
+							key={item}
+							onClick={(event) => handleItemClick(event, item)}
+							className='searchBar_row_button'
 						>
-							<X
-								size={20}
-								strokeWidth={1.6}
-								className='searchBar_icon'
-							/>
+							{item}
 						</button>
-					) : (
-						<Search
-							size={20}
-							strokeWidth={1.6}
-							className='searchBar_icon'
-						/>
-					)}
-				</div>
+					))}
+				</ul>
 			</div>
-			{isPanelVisible && (
-				<div className='panel'>
-					<ul className='ulList'>
-						{filteredData.map((item) => (
-							<li
-								onClick={() => handleItemClick(item)}
-								key={item}
-								className='items'
-							>
-								{item}
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
 		</div>
 	);
 };
 
-// Hook
+// Custom hook to click outside the component
 const useClickOutside = (
 	ref: React.RefObject<HTMLElement>,
 	callback: () => void,
@@ -153,12 +196,3 @@ const useClickOutside = (
 		};
 	});
 };
-
-{
-	/* <button
-						className='searchbar_reset_button'
-						onClick={handleReset}
-					>
-						reset
-					</button> */
-}

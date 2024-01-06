@@ -1,105 +1,134 @@
-.container {
+/* Conteneur principal du SearchBar */
+.searchBar_container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: fit-content;
-
-	height: 44px;
-	background-color: var(--color-page-background);
-	border-radius: 50px;
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
 	position: relative;
 	margin: 10px auto;
+	background-color: transparent;
+
+	.searchBar_input_button_wrapper {
+		background-color: transparent;
+	}
 }
-.wrapper {
+
+/* Styles communs pour les inputs et les boutons */
+.searchBar_input_hidden,
+.searchBar_input {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-}
-.input {
-	/* width: calc(100% - 46px); */
-	height: 100%;
-	border-radius: 50px;
-	margin-left: 20px;
-	text-align: center;
-	background-color: rgba(255, 0, 0, 0.11);
-}
-.icon_wrapper {
-	display: flex;
-	align-items: center;
 	justify-content: center;
-	cursor: pointer;
-	background-color: var(--accent-color);
-	width: 44px;
+	text-align: center;
+	font-size: 110%;
 	height: 44px;
-	border-radius: 100%;
-}
-.icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	padding: 0 43px 0 14px;
+	position: relative;
+	border-radius: 22px;
+	background-color: var(--background-color);
+	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	transition: box-shadow 1s ease, border-radius 1s ease;
 }
 
-.switch {
+/* Styles spécifiques pour searchBar_input */
+.searchBar_input {
+	border-radius: 22px 22px 0 0;
+	transition: box-shadow 1s ease, border-radius 1s ease;
+}
+
+/* Styles pour les bordures colorées */
+.green_border {
+	box-shadow: inset 0 0 0 1px var(--success-color);
+}
+
+/* Styles pour les icones et leurs wrappers */
+.searchBar_icon_wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 36px;
+	height: 36px;
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	border-radius: 40px;
+	background-color: transparent;
+}
+
+.searchBar_basic_icon {
+	color: var(--text-color);
+}
+
+.searchBar_reset_icon {
+	color: var(--danger-color);
 	cursor: pointer;
 }
-.panel {
-	background-color: var(--color-page-background);
-	height: 258px;
-	width: 95%;
-	position: absolute;
-	top: 54px;
-	left: 10px;
-	text-align: center;
-	border-radius: 7px;
-	overflow-y: auto;
-	z-index: 2;
+
+.searchBar_valid_icon {
+	color: var(--success-color);
 }
 
-.panel::-webkit-scrollbar {
-	width: 4px;
-}
-
-.panel::-webkit-scrollbar-thumb {
-	background: var(--accent-color);
-	border-radius: 10px;
-}
-
-.ulList {
+/* Styles pour le panneau déroulant */
+.searchBar_panel_hidden,
+.searchBar_panel {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	list-style-type: none;
+	position: absolute;
+	width: 100%;
+	background-color: var(--background-color);
+	top: 46px;
+	left: 0;
+	z-index: 99;
 }
-.items {
+
+.searchBar_panel_hidden {
+	max-height: 0px;
+	border-radius: 22px;
+	box-shadow: inset 0 0 0 1px transparent;
+	transition: box-shadow 1s ease, max-height 0.8s ease, border-radius 1s ease;
+}
+
+.searchBar_panel {
+	opacity: 1;
+	height: fit-content;
+	padding: 8px 0;
+	max-height: 260px;
+	box-shadow: inset 0 0 0 1px var(--accent-color);
+	border-radius: 0 0 22px 22px;
+	transition: box-shadow 1s ease, max-height 0.8s ease;
+}
+
+/* Styles pour la liste et les boutons dans le panneau */
+.searchBar_list {
+	width: inherit;
+	list-style-type: none;
+	overflow-y: scroll;
+	margin-bottom: 3px;
+	background-color: transparent;
+}
+
+.searchBar_list::-webkit-scrollbar {
+	width: 0px;
+}
+
+.searchBar_row_button {
 	color: var(--text-color);
 	padding: 2px;
-	width: 88%;
-	margin: 3px 0 2px 5px;
-	border-radius: var(--radius-4);
-}
-
-.items:hover {
-	background-color: var(--accent-color);
-}
-
-/* ############## */
-.searchbar_reset_button {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	border-radius: 40px;
-	border: none;
-	width: 120px;
-	height: 33px;
-	color: var(--background-color);
-	background-color: var(--danger-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	width: calc(99% - 24px);
+	height: max-content;
+	margin: 0 12px;
+	border-radius: 14px;
+	background-color: transparent;
+	word-wrap: break-word;
 	cursor: pointer;
+	font-size: 90%;
+}
+
+.searchBar_row_button:hover {
+	background-color: var(--accent-color);
+	color: var(--white-color);
 }

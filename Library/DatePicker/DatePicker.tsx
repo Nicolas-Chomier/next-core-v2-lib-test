@@ -15,9 +15,6 @@ import {
 	ChevronsLeft,
 	ChevronsRight,
 } from 'lucide-react';
-// Local components
-// Hooks and utilities
-// Configuration
 // Styles
 import './DatePicker.css';
 
@@ -73,7 +70,7 @@ const FRAME: React.ReactNode[] = [
 const TODAY: string = new Date().toLocaleDateString();
 
 type TDatePickerProps = {
-	placeHolder?: string;
+	placeholder?: string;
 	limitDateMin?: number;
 	limitDateMax?: number;
 	isSubmit?: boolean;
@@ -83,9 +80,9 @@ type TDatePickerProps = {
 	) => void;
 };
 
-//+++++ MAIN COMPONENT (French format version) +++++//
+//+++++ DATE PICKER Fr +++++//
 export const DatePicker: React.FC<TDatePickerProps> = ({
-	placeHolder = 'jj/mm/aaaa',
+	placeholder = 'jj/mm/aaaa',
 	limitDateMin,
 	limitDateMax,
 	isSubmit,
@@ -102,12 +99,11 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	const swapDate = useRef(true); // Refs for alterante date selection
 	const [showCalendar, setShowCalendar] = useState(false);
 	const [message, setMessage] = useState('');
-	// Handler for outside clicks to close the calendar
+
 	const clickRef = useRef(null);
-	const onClickOutside = () => {
-		setShowCalendar(false);
-	};
-	useClickOutside(clickRef, onClickOutside);
+
+	// Handler for outside clicks to close the calendar
+	useClickOutside(clickRef, () => setShowCalendar(false));
 
 	// Function to add / remove years and months
 	const changeMonth = (
@@ -218,7 +214,12 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 		}
 	};
 
-	// useEffect to handle date validation
+	const openPanel = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setShowCalendar(true);
+		event.preventDefault();
+	};
+
+	// Effect to handle date validation
 	useEffect(() => {
 		// Check if both dates are present
 		if (datePattern.test(startDate) && datePattern.test(endDate)) {
@@ -237,7 +238,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 		}
 	}, [startDate, endDate, errorMessage, datePattern, onFieldChange]);
 
-	// useEffect to clean component after form validation
+	// Effect to clean component after form validation
 	useEffect(() => {
 		if (isSubmit) {
 			setCalendarDate(new Date());
@@ -251,14 +252,13 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 
 	//+ TSX
 	return (
-		<div
-			ref={clickRef}
-			onClick={() => setShowCalendar(true)}
-			className={'datePicker_container'}
-		>
-			<div className={`${isValid && 'green_border'} ${'inputs_wrapper'}`}>
+		<div ref={clickRef} className={'datePicker_container'}>
+			<button
+				className={`${isValid && 'green_border'} ${'inputs_wrapper'}`}
+				onClick={openPanel}
+			>
 				<Input
-					placeholder={placeHolder}
+					placeholder={placeholder}
 					initialValue={startDate}
 					onValueChange={handleChangeStartDate}
 				></Input>
@@ -277,11 +277,11 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 				)}
 
 				<Input
-					placeholder={placeHolder}
+					placeholder={placeholder}
 					initialValue={endDate}
 					onValueChange={handleChangeEndDate}
 				></Input>
-			</div>
+			</button>
 			{showCalendar ? (
 				<div className={'datePicker_panel'}>
 					<Displayer
@@ -354,6 +354,109 @@ const Calendar: React.FC<TCalendarProps> = ({
 	endDate,
 	handleClick,
 }) => {
+	// Function which determine which css class assign to date in calendar
+	const getCellDateInfo = useCallback(
+		(cellDate: Date) => {
+			const isToday = cellDate.toLocaleDateString() === TODAY;
+
+			const convertedCellDate = dateToSecond(cellDate);
+			const convertedStartDate = stringToSecond(startDate);
+			const convertedEndDate = stringToSecond(endDate);
+
+			const isDayUnderLimitDateMin =
+				limitDateMin && cellDate < dateAddDays(limitDateMin);
+			const isDayAboveLimitDateMax =
+				limitDateMax && cellDate > dateAddDays(limitDateMax);
+			const isStartDate =
+				startDate && convertedCellDate === convertedStartDate;
+			const isEndDate = endDate && convertedCellDate === convertedEndDate;
+			const isBetweenDates =
+				convertedCellDate > convertedStartDate &&
+				convertedCellDate < convertedEndDate;
+
+			return {
+				isToday,
+				isDayUnderLimitDateMin,
+				isDayAboveLimitDateMax,
+				isStartDate,
+				isEndDate,
+				isBetweenDates,
+			};
+		},
+		[startDate, endDate, limitDateMin, limitDateMax],
+	);
+	// Function which generate the day cell calendar (<td>)
+	const generateDayCell = useCallback(
+		(
+			week: number,
+			day: number,
+			date: number,
+			year: number,
+			month: number,
+		) => {
+			const cellDate = new Date(year, month, date);
+			const cellDateInfo = getCellDateInfo(cellDate);
+
+			const cellClasses = `cell dates ${
+				cellDateInfo.isStartDate ? 'calendar_cell_start_date' : ''
+			} ${cellDateInfo.isEndDate ? 'calendar_cell_end_date' : ''} ${
+				cellDateInfo.isBetweenDates ? 'calendar_cell_between' : ''
+			} ${cellDateInfo.isToday ? 'calendar_cell_today' : ''}`;
+
+			if (
+				cellDateInfo.isDayUnderLimitDateMin ||
+				cellDateInfo.isDayAboveLimitDateMax
+			) {
+				return (
+					<td
+						key={`${week}-${day}`}
+						className={`${'cell'} ${'out_dates'}`}
+					>
+						{date}
+					</td>
+				);
+			} else {
+				return (
+					<td
+						key={`${week}-${day}`}
+						onClick={() => handleClick(cellDate)}
+						className={cellClasses}
+					>
+						{date}
+					</td>
+				);
+			}
+		},
+		[handleClick, getCellDateInfo],
+	);
+	// Function which build the calendar to stack day rows in render array
+	const generateWeekRow = useCallback(
+		(
+			week: number,
+			date: number,
+			daysInMonth: number,
+			firstDayOfMonth: number,
+			year: number,
+			month: number,
+		) => {
+			const weekRow = [];
+			for (let day = 1; day < 8; day++) {
+				if (
+					(week === 0 && day < firstDayOfMonth) ||
+					date > daysInMonth
+				) {
+					weekRow.push(<td key={`${day}`} className={'cell'}></td>);
+				} else {
+					weekRow.push(generateDayCell(week, day, date, year, month));
+					date++;
+				}
+			}
+			return weekRow;
+		},
+		[generateDayCell],
+	);
+
+	// Calendar componenent
 	const generateCalendar = useMemo(() => {
 		const calendar = [...FRAME];
 		const year = targetDate.getFullYear();
@@ -361,82 +464,27 @@ const Calendar: React.FC<TCalendarProps> = ({
 		const daysInMonth = getDaysInMonth(year, month);
 		const firstDayOfMonth = new Date(year, month, 1).getDay();
 		let date = 1;
+
 		for (let week = 0; week < 6; week++) {
-			const weekRow = [];
-			for (let day = 1; day < 8; day++) {
-				if (
-					(week === 0 && day < firstDayOfMonth) ||
-					date > daysInMonth
-				) {
-					weekRow.push(
-						<td key={`${day}`} className={`${'cell'}`}></td>,
-					);
-				} else {
-					const cellDate = new Date(year, month, date);
-					const isToday = cellDate.toLocaleDateString() === TODAY;
-
-					const convertedCellDate = dateToSecond(cellDate);
-					const convertedStartDate = stringToSecond(startDate);
-					const convertedEndDate = stringToSecond(endDate);
-
-					const isDayUnderLimitDateMin =
-						limitDateMin && cellDate < dateAddDays(limitDateMin);
-					const isDayAboveLimitDateMax =
-						limitDateMax && cellDate > dateAddDays(limitDateMax);
-					const isStartDate =
-						startDate && convertedCellDate === convertedStartDate;
-					const isEndDate =
-						endDate && convertedCellDate === convertedEndDate;
-					const isBetweenDates =
-						convertedCellDate > convertedStartDate &&
-						convertedCellDate < convertedEndDate;
-
-					if (isDayUnderLimitDateMin || isDayAboveLimitDateMax) {
-						weekRow.push(
-							<td
-								key={`${week}-${day}`}
-								className={`${'cell'} ${'out_dates'}`}
-							>
-								{date++}
-							</td>,
-						);
-					} else {
-						weekRow.push(
-							<td
-								key={`${week}-${day}`}
-								onClick={() => handleClick(cellDate)}
-								className={`${'cell'} ${'dates'} ${
-									isStartDate
-										? 'calendar_cell_start_date'
-										: ''
-								}	${isEndDate ? 'calendar_cell_end_date' : ''}	${
-									isBetweenDates
-										? 'calendar_cell_between'
-										: ''
-								} ${isToday ? 'calendar_cell_today' : ''}`}
-							>
-								{date++}
-							</td>,
-						);
-					}
-				}
-			}
+			const weekRow = generateWeekRow(
+				week,
+				date,
+				daysInMonth,
+				firstDayOfMonth,
+				year,
+				month,
+			);
 			calendar.push(
 				<tr key={week} className={'calendar_row'}>
 					{weekRow}
 				</tr>,
 			);
 			if (date > daysInMonth) break;
+			date += weekRow.filter((cell) => cell.props.children).length;
 		}
+
 		return calendar;
-	}, [
-		limitDateMin,
-		limitDateMax,
-		targetDate,
-		startDate,
-		endDate,
-		handleClick,
-	]);
+	}, [targetDate, generateWeekRow]);
 
 	return (
 		<table className={'calendar_table'}>
@@ -512,6 +560,7 @@ const Displayer: React.FC<TDisplayerProps> = ({ monthList, date, message }) => {
 	);
 };
 
+//* Side functions *//
 // Transform string like: "dd/mm/yyyy" or Date to number (second)
 const dateToSecond = (value: Date): number => {
 	return Math.floor(value.getTime() / 1000);
@@ -537,7 +586,7 @@ const dateAddDays = (offset: number | undefined): Date => {
 	offset && newDate.setDate(newDate.getDate() + offset - 1);
 	return newDate;
 };
-// Hook
+// Custom hook to click outside the component
 const useClickOutside = (
 	ref: React.RefObject<HTMLElement>,
 	callback: () => void,

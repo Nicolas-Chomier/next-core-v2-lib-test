@@ -8,9 +8,9 @@
 	--white-color: #ececec;
 	--black-color: #131313;
 	--grey-color: #8d8d8d;
-	--anthracite-color: #303030;
+	--anthracite-color: #353535;
 	/* THEME COLOR LIGHT */
-	--background-color: rgba(255, 255, 255, 0.85);
+	--background-color: rgb(240, 240, 240);
 	--background-color-mat: rgb(255, 255, 255);
 	--background-color-low-profile: rgba(255, 255, 255, 0.099);
 	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
@@ -21,15 +21,15 @@
 	/* MAIN THEME COLOR */
 	--accent-color: #6883f0;
 	--second-accent-color: #e54666;
-	--success-color: #48b65c;
+	--success-color: #43ad57;
 	--warning-color: #f7cb65;
-	--danger-color: #fc7054;
+	--danger-color: #e26249;
 	--white-color: #ececec;
 	--black-color: #131313;
 	--grey-color: #606060;
 	--anthracite-color: #3b3b3b;
 	/* THEME COLOR DARK */
-	--background-color: rgba(22, 22, 22, 0.9);
+	--background-color: rgb(26, 26, 26);
 	--background-color-mat: rgb(20, 20, 20);
 	--background-color-low-profile: rgba(0, 0, 0, 0.099);
 	--background-color-ultra-low-profile: rgba(0, 0, 0, 0.02);

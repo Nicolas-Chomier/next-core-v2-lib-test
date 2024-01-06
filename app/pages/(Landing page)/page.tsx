@@ -17,7 +17,7 @@ import { nanoid } from 'nanoid';
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(50, 4);
+const randomIds = generateRandomIds(50, 20);
 
 type TTestingForm = {
 	dateRange: [Date, Date];
@@ -35,8 +35,6 @@ const TestSchema: ZodType<TTestingForm> = z.object({
 
 const LandingPage = () => {
 	const {
-		setValue,
-		register,
 		handleSubmit,
 		reset,
 		control,
@@ -51,61 +49,50 @@ const LandingPage = () => {
 		reset();
 	};
 
-	const handleSearchChnage = (value: any) => {
-		console.log('value', value);
-	};
 	console.log(isValid);
 	return (
-		<>
-			<form
-				onSubmit={handleSubmit(submitData)}
-				className={styles.container}
-			>
-				{/* ############################################## */}
-				{/* ############################################## */}
+		<form onSubmit={handleSubmit(submitData)} className={styles.container}>
+			{/* ############################################## */}
+			{/* ############################################## */}
 
-				<Controller
-					control={control}
-					name='dateRange'
-					render={({ field: { onChange } }) => (
-						<DatePicker
-							limitDateMin={-10}
-							limitDateMax={1}
-							placeHolder='JJ/MM/AAAA'
-							isSubmit={isSubmitting}
-							isValid={isValid}
-							onFieldChange={onChange}
-						></DatePicker>
-					)}
-				/>
+			<Controller
+				control={control}
+				name='dateRange'
+				render={({ field: { onChange } }) => (
+					<DatePicker
+						limitDateMin={-10}
+						limitDateMax={5}
+						placeholder='JJ/MM/AAAA'
+						isSubmit={isSubmitting}
+						isValid={isValid}
+						onFieldChange={onChange}
+					></DatePicker>
+				)}
+			/>
 
-				{/* ############################################## */}
-				{/* ############################################## */}
+			{/* ############################################## */}
+			{/* ############################################## */}
 
-				<Controller
-					control={control}
-					name='searchBar'
-					render={({ field: { onChange } }) => (
-						<SearchBar
-							data={randomIds}
-							placeHolder='Nicolas'
-							size={50}
-							isSubmit={isSubmitting}
-							isValid={isValid}
-							onFieldChange={onChange}
-						></SearchBar>
-					)}
-				/>
+			<Controller
+				control={control}
+				name='searchBar'
+				render={({ field: { onChange } }) => (
+					<SearchBar
+						data={randomIds}
+						placeholder='Nicolas'
+						size={28}
+						isSubmit={isSubmitting}
+						isValid={isValid}
+						onFieldChange={onChange}
+					></SearchBar>
+				)}
+			/>
 
-				{/* ############################################## */}
-				{/* ############################################## */}
+			{/* ############################################## */}
+			{/* ############################################## */}
 
-				<FormButton
-					display={isValid}
-					isLoading={isLoading}
-				></FormButton>
-			</form>
-		</>
+			<FormButton display={isValid} isLoading={isLoading}></FormButton>
+		</form>
 	);
 };
 export default LandingPage;

@@ -1,0 +1,91 @@
+/* const Calendar: React.FC<TCalendarProps> = ({
+	limitDateMin,
+	limitDateMax,
+	targetDate,
+	startDate,
+	endDate,
+	handleClick,
+}) => {
+	const generateCalendar = useMemo(() => {
+		const calendar = [...FRAME];
+		const year = targetDate.getFullYear();
+		const month = targetDate.getMonth();
+		const daysInMonth = getDaysInMonth(year, month);
+		const firstDayOfMonth = new Date(year, month, 1).getDay();
+		let date = 1;
+		for (let week = 0; week < 6; week++) {
+			const weekRow = [];
+			for (let day = 1; day < 8; day++) {
+				if (
+					(week === 0 && day < firstDayOfMonth) ||
+					date > daysInMonth
+				) {
+					weekRow.push(
+						<td key={`${day}`} className={`${'cell'}`}></td>,
+					);
+				} else {
+					const cellDate = new Date(year, month, date);
+					const isToday = cellDate.toLocaleDateString() === TODAY;
+
+					const convertedCellDate = dateToSecond(cellDate);
+					const convertedStartDate = stringToSecond(startDate);
+					const convertedEndDate = stringToSecond(endDate);
+
+					const isDayUnderLimitDateMin =
+						limitDateMin && cellDate < dateAddDays(limitDateMin);
+					const isDayAboveLimitDateMax =
+						limitDateMax && cellDate > dateAddDays(limitDateMax);
+					const isStartDate =
+						startDate && convertedCellDate === convertedStartDate;
+					const isEndDate =
+						endDate && convertedCellDate === convertedEndDate;
+					const isBetweenDates =
+						convertedCellDate > convertedStartDate &&
+						convertedCellDate < convertedEndDate;
+
+					if (isDayUnderLimitDateMin || isDayAboveLimitDateMax) {
+						weekRow.push(
+							<td
+								key={`${week}-${day}`}
+								className={`${'cell'} ${'out_dates'}`}
+							>
+								{date++}
+							</td>,
+						);
+					} else {
+						weekRow.push(
+							<td
+								key={`${week}-${day}`}
+								onClick={() => handleClick(cellDate)}
+								className={`${'cell'} ${'dates'} ${
+									isStartDate
+										? 'calendar_cell_start_date'
+										: ''
+								}	${isEndDate ? 'calendar_cell_end_date' : ''}	${
+									isBetweenDates
+										? 'calendar_cell_between'
+										: ''
+								} ${isToday ? 'calendar_cell_today' : ''}`}
+							>
+								{date++}
+							</td>,
+						);
+					}
+				}
+			}
+			calendar.push(
+				<tr key={week} className={'calendar_row'}>
+					{weekRow}
+				</tr>,
+			);
+			if (date > daysInMonth) break;
+		}
+		return calendar;
+	}, [
+		limitDateMin,
+		limitDateMax,
+		targetDate,
+		startDate,
+		endDate,
+		handleClick,
+	]); */
