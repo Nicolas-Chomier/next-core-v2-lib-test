@@ -1,5 +1,11 @@
 // React core
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, {
+	useState,
+	useRef,
+	useEffect,
+	useCallback,
+	useMemo,
+} from 'react';
 // External modules / Third-party libraries
 import { Check, Search, X } from 'lucide-react';
 import { Virtuoso } from 'react-virtuoso';
@@ -13,11 +19,11 @@ type TSearchBarProps = {
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
+	overSizeLimit?: number;
+	disabled?: boolean;
 	className?: string;
 	onFieldChange: (value: string | undefined) => void;
 };
-// Settings
-const overSizeLimit = 999;
 
 //+++++ SEARCH BAR +++++//
 export const SearchBar: React.FC<TSearchBarProps> = ({
@@ -26,6 +32,8 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	size = 31,
 	isSubmit,
 	isValid,
+	overSizeLimit = 999,
+	disabled = false,
 	className,
 	onFieldChange,
 }) => {
@@ -38,6 +46,11 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	// Handler for outside clicks to close the calendar
 	useClickOutside(clickRef, () => setIsPanelVisible(false));
 
+	// Memo for decide which kind of list display
+	const isLargeList = useMemo(() => {
+		return data.length > overSizeLimit;
+	}, [overSizeLimit, data]);
+
 	// Managing input changes
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(event.target.value);
@@ -45,15 +58,15 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	};
 
 	// Clicking on a list item
-	const handleItemClick = (
-		event: React.MouseEvent<HTMLButtonElement>,
-		item: string,
-	) => {
-		setSearchValue(item);
-		onFieldChange(item);
-		setIsPanelVisible(false);
-		event.preventDefault();
-	};
+	const handleItemClick = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>, item: string) => {
+			setSearchValue(item);
+			onFieldChange(item);
+			setIsPanelVisible(false);
+			event.preventDefault();
+		},
+		[onFieldChange],
+	);
 
 	// Reset handler for clearing search field
 	const handleReset = useCallback(
@@ -148,14 +161,14 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 				className='searchBar_input_button_wrapper'
 			>
 				<input
-					className={`searchBar_input_hidden ${
-						isValid ? 'green_border' : ''
-					} ${isPanelVisible && 'searchBar_input'}`}
+					className={`searchBar_input_hidden
+					${isPanelVisible && 'searchBar_input'}`}
 					type='text'
 					size={size < 10 ? 10 : size}
 					onChange={handleInputChange}
 					value={searchValue}
 					placeholder={placeholder}
+					disabled={disabled}
 				/>
 			</button>
 
@@ -166,7 +179,7 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 					isPanelVisible && 'searchBar_panel'
 				}`}
 			>
-				{data.length > overSizeLimit ? (
+				{isLargeList ? (
 					<LargeList
 						data={filteredData}
 						handleClick={handleItemClick}

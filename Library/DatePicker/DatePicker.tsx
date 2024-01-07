@@ -75,6 +75,8 @@ type TDatePickerProps = {
 	limitDateMax?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
+	disabled?: boolean;
+	className?: string;
 	onFieldChange: (
 		value: [Date | undefined, Date | undefined] | undefined,
 	) => void;
@@ -87,6 +89,8 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	limitDateMax,
 	isSubmit,
 	isValid,
+	disabled = false,
+	className,
 	onFieldChange,
 }) => {
 	const { datePattern, months, errorMessage, limitMessage, locales } =
@@ -252,14 +256,18 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 
 	//+ TSX
 	return (
-		<div ref={clickRef} className={'datePicker_container'}>
+		<div ref={clickRef} className={`datePicker_container ${className}`}>
 			<button
-				className={`${isValid && 'green_border'} ${'inputs_wrapper'}`}
+				className={`
+				${disabled ? 'inputs_wrapper_disabled' : ''} 
+				${'inputs_wrapper'}`}
+				disabled={disabled}
 				onClick={openPanel}
 			>
 				<Input
 					placeholder={placeholder}
 					initialValue={startDate}
+					disabled={disabled}
 					onValueChange={handleChangeStartDate}
 				></Input>
 				{isValid ? (
@@ -279,6 +287,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 				<Input
 					placeholder={placeholder}
 					initialValue={endDate}
+					disabled={disabled}
 					onValueChange={handleChangeEndDate}
 				></Input>
 			</button>
@@ -497,6 +506,7 @@ type TInputProps = {
 	initialValue: string;
 	placeholder: string;
 	size?: number;
+	disabled?: boolean;
 	onValueChange: (value: string) => void;
 };
 
@@ -504,6 +514,7 @@ const Input: React.FC<TInputProps> = ({
 	initialValue,
 	placeholder,
 	size = 12,
+	disabled = false,
 	onValueChange,
 }) => {
 	const [value, setValue] = useState(initialValue || '');
@@ -537,6 +548,7 @@ const Input: React.FC<TInputProps> = ({
 			placeholder={placeholder}
 			onChange={handleChange}
 			value={value}
+			disabled={disabled}
 		/>
 	);
 };

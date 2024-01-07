@@ -49,7 +49,6 @@ const LandingPage = () => {
 		reset();
 	};
 
-	console.log(isValid);
 	return (
 		<form onSubmit={handleSubmit(submitData)} className={styles.container}>
 			{/* ############################################## */}
@@ -65,6 +64,7 @@ const LandingPage = () => {
 						placeholder='JJ/MM/AAAA'
 						isSubmit={isSubmitting}
 						isValid={isValid}
+						disabled={false}
 						onFieldChange={onChange}
 					></DatePicker>
 				)}
@@ -83,6 +83,8 @@ const LandingPage = () => {
 						size={28}
 						isSubmit={isSubmitting}
 						isValid={isValid}
+						overSizeLimit={999}
+						disabled={false}
 						onFieldChange={onChange}
 					></SearchBar>
 				)}

@@ -1,0 +1,5 @@
+How to build components
+
+Rules to follow:
+
+1.
