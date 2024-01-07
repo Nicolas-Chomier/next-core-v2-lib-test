@@ -17,7 +17,7 @@ import { nanoid } from 'nanoid';
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(2500, 3);
+const randomIds = generateRandomIds(500, 3);
 
 type TTestingForm = {
 	dateRange: [Date, Date];

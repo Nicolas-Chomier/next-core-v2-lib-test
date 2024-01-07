@@ -51,6 +51,7 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	) => {
 		setSearchValue(item);
 		onFieldChange(item);
+		setIsPanelVisible(false);
 		event.preventDefault();
 	};
 
@@ -201,7 +202,16 @@ type TClickableItemsProps = {
 // Virtuoso large list able to display more than 1000 items
 const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	const size = data.length;
-
+	const itemContent = (index: number) => {
+		const item = data[index];
+		return (
+			<ClickableItems
+				key={item}
+				item={item}
+				handleClick={handleClick}
+			></ClickableItems>
+		);
+	};
 	return (
 		<Virtuoso
 			className={'searchBar_list'}
@@ -209,16 +219,7 @@ const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 				height: `${size < 13 ? size * 24 : 300}px`,
 			}}
 			totalCount={data.length}
-			itemContent={(index) => {
-				const item = data[index];
-				return (
-					<ClickableItems
-						key={item}
-						item={item}
-						handleClick={handleClick}
-					></ClickableItems>
-				);
-			}}
+			itemContent={itemContent}
 		/>
 	);
 };
