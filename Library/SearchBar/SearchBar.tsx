@@ -46,10 +46,15 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	// Handler for outside clicks to close the calendar
 	useClickOutside(clickRef, () => setIsPanelVisible(false));
 
+	// Memo to remove duplicate string in data (avoid key problem on JSX render)
+	const cleanData = useMemo(() => {
+		return [...new Set(data)];
+	}, [data]);
+
 	// Memo for decide which kind of list display
 	const isLargeList = useMemo(() => {
-		return data.length > overSizeLimit;
-	}, [overSizeLimit, data]);
+		return cleanData.length > overSizeLimit;
+	}, [overSizeLimit, cleanData]);
 
 	// Managing input changes
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,22 +125,24 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 					<Search
 						size={20}
 						strokeWidth={1.7}
-						className='searchBar_basic_icon'
+						className={`searchBar_basic_icon ${
+							disabled ? 'searchBar_basic_icon_disabled' : ''
+						}`}
 					/>
 				</div>
 			);
 		},
-		[handleReset],
+		[handleReset, disabled],
 	);
 
 	// Effect to update filtered list
 	useEffect(() => {
 		setFilteredData(
-			data.filter((item) =>
+			cleanData.filter((item) =>
 				item.toLowerCase().includes(searchValue.toLowerCase()),
 			),
 		);
-	}, [searchValue, data]);
+	}, [searchValue, cleanData]);
 
 	// Effect to reset after submission
 	useEffect(() => {
