@@ -14,31 +14,34 @@ import { FormButton } from '@/Library/FormButton/FormButton';
 import { SearchBar } from '@/Library/SearchBar/SearchBar';
 import { nanoid } from 'nanoid';
 import { InputString } from '@/Library/InputString/InputString';
+import { InputNumber } from '@/Library/inputNumber/InputNumber';
+import { SelectMultiple } from '@/Library/SelectMultiple/SelectMultiple';
 
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
 const randomIds = generateRandomIds(100, 5);
 
+const regexString = /[^a-zA-Z0-9@.]/g;
+
 type TTestingForm = {
+	multiple: string[];
 	myText: string;
+	myNumber: number;
 	dateRange: [Date, Date];
 	searchBar: string;
 };
 
 const TestSchema: ZodType<TTestingForm> = z.object({
-	// largeList: z.string().toLowerCase().trim().min(1),
-	// multiple: z.array(z.string()),
+	multiple: z.array(z.string()),
 	myText: z.string().toLowerCase().trim().min(8),
-	//email: z.string().email().min(4, 'Email to short').max(90, 'Email to long'),
+	myNumber: z.number().finite().safe().min(-20).max(20),
 	dateRange: z.tuple([z.date(), z.date()]),
 	searchBar: z.string().toLowerCase().trim().min(1),
 });
 
 const LandingPage = () => {
 	const {
-		/* setValue,
-		register, */
 		handleSubmit,
 		reset,
 		control,
@@ -53,7 +56,7 @@ const LandingPage = () => {
 		reset();
 	};
 
-	console.log(isSubmitting);
+	console.log(errors);
 
 	return (
 		<form onSubmit={handleSubmit(submitData)} className={styles.container}>
@@ -66,7 +69,7 @@ const LandingPage = () => {
 				render={({ field: { onChange } }) => (
 					<DatePicker
 						limitDateMin={-10}
-						limitDateMax={5}
+						limitDateMax={10}
 						placeholder='JJ/MM/AAAA'
 						isSubmit={isSubmitting}
 						isValid={isValid}
@@ -85,11 +88,11 @@ const LandingPage = () => {
 				render={({ field: { onChange } }) => (
 					<SearchBar
 						data={randomIds}
-						placeholder='Nicolas'
 						size={28}
+						placeholder='Search'
+						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						overSizeLimit={999}
 						disabled={false}
 						onFieldChange={onChange}
 					></SearchBar>
@@ -105,14 +108,56 @@ const LandingPage = () => {
 				render={({ field: { onChange } }) => (
 					<InputString
 						type={'text'}
-						placeholder='Input String Text'
-						size={30}
+						regex={regexString}
+						placeholder='My text here!'
+						errors={errors['myText']?.message}
+						size={16}
 						isSubmit={isSubmitting}
 						isValid={isValid}
 						disabled={false}
-						errors={errors['myText']?.message}
 						onFieldChange={onChange}
 					></InputString>
+				)}
+			/>
+
+			{/* ############################################## */}
+			{/* ############################################## */}
+
+			<Controller
+				control={control}
+				name='myNumber'
+				render={({ field: { onChange } }) => (
+					<InputNumber
+						placeholder='My number here!'
+						errors={errors['myNumber']?.message}
+						step='0.1'
+						min='-20'
+						max='20'
+						outputNumber={true}
+						isSubmit={isSubmitting}
+						isValid={isValid}
+						disabled={false}
+						onFieldChange={onChange}
+					></InputNumber>
+				)}
+			/>
+
+			{/* ############################################## */}
+			{/* ############################################## */}
+
+			<Controller
+				control={control}
+				name='multiple'
+				render={({ field: { onChange } }) => (
+					<SelectMultiple
+						data={randomIds}
+						placeholder='Multiple'
+						overSizeLimit={999}
+						isSubmit={isSubmitting}
+						isValid={isValid}
+						disabled={false}
+						onFieldChange={onChange}
+					></SelectMultiple>
 				)}
 			/>
 

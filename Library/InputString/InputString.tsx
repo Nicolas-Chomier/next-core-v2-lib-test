@@ -1,56 +1,60 @@
 // React core
 import { useCallback, useEffect, useState } from 'react';
 // External modules / Third-party libraries
-// Local components
-// Hooks and utilities
-// Configuration
+import { AtSign, CaseSensitive, Check, KeyRound, X } from 'lucide-react';
 // Styles
 import './InputString.css';
-import { AtSign, Check, Hash, KeyRound, X } from 'lucide-react';
 
 type TInputStringProps = {
 	type: 'text' | 'email' | 'password';
+	regex?: RegExp;
+	errors?: string;
 	placeholder?: string;
-	disabled: boolean;
+	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
-	size?: number;
-	errors?: string;
+	disabled?: boolean;
 	className?: string;
 	onFieldChange: (value: string | undefined) => void;
 };
 
 export const InputString: React.FC<TInputStringProps> = ({
 	type = 'text',
-	placeholder,
+	regex = undefined,
+	placeholder = 'My text here!',
+	errors = '',
+	size = 16,
+	isSubmit = false,
+	isValid = false,
 	disabled = false,
-	size,
-	isSubmit,
-	isValid,
-	errors,
-	className,
+	className = undefined,
 	onFieldChange,
 }) => {
-	console.log(errors);
-	const [searchValue, setSearchValue] = useState('');
+	const [inputValue, setInputValue] = useState<string>('');
 
-	// Managing input changes
+	// Managing input changes with or with out REGEX
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(event.target.value);
-		onFieldChange(event.target.value);
+		if (regex) {
+			const filteredValue = event.target.value.replace(regex, '');
+			setInputValue(filteredValue);
+			onFieldChange(filteredValue);
+		} else {
+			setInputValue(event.target.value);
+			onFieldChange(event.target.value);
+		}
 	};
 
 	// Reset handler for clearing search field
 	const handleReset = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
-			setSearchValue('');
+			setInputValue('');
 			onFieldChange(undefined);
 			event.preventDefault();
 		},
 		[onFieldChange],
 	);
 
-	//
+	// Display icon depending on type
 	const inputStringLogo = useCallback(() => {
 		let displayedIcon;
 
@@ -58,64 +62,70 @@ export const InputString: React.FC<TInputStringProps> = ({
 			case 'password':
 				displayedIcon = (
 					<KeyRound
-						size={23}
+						size={18}
 						strokeWidth={1.6}
-						className='inputString_icon'
+						className={` inputString_password_icon ${
+							disabled ? 'inputString_icon_disabled' : ''
+						}`}
 					/>
 				);
 				break;
 			case 'email':
 				displayedIcon = (
 					<AtSign
-						size={23}
+						size={19}
 						strokeWidth={1.6}
-						className='inputString_icon'
+						className={` inputString_email_icon ${
+							disabled ? 'inputString_icon_disabled' : ''
+						}`}
 					/>
 				);
 				break;
 			default:
 				displayedIcon = (
-					<Hash
+					<CaseSensitive
 						size={23}
-						strokeWidth={1.6}
-						className='inputString_icon'
+						strokeWidth={1.4}
+						className={` inputString_text_icon ${
+							disabled ? 'inputString_icon_disabled' : ''
+						}`}
 					/>
 				);
 				break;
 		}
 
 		return displayedIcon;
-	}, [type]);
+	}, [type, disabled]);
 
 	// Display action buttons
 	const displayButtonActions = useCallback(
 		(isValid: boolean | undefined, searchValue: string) => {
 			if (isValid) {
 				return (
-					<div className={`${'searchBar_icon_wrapper'}`}>
+					<div className={`${'inputString_icon_wrapper'}`}>
 						<Check
 							size={20}
 							strokeWidth={1.8}
-							className='searchBar_valid_icon'
+							className='inputString_valid_icon'
 						/>
 					</div>
 				);
 			} else if (searchValue) {
 				return (
 					<button
-						className={`${'searchBar_icon_wrapper'}`}
+						className={`${'inputString_reset_button'}`}
 						onClick={handleReset}
 					>
 						<X
 							size={23}
 							strokeWidth={1.6}
-							className='inputString_icon'
+							className='inputString_reset_icon'
 						/>
 					</button>
 				);
 			}
 			return (
-				<div className={`${'searchBar_icon_wrapper'}`}>
+				<div className={`${'inputString_icon_wrapper'}`}>
 					{inputStringLogo()}
 				</div>
 			);
@@ -126,10 +136,18 @@ export const InputString: React.FC<TInputStringProps> = ({
 	// Effect to reset after submission
 	useEffect(() => {
 		if (isSubmit) {
-			setSearchValue('');
+			setInputValue('');
 			onFieldChange(undefined);
 		}
 	}, [isSubmit, onFieldChange]);
+
+	// Effect to reset if component disabled
+	useEffect(() => {
+		if (disabled) {
+			setInputValue('');
+			onFieldChange(undefined);
+		}
+	}, [disabled, onFieldChange]);
 
 	//+ TSX
 	return (
@@ -138,14 +156,28 @@ export const InputString: React.FC<TInputStringProps> = ({
 				type={type}
 				placeholder={placeholder}
 				onChange={handleInputChange}
-				value={searchValue}
-				size={size}
+				value={inputValue}
+				size={size < 10 ? 10 : size}
 				disabled={disabled}
-				className={`${'input_string_text_field'} ${
-					errors && 'input_string_text_field'
-				}`}
+				className='inputString_text_field'
 			/>
-			{displayButtonActions(isValid, searchValue)}
+
+			{displayButtonActions(isValid, inputValue)}
+
+			<TooltipErrorMessage message={errors} disabled={disabled} />
 		</div>
 	);
+};
+
+type TTooltipErrorMessageProps = {
+	message?: string;
+	disabled: boolean;
+};
+
+const TooltipErrorMessage: React.FC<TTooltipErrorMessageProps> = ({
+	message,
+	disabled,
+}) => {
+	if (!message || disabled) return null;
+	return <div className='inputString_error_message'>{message}</div>;
 };
