@@ -20,7 +20,7 @@ import { SelectMultiple } from '@/Library/SelectMultiple/SelectMultiple';
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(100, 5);
+const randomIds = generateRandomIds(10, 5);
 
 const regexString = /[^a-zA-Z0-9@.]/g;
 
@@ -33,7 +33,7 @@ type TTestingForm = {
 };
 
 const TestSchema: ZodType<TTestingForm> = z.object({
-	multiple: z.array(z.string()),
+	multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
 	myText: z.string().toLowerCase().trim().min(8),
 	myNumber: z.number().finite().safe().min(-20).max(20),
 	dateRange: z.tuple([z.date(), z.date()]),
