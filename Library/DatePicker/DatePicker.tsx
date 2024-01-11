@@ -14,6 +14,7 @@ import {
 	ChevronRight,
 	ChevronsLeft,
 	ChevronsRight,
+	X,
 } from 'lucide-react';
 // Styles
 import './DatePicker.css';
@@ -76,6 +77,7 @@ type TDatePickerProps = {
 	isSubmit?: boolean;
 	isValid?: boolean;
 	disabled?: boolean;
+	format?: 'S' | 'M' | 'L';
 	className?: string;
 	onFieldChange: (
 		value: [Date | undefined, Date | undefined] | undefined,
@@ -90,6 +92,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	isSubmit,
 	isValid,
 	disabled = false,
+	format = 'M',
 	className,
 	onFieldChange,
 }) => {
@@ -128,6 +131,27 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 			(prev) => new Date(prev.getFullYear() + delta, prev.getMonth(), 1),
 		);
 		event.preventDefault();
+	};
+
+	// Function to switch calendar icon according form status
+	const calendarIcon = (isValid: boolean | undefined, format: string) => {
+		if (format === 'S') return <span>:</span>;
+		if (isValid) {
+			return (
+				<CalendarCheck
+					size={19}
+					strokeWidth={1.4}
+					className='datePicker-middle-icon-valid'
+				/>
+			);
+		}
+		return (
+			<CalendarRange
+				size={19}
+				strokeWidth={1.3}
+				className='datePicker-middle-icon'
+			/>
+		);
 	};
 
 	// Reset handler for clearing dates
@@ -256,11 +280,12 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 
 	//+ TSX
 	return (
-		<div ref={clickRef} className={`datePicker_container ${className}`}>
+		<div
+			ref={clickRef}
+			className={`datePicker-container  datePicker-format-${format} ${className}`}
+		>
 			<button
-				className={`
-				${disabled ? 'inputs_wrapper_disabled' : ''} 
-				${'inputs_wrapper'}`}
+				className='datePicker-inputs-wrapper'
 				disabled={disabled}
 				onClick={openPanel}
 			>
@@ -270,19 +295,8 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 					disabled={disabled}
 					onValueChange={handleChangeStartDate}
 				></Input>
-				{isValid ? (
-					<CalendarCheck
-						size={19}
-						strokeWidth={1.4}
-						className={'datePicker_input_separator_form_valid'}
-					/>
-				) : (
-					<CalendarRange
-						size={19}
-						strokeWidth={1.3}
-						className={'datePicker_input_separator'}
-					/>
-				)}
+
+				{calendarIcon(isValid, format)}
 
 				<Input
 					placeholder={placeholder}
@@ -292,12 +306,13 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 				></Input>
 			</button>
 			{showCalendar ? (
-				<div className={'datePicker_panel'}>
+				<div className='datePicker-panel'>
 					<Displayer
 						monthList={months}
 						date={calendarDate}
 						message={message}
 					></Displayer>
+
 					<Calendar
 						limitDateMin={limitDateMin}
 						limitDateMax={limitDateMax}
@@ -307,34 +322,44 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 						handleClick={handleClick}
 					></Calendar>
 
-					<div className={'button_panel'}>
+					<div className='datePicker-button-wrapper'>
 						<button
-							className={'datePicker_buttons'}
+							className='datePicker-action-button'
 							onClick={(e) => changeYear(e, -1)}
 						>
 							<ChevronsLeft size={22} strokeWidth={1.4} />
 						</button>
 						<button
-							className={'datePicker_buttons'}
+							className='datePicker-action-button'
 							onClick={(e) => changeMonth(e, -1)}
 						>
 							<ChevronLeft size={25} strokeWidth={1.3} />
 						</button>
 
 						<button
-							className={'datePicker_reset_button'}
+							className='datePicker-reset-button'
 							onClick={handleReset}
 						>
-							<div className={'datePicker_reset_text'}>Reset</div>
+							{format === 'S' ? (
+								<X
+									size={19}
+									strokeWidth={1.3}
+									className='datePicker-reset-button-content'
+								/>
+							) : (
+								<div className='datePicker-reset-button-content'>
+									Reset
+								</div>
+							)}
 						</button>
 						<button
-							className={'datePicker_buttons'}
+							className='datePicker-action-button'
 							onClick={(e) => changeMonth(e, 1)}
 						>
 							<ChevronRight size={25} strokeWidth={1.3} />
 						</button>
 						<button
-							className={'datePicker_buttons'}
+							className='datePicker-action-button'
 							onClick={(e) => changeYear(e, 1)}
 						>
 							<ChevronsRight size={22} strokeWidth={1.4} />
@@ -539,7 +564,7 @@ const Input: React.FC<TInputProps> = ({
 
 	return (
 		<input
-			className={'inputDate'}
+			className='datePicker-inputs-dates'
 			type='text'
 			size={size}
 			minLength={10}

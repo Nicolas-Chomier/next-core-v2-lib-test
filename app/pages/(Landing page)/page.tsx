@@ -75,6 +75,7 @@ const LandingPage = () => {
 						isValid={isValid}
 						disabled={false}
 						onFieldChange={onChange}
+						format='S'
 					></DatePicker>
 				)}
 			/>
