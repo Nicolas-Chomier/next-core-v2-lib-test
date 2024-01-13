@@ -41,6 +41,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedValues, setSelectedValues] = useState<string[]>([]);
 	const [filteredData, setFilteredData] = useState<string[]>([]);
+	const [itemNumber, setItemNumber] = useState('');
 
 	const clickRef = useRef(null);
 
@@ -91,7 +92,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 			setSearchValue('');
 			setSelectedValues([]);
 			onFieldChange([]);
-			setIsPanelVisible(false);
+			/* 	setIsPanelVisible(false); */
 			event.preventDefault();
 		},
 		[onFieldChange],
@@ -109,8 +110,10 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 			isValid: boolean | undefined,
 			isPanel: boolean,
 			isSearching: string,
+			selectedValues: any,
 		) => {
 			const cssClass = 'selectMultiple-icon-wrapper';
+
 			if (isValid) {
 				return (
 					<div className={cssClass}>
@@ -121,7 +124,9 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 						/>
 					</div>
 				);
-			} else if (isPanel || isSearching) {
+			}
+
+			if (isPanel || isSearching) {
 				return (
 					<button className={cssClass} onClick={handleErase}>
 						<Eraser
@@ -131,21 +136,24 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 						/>
 					</button>
 				);
-			} else {
-				return (
-					<div className={cssClass}>
-						<CopyCheck
-							size={20}
-							strokeWidth={1.7}
-							className={
-								disabled
-									? 'selectMultiple-icon-disabled'
-									: 'selectMultiple-icon'
-							}
-						/>
-					</div>
-				);
 			}
+
+			const iconClass =
+				selectedValues.length !== 0
+					? 'selectMultiple-noEmpty-icon'
+					: disabled
+					? 'selectMultiple-icon-disabled'
+					: 'selectMultiple-icon';
+
+			return (
+				<button className={cssClass} onClick={openPanel}>
+					<CopyCheck
+						size={20}
+						strokeWidth={1.7}
+						className={iconClass}
+					/>
+				</button>
+			);
 		},
 		[disabled, handleErase],
 	);
@@ -173,31 +181,50 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 		onFieldChange(selectedValues);
 	}, [onFieldChange, selectedValues]);
 
+	// Effect to inform user about the numbers of item selected when component is closed
+	useEffect(() => {
+		if (selectedValues.length > 0) {
+			const num = String(selectedValues.length);
+			setItemNumber(`${num} item(s) sélectionné(s)`);
+		} else {
+			setItemNumber('');
+		}
+	}, [selectedValues]);
+
 	//+ TSX
 	return (
 		<div className={`selectMultiple-container ${className}`} ref={clickRef}>
-			<button
-				onClick={openPanel}
-				disabled={disabled}
-				className={` ${
+			<div
+				className={
 					isPanelVisible
-						? 'selectMultiple-clickable-wrapper-visible'
-						: 'selectMultiple-clickable-wrapper'
-				} 
-					${disabled ? 'selectMultiple-clickable-wrapper-disabled' : ''}`}
+						? 'selectMultiple-content-wrapper-visible'
+						: 'selectMultiple-content-wrapper'
+				}
 			>
-				<input
-					className='selectMultiple-input-text'
-					type='text'
-					size={size < 10 ? 10 : size}
-					onChange={handleInputChange}
-					value={searchValue}
-					placeholder={placeholder}
+				<button
+					onClick={openPanel}
 					disabled={disabled}
-				/>
-
-				{displayButtonActions(isValid, isPanelVisible, searchValue)}
-			</button>
+					className={` selectMultiple-clickable-wrapper ${
+						disabled && 'selectMultiple-clickable-wrapper-disabled'
+					}`}
+				>
+					<input
+						className='selectMultiple-input-text'
+						type='text'
+						size={size < 10 ? 10 : size}
+						onChange={handleInputChange}
+						value={searchValue}
+						placeholder={itemNumber || placeholder}
+						disabled={disabled}
+					/>
+				</button>
+				{displayButtonActions(
+					isValid,
+					isPanelVisible,
+					searchValue,
+					selectedValues,
+				)}
+			</div>
 
 			<ItemsDisplayer
 				values={selectedValues}

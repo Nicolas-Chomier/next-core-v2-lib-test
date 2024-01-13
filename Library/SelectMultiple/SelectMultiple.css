@@ -1,12 +1,21 @@
+/* General Styles for Select Multiple Component */
+.selectMultiple-container,
+.selectMultiple-content-wrapper,
+.selectMultiple-content-wrapper-visible,
+.selectMultiple-wrapper-displayer,
+.selectMultiple-wrapper-displayer-visible,
+.selectMultiple-icon-wrapper,
+.selectMultiple-panel,
+.selectMultiple-panel-visible {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--background-color);
+}
 /* ######################################## */
 /* ##### SELECT MULTIPLE MAIN FRAME ####### */
 /* ######################################## */
 .selectMultiple-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-
 	inline-size: fit-content;
 
 	margin: auto;
@@ -18,13 +27,8 @@
 /* ######################################## */
 /* ######## SELECT MULTIPLE CONTENT ####### */
 /* ######################################## */
-.selectMultiple-clickable-wrapper-visible,
-.selectMultiple-clickable-wrapper {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-end;
-
+.selectMultiple-content-wrapper-visible,
+.selectMultiple-content-wrapper {
 	font-size: var(--selectMultiple-font-size, inherit);
 
 	height: var(--selectMultiple-height, 44px);
@@ -38,23 +42,23 @@
 	transition-delay: 0s, 1.05s;
 	transition-timing-function: ease, ease;
 
-	/* INPUT FIELD */
-	.selectMultiple-input-text {
-		text-align: center;
+	/* CLICKABLE CONTENT */
+	.selectMultiple-clickable-wrapper {
 		background-color: transparent;
-		margin-left: 18px;
-	}
 
-	.selectMultiple-input-text:disabled {
-		cursor: not-allowed;
-	}
+		/* INPUT FIELD */
+		.selectMultiple-input-text {
+			text-align: center;
+			background-color: transparent;
+			margin-left: 18px;
+		}
 
+		.selectMultiple-input-text:disabled {
+			cursor: not-allowed;
+		}
+	}
 	/* ICON */
 	.selectMultiple-icon-wrapper {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
 		width: 36px;
 		height: 36px;
 
@@ -81,10 +85,15 @@
 			transform: scale(var(--selectMultiple-icon-size-scale, 1));
 			color: var(--box-shadow-color);
 		}
+		.selectMultiple-noEmpty-icon {
+			transform: scale(var(--selectMultiple-icon-size-scale, 1));
+			color: var(--success-color);
+			cursor: pointer;
+		}
 	}
 }
 
-.selectMultiple-clickable-wrapper-visible {
+.selectMultiple-content-wrapper-visible {
 	border-radius: 22px 22px 0 0;
 
 	box-shadow: inset 0 2px 0 0 var(--accent-color),
@@ -94,7 +103,7 @@
 	transition: border-radius 1s ease, box-shadow 1s ease;
 }
 
-.selectMultiple-clickable-wrapper-disabled {
+.selectMultiple-content-wrapper-disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
 }
@@ -104,11 +113,6 @@
 /* ######################################## */
 .selectMultiple-wrapper-displayer-visible,
 .selectMultiple-wrapper-displayer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-
 	height: 0px;
 	width: 100%;
 
@@ -138,6 +142,7 @@
 
 	transition: border-radius 1s ease, box-shadow 1s ease, height 1s ease;
 
+	/* DISPLAYER */
 	.selectMultiple-item-displayer {
 		display: flex;
 		flex-direction: row;
@@ -147,6 +152,7 @@
 		width: 100%;
 		height: var(--selectMultiple-displayer-height);
 
+		margin-left: 8px;
 		flex-wrap: wrap;
 		overflow-y: scroll;
 
@@ -154,7 +160,7 @@
 		.selectMultiple-items {
 			padding: 1px 8px;
 			border-radius: 20px;
-			margin: 5px;
+			margin: 3px;
 
 			background-color: var(--accent-color);
 			color: var(--white-color);
@@ -168,14 +174,13 @@
 	}
 
 	.selectMultiple-displayer-reset-button {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
 		margin: 10px;
+		margin-left: 11px;
+
 		background-color: transparent;
 		color: var(--danger-color);
-		margin-left: 11px;
+
+		cursor: pointer;
 	}
 }
 
@@ -184,10 +189,7 @@
 /* ######################################## */
 .selectMultiple-panel,
 .selectMultiple-panel-visible {
-	display: flex;
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 
 	inline-size: 100%;
 	max-height: 0px;

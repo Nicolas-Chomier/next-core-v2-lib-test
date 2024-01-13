@@ -84,7 +84,7 @@ const LandingPage = () => {
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			<Controller
+			{/* <Controller
 				control={control}
 				name='searchBar'
 				render={({ field: { onChange } }) => (
@@ -99,7 +99,7 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></SearchBar>
 				)}
-			/>
+			/> */}
 
 			{/* ############################################## */}
 			{/* ############################################## */}
