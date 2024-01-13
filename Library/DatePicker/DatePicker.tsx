@@ -14,6 +14,7 @@ import {
 	ChevronRight,
 	ChevronsLeft,
 	ChevronsRight,
+	MoreHorizontal,
 	X,
 } from 'lucide-react';
 // Styles
@@ -44,26 +45,47 @@ const constants = {
 };
 
 const FRAME: React.ReactNode[] = [
-	<tr className={'calendar_row'} key={'semaine'}>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Lu'}>
+	<tr className={'datePicker-calendar-row'} key={'week'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Lu'}
+		>
 			Lu
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Ma'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Ma'}
+		>
 			Ma
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Me'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Me'}
+		>
 			Me
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Je'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Je'}
+		>
 			Je
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Ve'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Ve'}
+		>
 			Ve
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Sa'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Sa'}
+		>
 			Sa
 		</td>
-		<td className={`${'calendar_day_cell'} ${'cell'}`} key={'Di'}>
+		<td
+			className={`${'datePicker-calendar-day-text'} ${'datePicker-calendar-cell'}`}
+			key={'Di'}
+		>
 			Di
 		</td>
 	</tr>,
@@ -77,14 +99,14 @@ type TDatePickerProps = {
 	isSubmit?: boolean;
 	isValid?: boolean;
 	disabled?: boolean;
-	format?: 'S' | 'M' | 'L';
+	size?: 'small' | 'standard';
 	className?: string;
 	onFieldChange: (
 		value: [Date | undefined, Date | undefined] | undefined,
 	) => void;
 };
 
-//+++++ DATE PICKER Fr +++++//
+//+ DATE PICKER (Fr)
 export const DatePicker: React.FC<TDatePickerProps> = ({
 	placeholder = 'jj/mm/aaaa',
 	limitDateMin,
@@ -92,7 +114,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	isSubmit,
 	isValid,
 	disabled = false,
-	format = 'M',
+	size = 'standard',
 	className,
 	onFieldChange,
 }) => {
@@ -135,7 +157,14 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 
 	// Function to switch calendar icon according form status
 	const calendarIcon = (isValid: boolean | undefined, format: string) => {
-		if (format === 'S') return <span>:</span>;
+		if (format === 'small')
+			return (
+				<MoreHorizontal
+					size={12}
+					strokeWidth={1.4}
+					className='datePicker-input-separator'
+				/>
+			);
 		if (isValid) {
 			return (
 				<CalendarCheck
@@ -148,7 +177,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 		return (
 			<CalendarRange
 				size={19}
-				strokeWidth={1.3}
+				strokeWidth={1.5}
 				className='datePicker-middle-icon'
 			/>
 		);
@@ -282,7 +311,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	return (
 		<div
 			ref={clickRef}
-			className={`datePicker-container  datePicker-format-${format} ${className}`}
+			className={`datePicker-container  datePicker-format-${size} ${className}`}
 		>
 			<button
 				className='datePicker-inputs-wrapper'
@@ -296,7 +325,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 					onValueChange={handleChangeStartDate}
 				></Input>
 
-				{calendarIcon(isValid, format)}
+				{calendarIcon(isValid, size)}
 
 				<Input
 					placeholder={placeholder}
@@ -305,6 +334,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 					onValueChange={handleChangeEndDate}
 				></Input>
 			</button>
+
 			{showCalendar ? (
 				<div className='datePicker-panel'>
 					<Displayer
@@ -340,7 +370,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 							className='datePicker-reset-button'
 							onClick={handleReset}
 						>
-							{format === 'S' ? (
+							{size === 'small' ? (
 								<X
 									size={19}
 									strokeWidth={1.3}
@@ -419,6 +449,7 @@ const Calendar: React.FC<TCalendarProps> = ({
 		},
 		[startDate, endDate, limitDateMin, limitDateMax],
 	);
+
 	// Function which generate the day cell calendar (<td>)
 	const generateDayCell = useCallback(
 		(
@@ -431,11 +462,13 @@ const Calendar: React.FC<TCalendarProps> = ({
 			const cellDate = new Date(year, month, date);
 			const cellDateInfo = getCellDateInfo(cellDate);
 
-			const cellClasses = `cell dates ${
-				cellDateInfo.isStartDate ? 'calendar_cell_start_date' : ''
-			} ${cellDateInfo.isEndDate ? 'calendar_cell_end_date' : ''} ${
-				cellDateInfo.isBetweenDates ? 'calendar_cell_between' : ''
-			} ${cellDateInfo.isToday ? 'calendar_cell_today' : ''}`;
+			const cellClasses = `datePicker-calendar-cell datePicker-calendar-dates ${
+				cellDateInfo.isStartDate ? 'datePicker-calendar-start-date' : ''
+			} ${cellDateInfo.isEndDate ? 'datePicker-calendar-end-date' : ''} ${
+				cellDateInfo.isBetweenDates
+					? 'datePicker-calendar-date-between'
+					: ''
+			} ${cellDateInfo.isToday ? 'datePicker-calendar-today' : ''}`;
 
 			if (
 				cellDateInfo.isDayUnderLimitDateMin ||
@@ -444,7 +477,9 @@ const Calendar: React.FC<TCalendarProps> = ({
 				return (
 					<td
 						key={`${week}-${day}`}
-						className={`${'cell'} ${'out_dates'}`}
+						className={
+							'datePicker-calendar-cell datePicker-calendar-dates-none'
+						}
 					>
 						{date}
 					</td>
@@ -463,6 +498,7 @@ const Calendar: React.FC<TCalendarProps> = ({
 		},
 		[handleClick, getCellDateInfo],
 	);
+
 	// Function which build the calendar to stack day rows in render array
 	const generateWeekRow = useCallback(
 		(
@@ -479,7 +515,12 @@ const Calendar: React.FC<TCalendarProps> = ({
 					(week === 0 && day < firstDayOfMonth) ||
 					date > daysInMonth
 				) {
-					weekRow.push(<td key={`${day}`} className={'cell'}></td>);
+					weekRow.push(
+						<td
+							key={`${day}`}
+							className='datePicker-calendar-cell'
+						></td>,
+					);
 				} else {
 					weekRow.push(generateDayCell(week, day, date, year, month));
 					date++;
@@ -499,7 +540,7 @@ const Calendar: React.FC<TCalendarProps> = ({
 		const firstDayOfMonth = new Date(year, month, 1).getDay();
 		let date = 1;
 
-		for (let week = 0; week < 6; week++) {
+		for (let week = 0; week < 5; week++) {
 			const weekRow = generateWeekRow(
 				week,
 				date,
@@ -509,7 +550,7 @@ const Calendar: React.FC<TCalendarProps> = ({
 				month,
 			);
 			calendar.push(
-				<tr key={week} className={'calendar_row'}>
+				<tr key={week} className='datePicker-calendar-row'>
 					{weekRow}
 				</tr>,
 			);
@@ -521,7 +562,7 @@ const Calendar: React.FC<TCalendarProps> = ({
 	}, [targetDate, generateWeekRow]);
 
 	return (
-		<table className={'calendar_table'}>
+		<table>
 			<tbody>{generateCalendar}</tbody>
 		</table>
 	);
@@ -585,19 +626,18 @@ type TDisplayerProps = {
 };
 
 const Displayer: React.FC<TDisplayerProps> = ({ monthList, date, message }) => {
-	if (message)
-		return (
-			<div className={'displayer_container_error_message'}>{message}</div>
-		);
+	// Display error message if it exists
+	if (message) {
+		return <div className='datePicker-error-message'>{message}</div>;
+	}
 
-	return (
-		<div className={'displayer_container'}>{`${
-			monthList[date.getMonth()]
-		} ${date.getFullYear()}`}</div>
-	);
+	// Format date for display
+	const formattedDate = `${monthList[date.getMonth()]} ${date.getFullYear()}`;
+
+	return <div className='datePicker-displayer'>{formattedDate}</div>;
 };
 
-//* Side functions *//
+//+ REQUIERED FUNCTIONS
 // Transform string like: "dd/mm/yyyy" or Date to number (second)
 const dateToSecond = (value: Date): number => {
 	return Math.floor(value.getTime() / 1000);

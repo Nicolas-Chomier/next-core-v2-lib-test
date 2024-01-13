@@ -2,42 +2,42 @@
 // React core
 import React from 'react';
 // External modules / Third-party libraries
+import { nanoid } from 'nanoid';
+import { ZodType, z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js';
 // Local components
 import { DatePicker } from '@/Library/DatePicker/DatePicker';
+import { FormButton } from '@/Library/FormButton/FormButton';
+import { SearchBar } from '@/Library/SearchBar/SearchBar';
+import { InputString } from '@/Library/InputString/InputString';
+import { InputNumber } from '@/Library/inputNumber/InputNumber';
+import { SelectMultiple } from '@/Library/SelectMultiple/SelectMultiple';
 // Hooks and utilities
 import { Controller, useForm } from 'react-hook-form';
 // Configuration
 import styles from './LandingPage.module.css';
-import { ZodType, z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod/dist/zod.js';
-import { FormButton } from '@/Library/FormButton/FormButton';
-import { SearchBar } from '@/Library/SearchBar/SearchBar';
-import { nanoid } from 'nanoid';
-import { InputString } from '@/Library/InputString/InputString';
-import { InputNumber } from '@/Library/inputNumber/InputNumber';
-import { SelectMultiple } from '@/Library/SelectMultiple/SelectMultiple';
 
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(10, 5);
+const randomIds = generateRandomIds(50, 5);
 
 const regexString = /[^a-zA-Z0-9@.]/g;
 
 type TTestingForm = {
-	multiple: string[];
-	myText: string;
-	myNumber: number;
 	dateRange: [Date, Date];
 	searchBar: string;
+	//myText: string;
+	//myNumber: number;
+	multiple: string[];
 };
 
 const TestSchema: ZodType<TTestingForm> = z.object({
-	multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
-	myText: z.string().toLowerCase().trim().min(8),
-	myNumber: z.number().finite().safe().min(-20).max(20),
 	dateRange: z.tuple([z.date(), z.date()]),
 	searchBar: z.string().toLowerCase().trim().min(1),
+	//myText: z.string().toLowerCase().trim().min(8),
+	//myNumber: z.number().finite().safe().min(-20).max(20),
+	multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
 });
 
 const LandingPage = () => {
@@ -75,7 +75,8 @@ const LandingPage = () => {
 						isValid={isValid}
 						disabled={false}
 						onFieldChange={onChange}
-						format='S'
+						size='standard'
+						className='testDatePicker'
 					></DatePicker>
 				)}
 			/>
@@ -89,7 +90,7 @@ const LandingPage = () => {
 				render={({ field: { onChange } }) => (
 					<SearchBar
 						data={randomIds}
-						size={28}
+						size={31}
 						placeholder='Search'
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
@@ -103,7 +104,7 @@ const LandingPage = () => {
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			<Controller
+			{/* <Controller
 				control={control}
 				name='myText'
 				render={({ field: { onChange } }) => (
@@ -119,12 +120,12 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></InputString>
 				)}
-			/>
+			/> */}
 
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			<Controller
+			{/* <Controller
 				control={control}
 				name='myNumber'
 				render={({ field: { onChange } }) => (
@@ -141,7 +142,7 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></InputNumber>
 				)}
-			/>
+			/> */}
 
 			{/* ############################################## */}
 			{/* ############################################## */}
@@ -153,6 +154,7 @@ const LandingPage = () => {
 					<SelectMultiple
 						data={randomIds}
 						placeholder='Multiple'
+						size={31}
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}

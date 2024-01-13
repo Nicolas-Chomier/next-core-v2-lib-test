@@ -1,248 +1,269 @@
-/* Conteneur principal du selectMultiple */
-.selectMultiple_container {
+/* ######################################## */
+/* ##### SELECT MULTIPLE MAIN FRAME ####### */
+/* ######################################## */
+.selectMultiple-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
+
+	inline-size: fit-content;
+
 	margin: auto;
 	background-color: transparent;
+
 	position: relative;
-	.selectMultiple_input_button_wrapper {
-		background-color: transparent;
-	}
 }
 
-/* Styles communs pour les inputs et les boutons */
-.selectMultiple_input_hidden,
-.selectMultiple_input {
+/* ######################################## */
+/* ######## SELECT MULTIPLE CONTENT ####### */
+/* ######################################## */
+.selectMultiple-clickable-wrapper-visible,
+.selectMultiple-clickable-wrapper {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	justify-content: center;
-	text-align: center;
-	font-size: 110%;
-	height: 44px;
-	width: 268px;
-	padding: 0 43px 0 14px;
-	border-radius: 22px;
+	justify-content: flex-end;
+
+	font-size: var(--selectMultiple-font-size, inherit);
+
+	height: var(--selectMultiple-height, 44px);
+
+	border-radius: var(--selectMultiple-semi-border-radius, 22px);
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
-	transition: box-shadow 0.8s ease, border-radius 0.6s ease;
-	position: relative;
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+
+	transition-property: box-shadow, border-radius;
+	transition-duration: 4s, 0.9s;
+	transition-delay: 0s, 1.05s;
+	transition-timing-function: ease, ease;
+
+	/* INPUT FIELD */
+	.selectMultiple-input-text {
+		text-align: center;
+		background-color: transparent;
+		margin-left: 18px;
+	}
+
+	.selectMultiple-input-text:disabled {
+		cursor: not-allowed;
+	}
+
+	/* ICON */
+	.selectMultiple-icon-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 36px;
+		height: 36px;
+
+		margin-right: 3px;
+		background-color: transparent;
+
+		.selectMultiple-valid-icon {
+			transform: scale(var(--selectMultiple-icon-size-scale, 1));
+			color: var(--success-color);
+		}
+
+		.selectMultiple-erase-icon {
+			transform: scale(var(--selectMultiple-icon-size-scale, 1));
+			color: var(--danger-color);
+			cursor: pointer;
+		}
+
+		.selectMultiple-icon {
+			transform: scale(var(--selectMultiple-icon-size-scale, 1));
+			color: var(--text-color);
+		}
+
+		.selectMultiple-icon-disabled {
+			transform: scale(var(--selectMultiple-icon-size-scale, 1));
+			color: var(--box-shadow-color);
+		}
+	}
 }
 
-.selectMultiple_input_hidden:focus {
-	box-shadow: inset 2px 0 0 0 var(--accent-color),
+.selectMultiple-clickable-wrapper-visible {
+	border-radius: 22px 22px 0 0;
+
+	box-shadow: inset 0 2px 0 0 var(--accent-color),
 		inset -2px 0 0 0 var(--accent-color),
-		inset 0 2px 0 0 var(--accent-color);
+		inset 2px 0 0 0 var(--accent-color);
+
+	transition: border-radius 1s ease, box-shadow 1s ease;
 }
 
-.selectMultiple_input_hidden:disabled {
+.selectMultiple-clickable-wrapper-disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
 }
-/* Styles spécifiques pour selectMultiple_input */
-.selectMultiple_input {
-	border-radius: 22px 22px 0 0;
-	transition: box-shadow 0.8s ease, border-radius 0.6s ease;
-}
 
-/* Styles pour les icones et leurs wrappers */
-.selectMultiple_icon_wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 36px;
-	height: 36px;
-	position: absolute;
-	top: 4px;
-	right: 4px;
-	border-radius: 40px;
-	background-color: transparent;
-}
-
-.selectMultiple_basic_icon {
-	color: var(--text-color);
-}
-
-.selectMultiple_basic_icon_disabled {
-	color: var(--gray-a7);
-}
-
-.selectMultiple_reset_icon {
-	color: var(--danger-color);
-	cursor: pointer;
-}
-
-.selectMultiple_valid_icon {
-	color: var(--success-color);
-}
-
-/* DISPLAYER */
-.selectMultiple_hidden_wrapper_displayer {
+/* ######################################## */
+/* #### SELECT MULTIPLE ITEM DISPLAYER #### */
+/* ######################################## */
+.selectMultiple-wrapper-displayer-visible,
+.selectMultiple-wrapper-displayer {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+
 	height: 0px;
 	width: 100%;
-	position: absolute;
-	border-radius: 22px;
-	top: 44px;
-	background-color: var(--background-color);
-	box-shadow: inset 1px 0 0 0 var(--gray-a7), inset -1px 0 0 0 var(--gray-a7);
 
-	/* transition-property: border-radius, padding, max-height;
-	transition-duration: 0.3s, 0.4s, 0.8s;
-	transition-delay: 0s, 0.1s, 0.3s;
-	transition-timing-function: ease, ease, ease-in-out; */
-	transition-property: top, height, box-shadow, border-radius;
-	transition-duration: 0.8s, 0.5s, 0.8s, 0.6s;
-	transition-delay: 0.7s, 1s, 0.1s, 0.1s;
-	transition-timing-function: ease-in-out, ease, ease, ease;
-}
-
-.selectMultiple_wrapper_displayer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
 	border-radius: 0px;
-	height: 40px;
-	width: 325px;
-	top: 44px;
 	background-color: var(--background-color);
-	transition: box-shadow 0.8s ease, border-radius 1s ease, height 1s ease,
-		top 1s ease;
+
+	box-shadow: inset 1px 0 0 0 var(--box-shadow-color),
+		inset -1px 0 0 0 var(--box-shadow-color);
+
+	position: absolute;
+	top: var(--selectMultiple-height, 44px);
+
+	transition-property: height, box-shadow;
+	transition-duration: 0.8s, 2.1s;
+	transition-delay: 0.6s, 0.1s;
+	transition-timing-function: ease, ease;
 }
 
-.selectMultiple_container:focus-within .selectMultiple_wrapper_displayer {
-	box-shadow: inset 2px 0 0 0 var(--accent-color),
-		inset -2px 0 0 0 var(--accent-color);
-}
+.selectMultiple-wrapper-displayer-visible {
+	height: var(--selectMultiple-displayer-height, 40px);
 
-.selectMultiple_hidden_displayer_reset_button {
-	height: 0px;
-}
-.selectMultiple_item_displayer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	width: 90%;
-	height: 40px;
-	flex-wrap: wrap;
-	overflow-y: scroll;
-}
+	border-radius: 0px;
 
-.selectMultiple_item_displayer::-webkit-scrollbar {
-	display: none; /* pour Chrome, Safari, et Opera */
-}
-
-/* .selectMultiple_input_hidden:focus-within
-	.selectMultiple_hidden_wrapper_displayer {
 	box-shadow: inset 2px 0 0 0 var(--accent-color),
 		inset -2px 0 0 0 var(--accent-color),
 		inset 0 -2px 0 0 var(--accent-color);
-} */
-.selectMultiple_displayer_erase_button,
-.selectMultiple_displayer_reset_button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: fit-content;
-	height: fit-content;
-	margin: 12px;
-	background-color: transparent;
+
+	transition: border-radius 1s ease, box-shadow 1s ease, height 1s ease;
+
+	.selectMultiple-item-displayer {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+
+		width: 100%;
+		height: var(--selectMultiple-displayer-height);
+
+		flex-wrap: wrap;
+		overflow-y: scroll;
+
+		/* ITEMS */
+		.selectMultiple-items {
+			padding: 1px 8px;
+			border-radius: 20px;
+			margin: 5px;
+
+			background-color: var(--accent-color);
+			color: var(--white-color);
+
+			font-size: 85%;
+		}
+	}
+
+	.selectMultiple-item-displayer::-webkit-scrollbar {
+		display: none;
+	}
+
+	.selectMultiple-displayer-reset-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		margin: 10px;
+		background-color: transparent;
+		color: var(--danger-color);
+		margin-left: 11px;
+	}
 }
 
-/* ITEMS */
-.selectMultiple_items {
-	background-color: var(--accent-color);
-	padding: 1px 7px;
-	color: var(--white-color);
-	border-radius: 50px;
-	font-size: 80%;
-	margin: 3px;
-}
-/* Styles pour le panneau déroulant */
-.selectMultiple_panel_hidden,
-.selectMultiple_panel {
+/* ######################################## */
+/* ######## SELECT MULTIPLE PANEL ######### */
+/* ######################################## */
+.selectMultiple-panel,
+.selectMultiple-panel-visible {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
-	width: 100%;
+
+	inline-size: 100%;
+	max-height: 0px;
+
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
-	top: 84px;
+	box-shadow: inset 0 0 0 2px var(--box-shadow-color);
+
+	border-radius: 0 0 var(--selectMultiple-semi-border-radius, 22px)
+		var(--selectMultiple-semi-border-radius, 22px);
+
+	position: absolute;
+	top: calc(
+		var(--selectMultiple-height, 44px) +
+			var(--selectMultiple-displayer-height, 40px) + 2px
+	);
 	left: 0;
 	z-index: 99;
-}
 
-.selectMultiple_panel_hidden {
-	max-height: 0px;
-	border-radius: 22px;
-	padding: 0;
-
-	transition-property: border-radius, padding, max-height;
+	transition-property: padding, border-radius, max-height;
 	transition-duration: 0.3s, 0.4s, 0.8s;
-	transition-delay: 0s, 0.1s, 0.3s;
+	transition-delay: 0s, 0s, 0s;
 	transition-timing-function: ease, ease, ease-in-out;
 }
 
-.selectMultiple_panel {
-	opacity: 1;
+.selectMultiple-panel-visible {
 	height: fit-content;
+	max-height: var(--selectMultiple-panel-max-height, 250px);
+
 	padding: 8px 0;
+	border-radius: 0 0 var(--selectMultiple-semi-border-radius, 22px)
+		var(--selectMultiple-semi-border-radius, 22px);
 
-	max-height: 260px;
-	border-radius: 0 0 22px 22px;
-	transition: padding 0.3s ease, max-height 0.7s ease-in, box-shadow 0.8s ease;
+	transition: padding 0.3s ease, max-height 1s ease-in, box-shadow 1s ease;
 }
-.selectMultiple_panel:hover {
-	box-shadow: inset 2px 0 0 0 var(--accent-color),
-		inset 0 -2px 0 0 var(--accent-color),
-		inset -2px 0 0 0 var(--accent-color);
+
+.selectMultiple-panel-visible:hover {
+	box-shadow: inset 0 0 0 2px var(--accent-color);
 	transition: box-shadow 1s ease;
 }
 
-.selectMultiple_container:focus-within .selectMultiple_panel {
-	box-shadow: inset 2px 0 0 0 var(--accent-color),
-		inset 0 -2px 0 0 var(--accent-color),
-		inset -2px 0 0 0 var(--accent-color);
-	transition: box-shadow 1s ease;
-}
-
-/* Styles pour la liste et les boutons dans le panneau */
-.selectMultiple_list {
+/* ######################################## */
+/* ######## SELECT MULTIPLE ITEMS ######### */
+/* ######################################## */
+.selectMultiple-item-list {
 	width: inherit;
+	text-align: center;
+
 	list-style-type: none;
+
 	overflow-y: scroll;
+
 	margin-bottom: 3px;
 	background-color: transparent;
+
+	.selectMultiple-clickable-items {
+		width: calc(99% - 24px);
+		height: max-content;
+
+		padding: 3px;
+		margin: 1px 1px;
+		border-radius: 14px;
+		background-color: transparent;
+
+		word-wrap: break-word;
+		font-size: var(--selectMultiple-font-size, inherit);
+		color: var(--text-color);
+
+		cursor: pointer;
+	}
+
+	.selectMultiple-clickable-items:hover {
+		background-color: var(--accent-color);
+		color: var(--white-color);
+	}
 }
 
-.selectMultiple_list::-webkit-scrollbar {
+.selectMultiple-item-list::-webkit-scrollbar {
 	width: 0px;
-}
-
-.selectMultiple_row_button {
-	color: var(--text-color);
-	padding: 2px;
-	width: calc(99% - 24px);
-	height: max-content;
-	margin: 0 12px;
-	border-radius: 14px;
-	background-color: transparent;
-	word-wrap: break-word;
-	cursor: pointer;
-	font-size: 90%;
-}
-
-.selectMultiple_row_button:hover {
-	background-color: var(--accent-color);
-	color: var(--white-color);
 }

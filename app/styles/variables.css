@@ -15,8 +15,28 @@
 	--background-color-low-profile: rgba(255, 255, 255, 0.099);
 	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
 	--text-color: rgba(0, 0, 0, 0.9);
-	/* COMPONENTS */
+	--box-shadow-color: var(--gray-a7);
+
+	/* DATE PICKER */
 	--datePicker-border-radius: 99px;
+	--datePicker-semi-border-radius: 22px;
+
+	/* SEARCH BAR */
+	--searchBar-height: 44px;
+	--searchBar-panel-max-height: 250px;
+	--searchBar-border-radius: 99px;
+	--searchBar-semi-border-radius: 22px;
+	--searchBar-font-size: 100%;
+	--searchBar-icon-size-scale: 1;
+
+	/* SELECT MULTIPLE */
+	--selectMultiple-height: 44px;
+	--selectMultiple-displayer-height: 40px;
+	--selectMultiple-panel-max-height: 250px;
+	--selectMultiple-border-radius: 99px;
+	--selectMultiple-semi-border-radius: 22px;
+	--selectMultiple-font-size: 100%;
+	--selectMultiple-icon-size-scale: 1;
 }
 
 .dark-theme {

@@ -96,37 +96,36 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 			isPanel: boolean,
 			isSearching: string,
 		) => {
+			const cssClass = 'searchBar-icon-wrapper';
+
 			if (isValid) {
 				return (
-					<div className={`${'searchBar_icon_wrapper'}`}>
+					<div className={cssClass}>
 						<Check
 							size={20}
 							strokeWidth={1.8}
-							className='searchBar_valid_icon'
+							className='searchBar-valid-icon'
 						/>
 					</div>
 				);
 			} else if (isPanel || isSearching) {
 				return (
-					<button
-						className={`${'searchBar_icon_wrapper'}`}
-						onClick={handleReset}
-					>
+					<button className={cssClass} onClick={handleReset}>
 						<X
 							size={23}
 							strokeWidth={1.6}
-							className='searchBar_reset_icon'
+							className='searchBar-reset-icon'
 						/>
 					</button>
 				);
 			}
 			return (
-				<div className={`${'searchBar_icon_wrapper'}`}>
+				<div className={cssClass}>
 					<Search
 						size={20}
 						strokeWidth={1.7}
-						className={`searchBar_basic_icon ${
-							disabled ? 'searchBar_basic_icon_disabled' : ''
+						className={`searchBar-icon ${
+							disabled ? 'searchBar-icon-disabled' : ''
 						}`}
 					/>
 				</div>
@@ -160,30 +159,40 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 		}
 	}, [searchValue, onFieldChange]);
 
+	// Effect to reset all value when component is disabled
+	useEffect(() => {
+		if (disabled) {
+			setSearchValue('');
+		}
+	}, [disabled]);
+
 	//+ TSX
 	return (
-		<div className={`searchBar_container ${className}`} ref={clickRef}>
-			<button
-				onClick={openPanel}
-				className='searchBar_input_button_wrapper'
-			>
-				<input
-					className={`searchBar_input_hidden
-					${isPanelVisible && 'searchBar_input'}`}
-					type='text'
-					size={size < 10 ? 10 : size}
-					onChange={handleInputChange}
-					value={searchValue}
-					placeholder={placeholder}
+		<div className={`searchBar-container ${className}`} ref={clickRef}>
+			<div className='searchBar-effect-wrapper'>
+				<button
+					onClick={openPanel}
 					disabled={disabled}
-				/>
-			</button>
+					className={`searchBar-clickable-wrapper
+					${isPanelVisible && 'searchBar-clickable-wrapper-visible'}
+					${disabled ? 'searchBar-clickable-wrapper-disabled' : ''}`}
+				>
+					<input
+						className='searchBar-input-text'
+						type='text'
+						size={size < 10 ? 10 : size}
+						onChange={handleInputChange}
+						value={searchValue}
+						placeholder={placeholder}
+						disabled={disabled}
+					/>
 
-			{displayButtonActions(isValid, isPanelVisible, searchValue)}
-
+					{displayButtonActions(isValid, isPanelVisible, searchValue)}
+				</button>
+			</div>
 			<div
-				className={`searchBar_panel_hidden ${
-					isPanelVisible && 'searchBar_panel'
+				className={`searchBar-panel ${
+					isPanelVisible && 'searchBar-panel-visible'
 				}`}
 			>
 				{isLargeList ? (
@@ -234,7 +243,7 @@ const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	};
 	return (
 		<Virtuoso
-			className={'searchBar_list'}
+			className='searchBar-item-list'
 			style={{
 				height: `${size < 13 ? size * 24 : 300}px`,
 			}}
@@ -247,7 +256,7 @@ const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 // Tiny list used to display less than 1000 items
 const TinyList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	return (
-		<ul className='searchBar_list'>
+		<ul className='searchBar-item-list'>
 			{data.map((item) => (
 				<ClickableItems
 					key={item}
@@ -267,7 +276,7 @@ const ClickableItems: React.FC<TClickableItemsProps> = ({
 	return (
 		<button
 			onClick={(event) => handleClick(event, item)}
-			className='searchBar_row_button'
+			className='searchBar-clickable-items'
 		>
 			{item}
 		</button>

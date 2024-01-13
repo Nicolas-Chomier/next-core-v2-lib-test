@@ -1,147 +1,182 @@
-/* Conteneur principal du SearchBar */
-.searchBar_container {
+/* ######################################## */
+/* ######## SEARCH BAR MAIN FRAME ######### */
+/* ######################################## */
+.searchBar-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
+
+	inline-size: fit-content;
+
 	margin: auto;
 	background-color: transparent;
+
 	position: relative;
-	.searchBar_input_button_wrapper {
-		background-color: transparent;
-	}
 }
 
-/* Styles communs pour les inputs et les boutons */
-.searchBar_input_hidden,
-.searchBar_input {
+/* ######################################## */
+/* ########## SEARCH BAR CONTENT ########## */
+/* ######################################## */
+.searchBar-clickable-wrapper {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
-	font-size: 110%;
-	height: 44px;
-	padding: 0 43px 0 14px;
-	position: relative;
-	border-radius: 22px;
+
+	font-size: var(--searchBar-font-size, inherit);
+
+	height: var(--searchBar-height, 44px);
+
+	border-radius: var(--searchBar-semi-border-radius, 22px);
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+
 	transition: box-shadow 1s ease, border-radius 0.6s ease;
+
+	/* INPUT FIELD */
+	.searchBar-input-text {
+		text-align: center;
+		background-color: transparent;
+		margin-left: 18px;
+	}
+
+	.searchBar-input-text:disabled {
+		cursor: not-allowed;
+	}
+
+	/* ICON */
+	.searchBar-icon-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		width: 36px;
+		height: 36px;
+
+		margin-right: 3px;
+		background-color: transparent;
+
+		.searchBar-valid-icon {
+			transform: scale(var(--searchBar-icon-size-scale, 1));
+			color: var(--success-color);
+		}
+
+		.searchBar-reset-icon {
+			transform: scale(var(--searchBar-icon-size-scale, 1));
+			color: var(--danger-color);
+			cursor: pointer;
+		}
+
+		.searchBar-icon {
+			transform: scale(var(--searchBar-icon-size-scale, 1));
+			color: var(--text-color);
+		}
+
+		.searchBar-icon-disabled {
+			transform: scale(var(--searchBar-icon-size-scale, 1));
+			color: var(--box-shadow-color);
+		}
+	}
 }
 
-.searchBar_input_hidden:focus {
-	box-shadow: inset 0 0 0 2px var(--accent-color);
+.searchBar-clickable-wrapper-visible {
+	border-radius: 22px 22px 0 0;
+	transition: box-shadow 1s ease, border-radius 1s ease;
 }
 
-.searchBar_input_hidden:disabled {
+.searchBar-clickable-wrapper-disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
 }
-/* Styles spécifiques pour searchBar_input */
-.searchBar_input {
-	border-radius: 22px 22px 0 0;
-	transition: box-shadow 1s ease, border-radius 0.6s ease;
+
+/* BOX SHADOW EFFECT WRAPPER */
+.searchBar-effect-wrapper:focus-within .searchBar-clickable-wrapper {
+	box-shadow: inset 0 0 0 2px var(--accent-color);
+	transition: box-shadow 1.5s ease;
 }
 
-/* Styles pour les icones et leurs wrappers */
-.searchBar_icon_wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 36px;
-	height: 36px;
-	position: absolute;
-	top: 4px;
-	right: 4px;
-	border-radius: 40px;
-	background-color: transparent;
-}
-
-.searchBar_basic_icon {
-	color: var(--text-color);
-}
-
-.searchBar_basic_icon_disabled {
-	color: var(--gray-a7);
-}
-
-.searchBar_reset_icon {
-	color: var(--danger-color);
-	cursor: pointer;
-}
-
-.searchBar_valid_icon {
-	color: var(--success-color);
-}
-
-/* Styles pour le panneau déroulant */
-.searchBar_panel_hidden,
-.searchBar_panel {
+/* ######################################## */
+/* ########### SEARCH BAR PANEL ########### */
+/* ######################################## */
+.searchBar-panel,
+.searchBar-panel-visible {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	position: absolute;
+
 	width: 100%;
+
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
-	top: 46px;
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+
+	position: absolute;
+	top: calc(var(--searchBar-height, 44px) + 2px);
 	left: 0;
 	z-index: 99;
 }
 
-.searchBar_panel_hidden {
+.searchBar-panel {
 	max-height: 0px;
-	border-radius: 22px;
-	padding: 0;
+	border-radius: var(--searchBar-semi-border-radius, 22px);
+
 	transition-property: padding, border-radius, max-height;
-	transition-duration: 0.3s, 0.4s, 0.8s;
+	transition-duration: 0.3s, 0.4s, 1s;
 	transition-delay: 0s, 0.1s, 0.3s;
 	transition-timing-function: ease, ease, ease-in-out;
 }
 
-.searchBar_panel {
-	opacity: 1;
+.searchBar-panel-visible {
 	height: fit-content;
+	max-height: var(--searchBar-panel-max-height, 250px);
+
 	padding: 8px 0;
-	max-height: 260px;
-	border-radius: 0 0 22px 22px;
-	transition: padding 0.3s ease, max-height 0.7s ease-in, box-shadow 1s ease;
+	border-radius: 0 0 var(--searchBar-semi-border-radius, 22px)
+		var(--searchBar-semi-border-radius, 22px);
+
+	transition: padding 0.3s ease, max-height 1s ease-in, box-shadow 1s ease;
 }
-.searchBar_panel:hover {
+
+.searchBar-panel:hover {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 	transition: box-shadow 1s ease;
 }
 
-/* Styles pour la liste et les boutons dans le panneau */
-.searchBar_list {
+/* LIST OF ITEMS */
+.searchBar-item-list {
 	width: inherit;
+	text-align: center;
+
 	list-style-type: none;
+
 	overflow-y: scroll;
+
 	margin-bottom: 3px;
 	background-color: transparent;
+
+	.searchBar-clickable-items {
+		width: calc(99% - 24px);
+		height: max-content;
+
+		padding: 3px;
+		margin: 1px 1px;
+		border-radius: 14px;
+		background-color: transparent;
+
+		word-wrap: break-word;
+		font-size: var(--searchBar-font-size, inherit);
+		color: var(--text-color);
+
+		cursor: pointer;
+	}
+
+	.searchBar-clickable-items:hover {
+		background-color: var(--accent-color);
+		color: var(--white-color);
+	}
 }
 
-.searchBar_list::-webkit-scrollbar {
+.searchBar-item-list::-webkit-scrollbar {
 	width: 0px;
-}
-
-.searchBar_row_button {
-	color: var(--text-color);
-	padding: 2px;
-	width: calc(99% - 24px);
-	height: max-content;
-	margin: 0 12px;
-	border-radius: 14px;
-	background-color: transparent;
-	word-wrap: break-word;
-	cursor: pointer;
-	font-size: 90%;
-}
-
-.searchBar_row_button:hover {
-	background-color: var(--accent-color);
-	color: var(--white-color);
 }
