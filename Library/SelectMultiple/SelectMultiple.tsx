@@ -7,7 +7,7 @@ import React, {
 	useMemo,
 } from 'react';
 // External modules / Third-party libraries
-import { Check, CopyCheck, Eraser, X } from 'lucide-react';
+import { Check, CopyCheck, X } from 'lucide-react';
 import { Virtuoso } from 'react-virtuoso';
 // Styles
 import './SelectMultiple.css';
@@ -77,13 +77,16 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 		[],
 	);
 
-	// Erase handler for clearing search field
-	const handleErase = useCallback(
-		(event: React.MouseEvent<HTMLButtonElement>) => {
-			setSearchValue('');
+	// Delete handler for each item
+	const handleDelete = useCallback(
+		(item: string, event: React.MouseEvent<HTMLButtonElement>) => {
+			setSelectedValues(() => [
+				...selectedValues.filter((value) => value !== item),
+			]);
+
 			event.preventDefault();
 		},
-		[],
+		[selectedValues],
 	);
 
 	// Reset handler for clearing everything
@@ -91,11 +94,10 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			setSearchValue('');
 			setSelectedValues([]);
-			onFieldChange([]);
-			/* 	setIsPanelVisible(false); */
+			setIsPanelVisible(false);
 			event.preventDefault();
 		},
-		[onFieldChange],
+		[],
 	);
 
 	// Panel openning
@@ -110,27 +112,34 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 			isValid: boolean | undefined,
 			isPanel: boolean,
 			isSearching: string,
-			selectedValues: any,
 		) => {
 			const cssClass = 'selectMultiple-icon-wrapper';
 
 			if (isValid) {
 				return (
-					<div className={cssClass}>
+					<button
+						className={cssClass}
+						disabled={disabled}
+						onClick={handleReset}
+					>
 						<Check
 							size={20}
 							strokeWidth={1.8}
 							className='selectMultiple-valid-icon'
 						/>
-					</div>
+					</button>
 				);
 			}
 
 			if (isPanel || isSearching) {
 				return (
-					<button className={cssClass} onClick={handleErase}>
-						<Eraser
-							size={18}
+					<button
+						className={cssClass}
+						disabled={disabled}
+						onClick={handleReset}
+					>
+						<X
+							size={22}
 							strokeWidth={1.7}
 							className='selectMultiple-erase-icon'
 						/>
@@ -138,15 +147,16 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 				);
 			}
 
-			const iconClass =
-				selectedValues.length !== 0
-					? 'selectMultiple-noEmpty-icon'
-					: disabled
-					? 'selectMultiple-icon-disabled'
-					: 'selectMultiple-icon';
+			const iconClass = disabled
+				? 'selectMultiple-icon-disabled'
+				: 'selectMultiple-icon';
 
 			return (
-				<button className={cssClass} onClick={openPanel}>
+				<button
+					className={cssClass}
+					disabled={disabled}
+					onClick={openPanel}
+				>
 					<CopyCheck
 						size={20}
 						strokeWidth={1.7}
@@ -155,7 +165,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 				</button>
 			);
 		},
-		[disabled, handleErase],
+		[disabled, handleReset],
 	);
 
 	// Effect to reset after submission
@@ -166,6 +176,15 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 			setIsPanelVisible(false);
 		}
 	}, [isSubmit, onFieldChange]);
+
+	// Effect to reset after disabled
+	useEffect(() => {
+		if (disabled) {
+			setSearchValue('');
+			setSelectedValues([]);
+			setIsPanelVisible(false);
+		}
+	}, [disabled]);
 
 	// Effect to update filtered list
 	useEffect(() => {
@@ -195,116 +214,96 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	return (
 		<div className={`selectMultiple-container ${className}`} ref={clickRef}>
 			<div
-				className={
-					isPanelVisible
-						? 'selectMultiple-content-wrapper-visible'
-						: 'selectMultiple-content-wrapper'
+				className={`${
+					disabled && 'selectMultiple-content-wrapper-disabled'
 				}
+					${
+						isPanelVisible
+							? 'selectMultiple-content-wrapper-visible'
+							: 'selectMultiple-content-wrapper'
+					}`}
 			>
 				<button
 					onClick={openPanel}
+					className='selectMultiple-clickable-wrapper'
 					disabled={disabled}
-					className={` selectMultiple-clickable-wrapper ${
-						disabled && 'selectMultiple-clickable-wrapper-disabled'
-					}`}
 				>
 					<input
 						className='selectMultiple-input-text'
 						type='text'
-						size={size < 10 ? 10 : size}
+						size={size < 21 ? 21 : size}
 						onChange={handleInputChange}
 						value={searchValue}
 						placeholder={itemNumber || placeholder}
 						disabled={disabled}
 					/>
 				</button>
-				{displayButtonActions(
-					isValid,
-					isPanelVisible,
-					searchValue,
-					selectedValues,
-				)}
+
+				{displayButtonActions(isValid, isPanelVisible, searchValue)}
 			</div>
 
-			<ItemsDisplayer
-				values={selectedValues}
-				isPanelVisible={isPanelVisible}
-				handleClickReset={handleReset}
-				handleClickErase={handleErase}
-			></ItemsDisplayer>
-
-			<div
-				className={
-					isPanelVisible
-						? 'selectMultiple-panel-visible'
-						: 'selectMultiple-panel'
-				}
-			>
-				{isLargeList ? (
-					<LargeList
-						data={filteredData}
-						handleClick={handleItemClick}
-					></LargeList>
-				) : (
-					<TinyList
-						data={filteredData}
-						handleClick={handleItemClick}
-					></TinyList>
-				)}
-			</div>
-		</div>
-	);
-};
-
-// Sub componenent which display selected items
-type TItemsDisplayerProps = {
-	values: string[];
-	isPanelVisible: boolean;
-	handleClickErase: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	handleClickReset: (event: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const ItemsDisplayer: React.FC<TItemsDisplayerProps> = ({
-	values,
-	isPanelVisible,
-	handleClickReset,
-}) => {
-	return (
-		<div
-			className={
-				isPanelVisible
-					? 'selectMultiple-wrapper-displayer-visible'
-					: 'selectMultiple-wrapper-displayer'
-			}
-		>
 			{isPanelVisible ? (
-				<>
-					<div className='selectMultiple-item-displayer'>
-						{values.map((item: string) => {
-							return (
-								<span
-									key={item}
-									className='selectMultiple-items'
-								>
-									{item}
-								</span>
-							);
-						})}
-					</div>
+				<div className='selectMultiple-removable-panel'>
+					<ItemsBox
+						values={selectedValues}
+						handleClick={handleDelete}
+					></ItemsBox>
 
-					<button
-						className='selectMultiple-displayer-reset-button'
-						onClick={handleClickReset}
-					>
-						<X size={21} strokeWidth={1.6} />
-					</button>
-				</>
+					<div className='selectMultiple-list-container'>
+						{isLargeList ? (
+							<LargeList
+								data={filteredData}
+								handleClick={handleItemClick}
+							></LargeList>
+						) : (
+							<TinyList
+								data={filteredData}
+								handleClick={handleItemClick}
+							></TinyList>
+						)}
+					</div>
+				</div>
 			) : null}
 		</div>
 	);
 };
 
-// Sub componenents to display items
+type TItemsBoxProps = {
+	values: string[];
+	handleClick: (
+		item: string,
+		event: React.MouseEvent<HTMLButtonElement>,
+	) => void;
+};
+
+const ItemsBox: React.FC<TItemsBoxProps> = ({ values, handleClick }) => {
+	if (values.length === 0) return null;
+	return (
+		<div className='selectMultiple-item-box'>
+			{values.map((item: string) => {
+				return (
+					<button
+						key={item}
+						className='selectMultiple-items-clickable-container'
+						onClick={(event) => handleClick(item, event)}
+					>
+						<div className='selectMultiple-items-wrapper'>
+							<span className='selectMultiple-items-text'>
+								{item}
+							</span>
+							<X
+								size={18}
+								strokeWidth={1.7}
+								className='selectMultiple-items-delete-icon'
+							/>
+						</div>
+					</button>
+				);
+			})}
+		</div>
+	);
+};
+
 type TSearchBarListProps = {
 	data: string[];
 	handleClick: (
@@ -312,15 +311,6 @@ type TSearchBarListProps = {
 		item: string,
 	) => void;
 };
-
-type TClickableItemsProps = {
-	item: string;
-	handleClick: (
-		event: React.MouseEvent<HTMLButtonElement>,
-		item: string,
-	) => void;
-};
-
 // Virtuoso large list able to display more than 1000 items
 const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	const size = data.length;
@@ -361,6 +351,13 @@ const TinyList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	);
 };
 
+type TClickableItemsProps = {
+	item: string;
+	handleClick: (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: string,
+	) => void;
+};
 // Clickable items components
 const ClickableItems: React.FC<TClickableItemsProps> = ({
 	item,

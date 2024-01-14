@@ -20,24 +20,24 @@ import styles from './LandingPage.module.css';
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(50, 5);
+const randomIds = generateRandomIds(50, 8);
 
 const regexString = /[^a-zA-Z0-9@.]/g;
 
 type TTestingForm = {
-	dateRange: [Date, Date];
+	//dateRange: [Date, Date];
 	searchBar: string;
 	//myText: string;
 	//myNumber: number;
-	multiple: string[];
+	//multiple: string[];
 };
 
 const TestSchema: ZodType<TTestingForm> = z.object({
-	dateRange: z.tuple([z.date(), z.date()]),
+	//dateRange: z.tuple([z.date(), z.date()]),
 	searchBar: z.string().toLowerCase().trim().min(1),
 	//myText: z.string().toLowerCase().trim().min(8),
 	//myNumber: z.number().finite().safe().min(-20).max(20),
-	multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
+	//multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
 });
 
 const LandingPage = () => {
@@ -63,7 +63,7 @@ const LandingPage = () => {
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			<Controller
+			{/* <Controller
 				control={control}
 				name='dateRange'
 				render={({ field: { onChange } }) => (
@@ -79,12 +79,12 @@ const LandingPage = () => {
 						className='testDatePicker'
 					></DatePicker>
 				)}
-			/>
+			/> */}
 
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			{/* <Controller
+			<Controller
 				control={control}
 				name='searchBar'
 				render={({ field: { onChange } }) => (
@@ -99,7 +99,7 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></SearchBar>
 				)}
-			/> */}
+			/>
 
 			{/* ############################################## */}
 			{/* ############################################## */}
@@ -147,7 +147,7 @@ const LandingPage = () => {
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			<Controller
+			{/* <Controller
 				control={control}
 				name='multiple'
 				render={({ field: { onChange } }) => (
@@ -162,7 +162,7 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></SelectMultiple>
 				)}
-			/>
+			/> */}
 
 			{/* ############################################## */}
 			{/* ############################################## */}
