@@ -1,7 +1,7 @@
 // React core
 import { useCallback, useEffect, useState } from 'react';
 // External modules / Third-party libraries
-import { AtSign, CaseSensitive, Check, KeyRound, X } from 'lucide-react';
+import { AtSign, CaseLower, Check, KeyRound, X } from 'lucide-react';
 // Styles
 import './InputString.css';
 
@@ -63,9 +63,9 @@ export const InputString: React.FC<TInputStringProps> = ({
 				displayedIcon = (
 					<KeyRound
 						size={18}
-						strokeWidth={1.6}
-						className={` inputString_password_icon ${
-							disabled ? 'inputString_icon_disabled' : ''
+						strokeWidth={1.8}
+						className={` inputString-password-icon ${
+							disabled ? 'inputString-icon-disabled' : ''
 						}`}
 					/>
 				);
@@ -75,19 +75,19 @@ export const InputString: React.FC<TInputStringProps> = ({
 					<AtSign
 						size={19}
 						strokeWidth={1.6}
-						className={` inputString_email_icon ${
-							disabled ? 'inputString_icon_disabled' : ''
+						className={` inputString-email-icon ${
+							disabled ? 'inputString-icon-disabled' : ''
 						}`}
 					/>
 				);
 				break;
 			default:
 				displayedIcon = (
-					<CaseSensitive
+					<CaseLower
 						size={23}
-						strokeWidth={1.4}
-						className={` inputString_text_icon ${
-							disabled ? 'inputString_icon_disabled' : ''
+						strokeWidth={1.2}
+						className={` inputString-text-icon ${
+							disabled ? 'inputString-icon-disabled' : ''
 						}`}
 					/>
 				);
@@ -100,35 +100,29 @@ export const InputString: React.FC<TInputStringProps> = ({
 	// Display action buttons
 	const displayButtonActions = useCallback(
 		(isValid: boolean | undefined, searchValue: string) => {
+			const cssClass = 'inputString-icon-wrapper';
 			if (isValid) {
 				return (
-					<div className={`${'inputString_icon_wrapper'}`}>
+					<div className={cssClass}>
 						<Check
 							size={20}
 							strokeWidth={1.8}
-							className='inputString_valid_icon'
+							className='inputString-valid-icon'
 						/>
 					</div>
 				);
 			} else if (searchValue) {
 				return (
-					<button
-						className={`${'inputString_reset_button'}`}
-						onClick={handleReset}
-					>
+					<button className={cssClass} onClick={handleReset}>
 						<X
 							size={23}
 							strokeWidth={1.6}
-							className='inputString_reset_icon'
+							className='inputString-reset-icon'
 						/>
 					</button>
 				);
 			}
-			return (
-				<div className={`${'inputString_icon_wrapper'}`}>
-					{inputStringLogo()}
-				</div>
-			);
+			return <div className={cssClass}>{inputStringLogo()}</div>;
 		},
 		[handleReset, inputStringLogo],
 	);
@@ -151,7 +145,7 @@ export const InputString: React.FC<TInputStringProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`inputString_container ${className}`}>
+		<div className={`inputString-container ${className}`}>
 			<input
 				type={type}
 				placeholder={placeholder}
@@ -159,7 +153,7 @@ export const InputString: React.FC<TInputStringProps> = ({
 				value={inputValue}
 				size={size < 10 ? 10 : size}
 				disabled={disabled}
-				className='inputString_text_field'
+				className='inputString-text-field'
 			/>
 
 			{displayButtonActions(isValid, inputValue)}
@@ -179,5 +173,5 @@ const TooltipErrorMessage: React.FC<TTooltipErrorMessageProps> = ({
 	disabled,
 }) => {
 	if (!message || disabled) return null;
-	return <div className='inputString_error_message'>{message}</div>;
+	return <div className='inputString-error-message'>{message}</div>;
 };

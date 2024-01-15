@@ -176,7 +176,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 		}
 		return (
 			<CalendarRange
-				size={19}
+				size={18}
 				strokeWidth={1.5}
 				className='datePicker-middle-icon'
 			/>

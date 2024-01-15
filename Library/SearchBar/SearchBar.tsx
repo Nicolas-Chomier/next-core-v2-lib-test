@@ -100,13 +100,13 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 
 			if (isValid) {
 				return (
-					<div className={cssClass}>
+					<button className={cssClass} onClick={handleReset}>
 						<Check
 							size={20}
 							strokeWidth={1.8}
 							className='searchBar-valid-icon'
 						/>
-					</div>
+					</button>
 				);
 			} else if (isPanel || isSearching) {
 				return (
@@ -119,16 +119,19 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 					</button>
 				);
 			}
+
+			const iconClass = disabled
+				? 'searchBar-icon-disabled'
+				: 'searchBar-icon';
+
 			return (
-				<div className={cssClass}>
-					<Search
-						size={20}
-						strokeWidth={1.7}
-						className={`searchBar-icon ${
-							disabled ? 'searchBar-icon-disabled' : ''
-						}`}
-					/>
-				</div>
+				<button
+					className={cssClass}
+					disabled={disabled}
+					onClick={openPanel}
+				>
+					<Search size={19} strokeWidth={1.7} className={iconClass} />
+				</button>
 			);
 		},
 		[handleReset, disabled],
@@ -169,49 +172,51 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	//+ TSX
 	return (
 		<div className={`searchBar-container ${className}`} ref={clickRef}>
-			<div className='searchBar-effect-wrapper'>
+			<div
+				className={`${disabled && 'searchBar-content-wrapper-disabled'}
+					${
+						isPanelVisible
+							? 'searchBar-content-wrapper-visible'
+							: 'searchBar-content-wrapper'
+					}`}
+			>
 				<button
 					onClick={openPanel}
+					className='searchBar-clickable-wrapper'
 					disabled={disabled}
-					className={`searchBar-clickable-wrapper
-					${isPanelVisible && 'searchBar-clickable-wrapper-visible'}
-					${disabled ? 'searchBar-clickable-wrapper-disabled' : ''}`}
 				>
 					<input
 						className='searchBar-input-text'
 						type='text'
-						size={size < 10 ? 10 : size}
+						size={size < 21 ? 21 : size}
 						onChange={handleInputChange}
 						value={searchValue}
 						placeholder={placeholder}
 						disabled={disabled}
 					/>
-
-					{displayButtonActions(isValid, isPanelVisible, searchValue)}
 				</button>
+
+				{displayButtonActions(isValid, isPanelVisible, searchValue)}
 			</div>
-			<div
-				className={`searchBar-panel ${
-					isPanelVisible && 'searchBar-panel-visible'
-				}`}
-			>
-				{isLargeList ? (
-					<LargeList
-						data={filteredData}
-						handleClick={handleItemClick}
-					></LargeList>
-				) : (
-					<TinyList
-						data={filteredData}
-						handleClick={handleItemClick}
-					></TinyList>
-				)}
-			</div>
+			{isPanelVisible ? (
+				<div className='searchBar-removable-panel'>
+					{isLargeList ? (
+						<LargeList
+							data={filteredData}
+							handleClick={handleItemClick}
+						></LargeList>
+					) : (
+						<TinyList
+							data={filteredData}
+							handleClick={handleItemClick}
+						></TinyList>
+					)}
+				</div>
+			) : null}
 		</div>
 	);
 };
 
-// Sub componenents to display items
 type TSearchBarListProps = {
 	data: string[];
 	handleClick: (
@@ -219,15 +224,6 @@ type TSearchBarListProps = {
 		item: string,
 	) => void;
 };
-
-type TClickableItemsProps = {
-	item: string;
-	handleClick: (
-		event: React.MouseEvent<HTMLButtonElement>,
-		item: string,
-	) => void;
-};
-
 // Virtuoso large list able to display more than 1000 items
 const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	const size = data.length;
@@ -268,6 +264,13 @@ const TinyList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 	);
 };
 
+type TClickableItemsProps = {
+	item: string;
+	handleClick: (
+		event: React.MouseEvent<HTMLButtonElement>,
+		item: string,
+	) => void;
+};
 // Clickable items components
 const ClickableItems: React.FC<TClickableItemsProps> = ({
 	item,

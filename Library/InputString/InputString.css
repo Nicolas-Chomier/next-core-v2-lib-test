@@ -1,88 +1,92 @@
-.inputString_container {
+.inputString-container,
+.inputString-text-field,
+.inputString-icon-wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
+}
+
+.inputString-container {
+	inline-size: fit-content;
 	margin: auto;
 	background-color: transparent;
 	position: relative;
 }
 
-.inputString_text_field {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
+.inputString-text-field {
+	height: var(--input-height, 44px);
+
 	text-align: center;
-	font-size: 105%;
-	height: 44px;
+	font-size: var(--input-font-size, 100%);
+
 	padding: 0 37px 0 21px;
-	border-radius: 22px;
+	border-radius: var(--input-border-radius, 22px);
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+
 	transition: box-shadow 1s ease, border-radius 0.6s ease;
 }
 
-.inputString_text_field:disabled {
+.inputString-text-field:disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
 }
 
-.inputString_icon_disabled {
-	color: var(--gray-a7);
+.inputString-icon-disabled {
+	color: var(--box-shadow-color);
 }
 
-.inputString_reset_button,
-.inputString_icon_wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.inputString-icon-wrapper {
 	width: 36px;
 	height: 36px;
+
+	background-color: transparent;
+
 	position: absolute;
 	top: 4px;
 	right: 4px;
-	border-radius: 40px;
-	background-color: transparent;
 }
 
-.inputString_text_field:focus {
+.inputString-text-field:focus {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 }
-.inputString_valid_icon,
-.inputString_reset_icon,
-.inputString_email_icon,
-.inputString_password_icon {
-	margin-top: 1px;
+
+.inputString-valid-icon,
+.inputString-reset-icon,
+.inputString-email-icon,
+.inputString-text-icon,
+.inputString-password-icon {
+	transform: scale(var(--input-icon-size-scale, 1));
 }
 
-.inputString_valid_icon {
+.inputString-valid-icon {
 	color: var(--success-color);
 }
 
-.inputString_reset_icon {
+.inputString-reset-icon {
 	color: var(--danger-color);
 }
 
-.inputString_text_icon {
-	margin-top: 3px;
-	margin-right: 3px;
+.inputString-text-icon {
+	margin-top: 2px;
+	margin-right: 2px;
 }
 
-.inputString_error_message {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.inputString-error-message {
 	width: max-content;
 	height: fit-content;
+
+	font-size: 80%;
+
 	color: var(--danger-color);
 	background-color: var(--background-color-low-profile);
 	padding: 0 3px;
 	border-radius: 4px;
-	font-size: 80%;
-	top: 44px;
+
 	position: absolute;
-	z-index: 2;
+	top: var(--input-height, 44px);
+	z-index: 5;
+
 	transition: box-shadow 1s ease, border-radius 0.6s ease;
 }

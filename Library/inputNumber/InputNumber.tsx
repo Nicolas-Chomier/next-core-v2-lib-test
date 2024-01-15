@@ -8,6 +8,7 @@ import './InputNumber.css';
 type TInputNumberProps = {
 	errors?: string;
 	placeholder?: string;
+	size?: number;
 	step?: string;
 	min?: string;
 	max?: string;
@@ -21,6 +22,7 @@ type TInputNumberProps = {
 
 export const InputNumber: React.FC<TInputNumberProps> = ({
 	placeholder = 'My number here!',
+	size = 16,
 	errors = '',
 	step = '1',
 	min = '-99999',
@@ -57,37 +59,35 @@ export const InputNumber: React.FC<TInputNumberProps> = ({
 	// Display action buttons
 	const displayButtonActions = useCallback(
 		(isValid: boolean | undefined, searchValue: string) => {
+			const cssClass = 'inputNumber-icon-wrapper';
 			if (isValid) {
 				return (
-					<div className={`${'inputNumber_icon_wrapper'}`}>
+					<div className={cssClass}>
 						<Check
 							size={20}
 							strokeWidth={1.8}
-							className='inputNumber_valid_icon'
+							className='inputNumber-valid-icon'
 						/>
 					</div>
 				);
 			} else if (searchValue) {
 				return (
-					<button
-						className={`${'inputNumber_reset_button'}`}
-						onClick={handleReset}
-					>
+					<button className={cssClass} onClick={handleReset}>
 						<X
 							size={23}
 							strokeWidth={1.6}
-							className='inputNumber_reset_icon'
+							className='inputNumber-reset-icon'
 						/>
 					</button>
 				);
 			}
 			return (
-				<div className={`${'inputNumber_icon_wrapper'}`}>
+				<div className={cssClass}>
 					<Hash
-						size={19}
+						size={18}
 						strokeWidth={1.5}
-						className={`inputNumber_ambiance_icon ${
-							disabled ? 'inputString_icon_disabled' : ''
+						className={`inputNumber-ambiance-icon ${
+							disabled ? 'inputString-icon-disabled' : ''
 						}`}
 					/>
 				</div>
@@ -114,7 +114,7 @@ export const InputNumber: React.FC<TInputNumberProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`inputNumber_container ${className}`}>
+		<div className={`inputNumber-container ${className}`}>
 			<input
 				type='number'
 				step={step}
@@ -124,7 +124,8 @@ export const InputNumber: React.FC<TInputNumberProps> = ({
 				onChange={handleInputChange}
 				value={inputValue}
 				disabled={disabled}
-				className='inputNumber_text_field'
+				className='inputNumber-text-field'
+				style={{ inlineSize: `${size * 8.1}px` }}
 			/>
 
 			{displayButtonActions(isValid, inputValue)}
@@ -144,5 +145,5 @@ const TooltipErrorMessage: React.FC<TTooltipErrorMessageProps> = ({
 	disabled,
 }) => {
 	if (!message || disabled) return null;
-	return <div className='inputNumber_error_message'>{message}</div>;
+	return <div className='inputNumber-error-message'>{message}</div>;
 };

@@ -1,27 +1,18 @@
-/* General Styles for Select Multiple Component */
-/* .searchBar-container,
+/* General Styles for SEARCH BAR Component */
+.searchBar-container,
 .searchBar-content-wrapper,
 .searchBar-content-wrapper-visible,
-.searchBar-wrapper-displayer,
-.searchBar-wrapper-displayer-visible,
 .searchBar-icon-wrapper,
-.searchBar-panel,
-.searchBar-panel-visible {
+.searchBar-removable-panel {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition: all 0.8s ease;
 	background-color: var(--background-color);
-} */
+}
 /* ######################################## */
-/* ######## SEARCH BAR MAIN FRAME ######### */
+/* ##### SEARCH BAR MAIN FRAME ####### */
 /* ######################################## */
 .searchBar-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-
 	inline-size: fit-content;
 
 	margin: auto;
@@ -31,14 +22,10 @@
 }
 
 /* ######################################## */
-/* ########## SEARCH BAR CONTENT ########## */
+/* ######## SEARCH BAR CONTENT ####### */
 /* ######################################## */
-.searchBar-clickable-wrapper {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-
+.searchBar-content-wrapper-visible,
+.searchBar-content-wrapper {
 	font-size: var(--searchBar-font-size, inherit);
 
 	height: var(--searchBar-height, 44px);
@@ -47,25 +34,25 @@
 	background-color: var(--background-color);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 
-	transition: box-shadow 1s ease, border-radius 0.6s ease;
+	transition: border-radius 1s ease, box-shadow 1s ease;
 
-	/* INPUT FIELD */
-	.searchBar-input-text {
-		text-align: center;
+	/* CLICKABLE CONTENT */
+	.searchBar-clickable-wrapper {
 		background-color: transparent;
-		margin-left: 18px;
-	}
 
-	.searchBar-input-text:disabled {
-		cursor: not-allowed;
-	}
+		/* INPUT FIELD */
+		.searchBar-input-text {
+			text-align: center;
+			background-color: transparent;
+			margin-left: 18px;
+		}
 
+		.searchBar-input-text:disabled {
+			cursor: not-allowed;
+		}
+	}
 	/* ICON */
 	.searchBar-icon-wrapper {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
 		width: 36px;
 		height: 36px;
 
@@ -75,6 +62,7 @@
 		.searchBar-valid-icon {
 			transform: scale(var(--searchBar-icon-size-scale, 1));
 			color: var(--success-color);
+			cursor: pointer;
 		}
 
 		.searchBar-reset-icon {
@@ -93,105 +81,85 @@
 			color: var(--box-shadow-color);
 		}
 	}
+
+	.searchBar-icon-wrapper:disabled {
+		cursor: not-allowed;
+	}
 }
 
-.searchBar-clickable-wrapper-visible {
-	border-radius: 22px 22px 0 0;
-	transition: box-shadow 1s ease, border-radius 1s ease;
+.searchBar-content-wrapper-visible {
+	border-radius: var(--searchBar-semi-border-radius)
+		var(--searchBar-semi-border-radius) 0 0;
+
+	box-shadow: inset 0 0 0 2px var(--accent-color);
+
+	transition: border-radius 1s ease, box-shadow 1s ease;
 }
 
-.searchBar-clickable-wrapper-disabled {
+.searchBar-content-wrapper-disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
-}
-
-/* BOX SHADOW EFFECT WRAPPER */
-.searchBar-effect-wrapper:focus-within .searchBar-clickable-wrapper {
-	box-shadow: inset 0 0 0 2px var(--accent-color);
-	transition: box-shadow 1.5s ease;
 }
 
 /* ######################################## */
 /* ########### SEARCH BAR PANEL ########### */
 /* ######################################## */
-.searchBar-panel,
-.searchBar-panel-visible {
-	display: flex;
+.searchBar-removable-panel {
 	flex-direction: column;
-	align-items: center;
-	justify-content: center;
 
+	border-radius: 0 0 var(--searchBar-semi-border-radius, 22px)
+		var(--searchBar-semi-border-radius, 22px);
+
+	height: fit-content;
+	max-height: var(--searchBar-panel-max-height, 350px);
 	width: 100%;
-
-	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 
 	position: absolute;
 	top: calc(var(--searchBar-height, 44px) + 2px);
 	left: 0;
 	z-index: 99;
-}
 
-.searchBar-panel {
-	max-height: 0px;
-	border-radius: var(--searchBar-semi-border-radius, 22px);
-
-	transition-property: padding, border-radius, max-height;
-	transition-duration: 0.3s, 0.4s, 1s;
-	transition-delay: 0s, 0.1s, 0.3s;
-	transition-timing-function: ease, ease, ease-in-out;
-}
-
-.searchBar-panel-visible {
-	height: fit-content;
-	max-height: var(--searchBar-panel-max-height, 250px);
-
-	padding: 8px 0;
-	border-radius: 0 0 var(--searchBar-semi-border-radius, 22px)
-		var(--searchBar-semi-border-radius, 22px);
-
-	transition: padding 0.3s ease, max-height 1s ease-in, box-shadow 1s ease;
-}
-
-.searchBar-panel:hover {
-	box-shadow: inset 0 0 0 2px var(--accent-color);
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 	transition: box-shadow 1s ease;
-}
 
-/* LIST OF ITEMS */
-.searchBar-item-list {
-	width: inherit;
-	text-align: center;
+	/* ITEMS LIST */
+	.searchBar-item-list {
+		width: inherit;
+		text-align: center;
+		margin: 6px 0;
+		overflow-y: scroll;
+		list-style-type: none;
 
-	list-style-type: none;
-
-	overflow-y: scroll;
-
-	margin-bottom: 3px;
-	background-color: transparent;
-
-	.searchBar-clickable-items {
-		width: calc(99% - 24px);
-		height: max-content;
-
-		padding: 3px;
-		margin: 1px 1px;
-		border-radius: 14px;
 		background-color: transparent;
 
-		word-wrap: break-word;
-		font-size: var(--searchBar-font-size, inherit);
-		color: var(--text-color);
+		.searchBar-clickable-items {
+			width: calc(99% - 24px);
+			height: fit-content;
 
-		cursor: pointer;
-	}
+			padding: 3px;
+			margin: 1px 1px;
+			border-radius: 14px;
+			background-color: transparent;
 
-	.searchBar-clickable-items:hover {
-		background-color: var(--accent-color);
-		color: var(--white-color);
+			word-wrap: break-word;
+			font-size: var(--searchBar-font-size, inherit);
+			color: var(--text-color);
+
+			cursor: pointer;
+		}
+
+		.searchBar-clickable-items:hover {
+			background-color: var(--accent-color);
+			color: var(--white-color);
+		}
 	}
 }
 
 .searchBar-item-list::-webkit-scrollbar {
-	width: 0px;
+	display: none;
+}
+
+.searchBar-removable-panel:hover {
+	box-shadow: inset 0 0 0 2px var(--accent-color);
+	transition: box-shadow 1s ease;
 }

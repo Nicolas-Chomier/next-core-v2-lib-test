@@ -4,85 +4,87 @@ input::-webkit-inner-spin-button {
 	margin: 0;
 }
 
-.inputNumber_container {
+.inputNumber-container,
+.inputNumber-text-field,
+.inputNumber-icon-wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: fit-content;
+}
+
+.inputNumber-container {
+	inline-size: fit-content;
 	margin: auto;
 	background-color: transparent;
 	position: relative;
 }
 
-.inputNumber_text_field {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
+.inputNumber-text-field {
+	height: var(--input-height, 44px);
+
 	text-align: center;
-	font-size: 105%;
-	height: 44px;
-	width: 142px;
+	font-size: var(--input-font-size, 100%);
+
 	padding: 0 37px 0 21px;
-	border-radius: 22px;
+	border-radius: var(--input-border-radius, 22px);
 	background-color: var(--background-color);
-	box-shadow: inset 0 0 0 1px var(--gray-a7);
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+
 	transition: box-shadow 1s ease, border-radius 0.6s ease;
 }
 
-.inputNumber_text_field:disabled {
+.inputNumber-text-field:disabled {
 	background-color: var(--background-color-low-profile);
 	cursor: not-allowed;
 }
 
-.inputNumber_icon_disabled {
-	color: var(--gray-a7);
+.inputNumber-icon-disabled {
+	color: var(--box-shadow-color);
 }
 
-.inputNumber_reset_button,
-.inputNumber_icon_wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.inputNumber-icon-wrapper {
 	width: 36px;
 	height: 36px;
+
+	background-color: transparent;
+
 	position: absolute;
 	top: 4px;
 	right: 4px;
-	border-radius: 40px;
-	background-color: transparent;
 }
 
-.inputNumber_text_field:focus {
+.inputNumber-text-field:focus {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 }
-.inputNumber_valid_icon,
-.inputNumber_reset_icon {
-	margin-top: 1px;
+
+.inputNumber-valid-icon,
+.inputNumber-reset-icon {
+	transform: scale(var(--input-icon-size-scale, 1));
 }
 
-.inputNumber_valid_icon {
+.inputNumber-valid-icon {
 	color: var(--success-color);
 }
 
-.inputNumber_reset_icon {
+.inputNumber-reset-icon {
 	color: var(--danger-color);
 }
 
-.inputNumber_error_message {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.inputNumber-error-message {
 	width: max-content;
 	height: fit-content;
+
+	font-size: 80%;
+
 	color: var(--danger-color);
 	background-color: var(--background-color-low-profile);
 	padding: 0 3px;
 	border-radius: 4px;
-	font-size: 80%;
-	top: 44px;
+
 	position: absolute;
-	z-index: 2;
+	top: var(--input-height, 44px);
+	z-index: 5;
+
 	transition: box-shadow 1s ease, border-radius 0.6s ease;
 }

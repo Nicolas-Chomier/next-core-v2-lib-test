@@ -25,19 +25,19 @@ const randomIds = generateRandomIds(50, 8);
 const regexString = /[^a-zA-Z0-9@.]/g;
 
 type TTestingForm = {
-	//dateRange: [Date, Date];
+	dateRange: [Date, Date];
+	multiple: string[];
 	searchBar: string;
-	//myText: string;
-	//myNumber: number;
-	//multiple: string[];
+	myText: string;
+	myNumber: number;
 };
 
 const TestSchema: ZodType<TTestingForm> = z.object({
-	//dateRange: z.tuple([z.date(), z.date()]),
+	dateRange: z.tuple([z.date(), z.date()]),
+	multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
 	searchBar: z.string().toLowerCase().trim().min(1),
-	//myText: z.string().toLowerCase().trim().min(8),
-	//myNumber: z.number().finite().safe().min(-20).max(20),
-	//multiple: z.array(z.string().toLowerCase().trim().min(1)).nonempty(),
+	myText: z.string().toLowerCase().trim().min(8),
+	myNumber: z.number().finite().safe().min(-20).max(20),
 });
 
 const LandingPage = () => {
@@ -63,7 +63,7 @@ const LandingPage = () => {
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			{/* <Controller
+			<Controller
 				control={control}
 				name='dateRange'
 				render={({ field: { onChange } }) => (
@@ -79,11 +79,29 @@ const LandingPage = () => {
 						className='testDatePicker'
 					></DatePicker>
 				)}
-			/> */}
+			/>
 
 			{/* ############################################## */}
 			{/* ############################################## */}
+			<Controller
+				control={control}
+				name='multiple'
+				render={({ field: { onChange } }) => (
+					<SelectMultiple
+						data={randomIds}
+						placeholder='Multiple'
+						size={31}
+						overSizeLimit={999}
+						isSubmit={isSubmitting}
+						isValid={isValid}
+						disabled={false}
+						onFieldChange={onChange}
+					></SelectMultiple>
+				)}
+			/>
 
+			{/* ############################################## */}
+			{/* ############################################## */}
 			<Controller
 				control={control}
 				name='searchBar'
@@ -103,8 +121,7 @@ const LandingPage = () => {
 
 			{/* ############################################## */}
 			{/* ############################################## */}
-
-			{/* <Controller
+			<Controller
 				control={control}
 				name='myText'
 				render={({ field: { onChange } }) => (
@@ -113,24 +130,25 @@ const LandingPage = () => {
 						regex={regexString}
 						placeholder='My text here!'
 						errors={errors['myText']?.message}
-						size={16}
+						size={31}
 						isSubmit={isSubmitting}
 						isValid={isValid}
 						disabled={false}
 						onFieldChange={onChange}
 					></InputString>
 				)}
-			/> */}
+			/>
 
 			{/* ############################################## */}
 			{/* ############################################## */}
 
-			{/* <Controller
+			<Controller
 				control={control}
 				name='myNumber'
 				render={({ field: { onChange } }) => (
 					<InputNumber
 						placeholder='My number here!'
+						size={30}
 						errors={errors['myNumber']?.message}
 						step='0.1'
 						min='-20'
@@ -142,27 +160,7 @@ const LandingPage = () => {
 						onFieldChange={onChange}
 					></InputNumber>
 				)}
-			/> */}
-
-			{/* ############################################## */}
-			{/* ############################################## */}
-
-			{/* <Controller
-				control={control}
-				name='multiple'
-				render={({ field: { onChange } }) => (
-					<SelectMultiple
-						data={randomIds}
-						placeholder='Multiple'
-						size={31}
-						overSizeLimit={999}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						disabled={false}
-						onFieldChange={onChange}
-					></SelectMultiple>
-				)}
-			/> */}
+			/>
 
 			{/* ############################################## */}
 			{/* ############################################## */}

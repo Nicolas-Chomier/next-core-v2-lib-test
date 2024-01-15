@@ -158,8 +158,8 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 					onClick={openPanel}
 				>
 					<CopyCheck
-						size={20}
-						strokeWidth={1.7}
+						size={19}
+						strokeWidth={1.6}
 						className={iconClass}
 					/>
 				</button>
@@ -304,7 +304,7 @@ const ItemsBox: React.FC<TItemsBoxProps> = ({ values, handleClick }) => {
 	);
 };
 
-type TSearchBarListProps = {
+type TMultiSelectListProps = {
 	data: string[];
 	handleClick: (
 		event: React.MouseEvent<HTMLButtonElement>,
@@ -312,7 +312,7 @@ type TSearchBarListProps = {
 	) => void;
 };
 // Virtuoso large list able to display more than 1000 items
-const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
+const LargeList: React.FC<TMultiSelectListProps> = ({ data, handleClick }) => {
 	const size = data.length;
 	const itemContent = (index: number) => {
 		const item = data[index];
@@ -337,7 +337,7 @@ const LargeList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
 };
 
 // Tiny list used to display less than 1000 items
-const TinyList: React.FC<TSearchBarListProps> = ({ data, handleClick }) => {
+const TinyList: React.FC<TMultiSelectListProps> = ({ data, handleClick }) => {
 	return (
 		<ul className='selectMultiple-item-list'>
 			{data.map((item) => (

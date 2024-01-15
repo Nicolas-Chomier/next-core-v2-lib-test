@@ -37,6 +37,21 @@
 	--selectMultiple-semi-border-radius: 22px;
 	--selectMultiple-font-size: 100%;
 	--selectMultiple-icon-size-scale: 1;
+
+	/* INPUT STRING / NUMBER */
+	--input-height: 44px;
+	--input-border-radius: 22px;
+	--input-font-size: 100%;
+	--input-error-message-font-size: 80%;
+	--input-icon-size-scale: 1;
+
+	/* FORM BUTTON */
+	--formButton-inline-size: 150px;
+	--formButton-height: 44px;
+	--formButton-border-radius: 22px;
+	--formButton-font-size: 100%;
+	--formButton-error-message-font-size: 80%;
+	--formButton-spinner-size: 25px;
 }
 
 .dark-theme {
