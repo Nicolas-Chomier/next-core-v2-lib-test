@@ -19,6 +19,7 @@ type TSelectMultipleProps = {
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
+	pickLimit?: number;
 	overSizeLimit?: number;
 	disabled?: boolean;
 	className?: string;
@@ -32,6 +33,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	size = 31,
 	isSubmit,
 	isValid,
+	pickLimit = 0,
 	overSizeLimit = 999,
 	disabled = false,
 	className,
@@ -41,9 +43,13 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	const [searchValue, setSearchValue] = useState('');
 	const [selectedValues, setSelectedValues] = useState<string[]>([]);
 	const [filteredData, setFilteredData] = useState<string[]>([]);
-	const [itemNumber, setItemNumber] = useState('');
+	const [pickedItemInfos, setPickedItemInfos] = useState('');
 
+	// Used for click outside hook
 	const clickRef = useRef(null);
+
+	// Determine the selected value array size
+	const sizeRef = useRef(0);
 
 	// Handler for outside clicks to close the calendar
 	useClickOutside(clickRef, () => setIsPanelVisible(false));
@@ -70,11 +76,14 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	// Clicking on a list item
 	const handleItemClick = useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>, item: string) => {
-			setSearchValue('');
-			setSelectedValues((prev) => [...prev, item]);
+			if (sizeRef.current < pickLimit || pickLimit === 0) {
+				setSearchValue('');
+				setSelectedValues((prev) => [...prev, item]);
+			}
+
 			event.preventDefault();
 		},
-		[],
+		[pickLimit],
 	);
 
 	// Delete handler for each item
@@ -197,18 +206,20 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 
 	// Effect to send updated result
 	useEffect(() => {
+		sizeRef.current = selectedValues.length;
 		onFieldChange(selectedValues);
 	}, [onFieldChange, selectedValues]);
 
 	// Effect to inform user about the numbers of item selected when component is closed
 	useEffect(() => {
-		if (selectedValues.length > 0) {
-			const num = String(selectedValues.length);
-			setItemNumber(`${num} item(s) sélectionné(s)`);
-		} else {
-			setItemNumber('');
-		}
-	}, [selectedValues]);
+		const pickLimitText = pickLimit ? `/${pickLimit}` : '';
+		const itemNumberText =
+			selectedValues.length > 0
+				? `${selectedValues.length}${pickLimitText} item(s) sélectionné(s)`
+				: '';
+
+		setPickedItemInfos(itemNumberText);
+	}, [selectedValues, pickLimit]);
 
 	//+ TSX
 	return (
@@ -234,7 +245,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 						size={size < 21 ? 21 : size}
 						onChange={handleInputChange}
 						value={searchValue}
-						placeholder={itemNumber || placeholder}
+						placeholder={pickedItemInfos || placeholder}
 						disabled={disabled}
 					/>
 				</button>

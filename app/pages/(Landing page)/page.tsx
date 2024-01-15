@@ -56,8 +56,6 @@ const LandingPage = () => {
 		reset();
 	};
 
-	console.log(errors);
-
 	return (
 		<form onSubmit={handleSubmit(submitData)} className={styles.container}>
 			{/* ############################################## */}
@@ -94,6 +92,7 @@ const LandingPage = () => {
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}
+						pickLimit={3}
 						disabled={disabledStateTest}
 						onFieldChange={onChange}
 					></SelectMultiple>
