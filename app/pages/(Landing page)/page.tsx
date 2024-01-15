@@ -21,7 +21,7 @@ const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
 const randomIds = generateRandomIds(50, 8);
-
+const disabledStateTest = false;
 const regexString = /[^a-zA-Z0-9@.]/g;
 
 type TTestingForm = {
@@ -73,7 +73,7 @@ const LandingPage = () => {
 						placeholder='JJ/MM/AAAA'
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						disabled={false}
+						disabled={disabledStateTest}
 						onFieldChange={onChange}
 						size='standard'
 						className='testDatePicker'
@@ -94,7 +94,7 @@ const LandingPage = () => {
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						disabled={false}
+						disabled={disabledStateTest}
 						onFieldChange={onChange}
 					></SelectMultiple>
 				)}
@@ -113,7 +113,7 @@ const LandingPage = () => {
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						disabled={false}
+						disabled={disabledStateTest}
 						onFieldChange={onChange}
 					></SearchBar>
 				)}
@@ -133,7 +133,7 @@ const LandingPage = () => {
 						size={31}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						disabled={false}
+						disabled={disabledStateTest}
 						onFieldChange={onChange}
 					></InputString>
 				)}
@@ -156,7 +156,7 @@ const LandingPage = () => {
 						outputNumber={true}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						disabled={false}
+						disabled={disabledStateTest}
 						onFieldChange={onChange}
 					></InputNumber>
 				)}
@@ -168,7 +168,7 @@ const LandingPage = () => {
 			<FormButton
 				isValid={isValid}
 				isSubmit={isSubmitting}
-				disabled={false}
+				disabled={disabledStateTest}
 				placeholder={'Validation'}
 			></FormButton>
 		</form>
