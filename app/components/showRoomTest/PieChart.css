@@ -1,0 +1,33 @@
+.pie-chart-globe,
+.pie-chart-title-wrapper,
+.pie-chart-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	transition: all 1s ease;
+}
+
+.pie-chart-container {
+	width: 45%;
+	height: 45%;
+
+	margin: auto;
+	padding: 10px;
+
+	z-index: 99;
+}
+
+.pie-chart-title-wrapper {
+	.pie-chart-globe {
+		width: 10px;
+		height: 10px;
+		border-radius: 10px;
+		margin: 4px;
+	}
+	.pie-chart-title {
+		text-align: center;
+		font-size: 127%;
+		color: white;
+	}
+}

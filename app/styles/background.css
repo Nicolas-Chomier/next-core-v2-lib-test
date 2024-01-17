@@ -1,10 +1,11 @@
 .light_background {
-	height: 100vh;
+	/* height: 100vh;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
 	background-image: url('../../public/images/lightFlou.jpg');
-	z-index: -99;
+	z-index: -99; */
+	background-color: hsl(240, 100%, 10%);
 }
 
 .dark_background {
