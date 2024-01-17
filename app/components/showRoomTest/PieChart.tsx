@@ -43,21 +43,6 @@ export const PieChartEx: React.FC<TPieChartExProps> = ({
 		setPieData(data);
 	}, [value]);
 
-	const renderCustomizedLabel = ({ cx, cy }: any) => {
-		return (
-			<text
-				x={cx}
-				y={cy}
-				fill='white'
-				textAnchor='middle'
-				dominantBaseline='central'
-				style={{ fontSize: 30 }}
-			>
-				{`${value}%`}
-			</text>
-		);
-	};
-
 	return (
 		<div className={'pie-chart-container'}>
 			<div className='pie-chart-title-wrapper'>
@@ -68,56 +53,57 @@ export const PieChartEx: React.FC<TPieChartExProps> = ({
 					}}
 				></div>
 				<div className='pie-chart-title'>{label}</div>
-				<div className='pie-chart-value'>{`${value}%`}</div>
 			</div>
-
-			<ResponsiveContainer width={'100%'} height={'100%'}>
-				<PieChart>
-					<defs>
-						<linearGradient
-							id={`colorUv-${id}`}
-							x1='0'
-							y1='0'
-							x2='0'
-							y2='1'
-						>
-							<stop
-								offset='20%'
-								stopColor={linearGradientColor1}
-								stopOpacity={1}
-							/>
-							<stop
-								offset='80%'
-								stopColor={linearGradientColor2}
-								stopOpacity={1}
-							/>
-						</linearGradient>
-					</defs>
-					{/* <defs>
+			<div className='pie-chart-pie-wrapper'>
+				<div className='pie-chart-value'>{`${value}%`}</div>
+				<ResponsiveContainer width={'100%'} height={'100%'}>
+					<PieChart>
+						<defs>
+							<linearGradient
+								id={`colorUv-${id}`}
+								x1='0'
+								y1='0'
+								x2='0'
+								y2='1'
+							>
+								<stop
+									offset='20%'
+									stopColor={linearGradientColor1}
+									stopOpacity={1}
+								/>
+								<stop
+									offset='80%'
+									stopColor={linearGradientColor2}
+									stopOpacity={1}
+								/>
+							</linearGradient>
+						</defs>
+						{/* <defs>
 						<RenderGradient color={color} id={id}></RenderGradient>
 					</defs> */}
-					<Pie
-						dataKey='value'
-						innerRadius={'77%'}
-						outerRadius={'90%'}
-						data={pieData}
-						stroke={neutralColor}
-						paddingAngle={4}
-						labelLine={false}
-						isAnimationActive={true}
-						animationDuration={sampling}
-						animationEasing={'ease-in-out'}
-					>
-						{pieData.map((entry, number) => (
-							<Cell
-								key={`cell-${number}`}
-								fill={pieColor[number]}
-							/>
-						))}
-					</Pie>
-					{/* Ajouter d'autres composants de graphique si nécessaire */}
-				</PieChart>
-			</ResponsiveContainer>
+						<Pie
+							dataKey='value'
+							innerRadius={63}
+							outerRadius={70}
+							data={pieData}
+							stroke={neutralColor}
+							paddingAngle={4}
+							labelLine={false}
+							isAnimationActive={true}
+							animationDuration={sampling}
+							animationEasing={'ease-in-out'}
+						>
+							{pieData.map((entry, number) => (
+								<Cell
+									key={`cell-${number}`}
+									fill={pieColor[number]}
+								/>
+							))}
+						</Pie>
+						{/* Ajouter d'autres composants de graphique si nécessaire */}
+					</PieChart>
+				</ResponsiveContainer>
+			</div>
 		</div>
 	);
 };
