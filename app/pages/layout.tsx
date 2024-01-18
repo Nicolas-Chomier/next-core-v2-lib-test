@@ -18,7 +18,7 @@ const customFont = Plus_Jakarta_Sans({
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<main className={customFont.className}>
-			{/* <NavigationBar /> */}
+			<NavigationBar />
 			<div>{children}</div>
 		</main>
 	);

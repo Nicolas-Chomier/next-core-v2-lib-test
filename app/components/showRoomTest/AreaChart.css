@@ -5,28 +5,33 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	transition: all 1s ease;
 }
 
 .area-chart-container {
 	width: 100%;
 	height: 100%;
 
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+	/* background-color: var(--background-color); */
+	color: var(--text-color);
+	border-radius: 24px;
 	margin: auto;
 	position: relative;
 	z-index: 99;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-image: url('../../../public/images/dddepth-086.jpg');
 }
 
-.area-chart-title-wrapper {
-	flex-direction: row;
-
+.area-chart-title {
 	position: absolute;
 	top: 3%;
 	left: 50%;
 	transform: translate(-50%);
 
-	.area-chart-title {
-		text-align: center;
-		font-size: 150%;
-		color: white;
-	}
+	text-align: center;
+	font-size: 190%;
+	color: var(--text-color);
 }

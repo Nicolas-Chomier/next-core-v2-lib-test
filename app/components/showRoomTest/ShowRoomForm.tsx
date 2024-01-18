@@ -40,7 +40,7 @@ const TestSchema: ZodType<TTestingForm> = z.object({
 	myNumber: z.number().finite().safe().min(-20).max(20),
 });
 
-const ComponentPage = () => {
+export const ShowRoomForm = () => {
 	const {
 		handleSubmit,
 		reset,
@@ -173,4 +173,3 @@ const ComponentPage = () => {
 		</form>
 	);
 };
-export default ComponentPage;

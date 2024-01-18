@@ -5,7 +5,15 @@ import React, { useState, useEffect } from 'react';
 // Hooks and utilities
 // Configuration
 // Styles
-import { AreaChart, ResponsiveContainer, Area } from 'recharts';
+import {
+	AreaChart,
+	ResponsiveContainer,
+	Area,
+	CartesianGrid,
+	XAxis,
+	YAxis,
+	Tooltip,
+} from 'recharts';
 import './AreaChart.css';
 
 type TAreaChartExProps = {
@@ -17,12 +25,16 @@ type TAreaChartExProps = {
 	};
 	label: string;
 	sampling: number;
+	width?: string;
+	height?: string;
 };
 
 export const AreaChartEx: React.FC<TAreaChartExProps> = ({
 	newData,
 	label,
 	sampling,
+	width = '100%',
+	height = '100%',
 }: any) => {
 	const [values, setValues] = useState<
 		{
@@ -45,14 +57,12 @@ export const AreaChartEx: React.FC<TAreaChartExProps> = ({
 
 	return (
 		<div className={'area-chart-container'}>
-			<div className='area-chart-title-wrapper'>
-				<div className='area-chart-title'>{label}</div>
-			</div>
+			<div className='area-chart-title'>{label}</div>
 
-			<ResponsiveContainer width={'110%'} height={'80%'}>
+			<ResponsiveContainer width={width} height={height}>
 				<AreaChart
 					data={values}
-					margin={{ top: 50, right: 0, left: 0, bottom: 0 }}
+					margin={{ top: 40, right: 0, left: 0, bottom: 0 }}
 				>
 					<defs>
 						<linearGradient
@@ -110,6 +120,20 @@ export const AreaChartEx: React.FC<TAreaChartExProps> = ({
 							/>
 						</linearGradient>
 					</defs>
+					{/* 	<CartesianGrid strokeDasharray='3 3' /> */}
+					{/* <XAxis dataKey='timeStamp' stroke='white' />
+					<YAxis stroke='white' /> */}
+					{/* 	<Area
+						type='monotone'
+						dataKey='saturation'
+						stroke='rgb(217, 249, 157)'
+						strokeWidth={2}
+						fillOpacity={1}
+						fill='url(#AreaChartcolor3)'
+						animationEasing={'ease'}
+						animationDuration={sampling}
+						isAnimationActive={true}
+					/>
 					<Area
 						type='monotone'
 						dataKey='convergence'
@@ -120,7 +144,7 @@ export const AreaChartEx: React.FC<TAreaChartExProps> = ({
 						animationEasing={'ease'}
 						animationDuration={sampling}
 						isAnimationActive={true}
-					/>
+					/> */}
 					<Area
 						type='monotone'
 						dataKey='flux'
@@ -128,17 +152,6 @@ export const AreaChartEx: React.FC<TAreaChartExProps> = ({
 						strokeWidth={2}
 						fillOpacity={1}
 						fill='url(#AreaChartcolor2)'
-						animationEasing={'ease'}
-						animationDuration={sampling}
-						isAnimationActive={true}
-					/>
-					<Area
-						type='monotone'
-						dataKey='saturation'
-						stroke='rgb(217, 249, 157)'
-						strokeWidth={2}
-						fillOpacity={1}
-						fill='url(#AreaChartcolor3)'
 						animationEasing={'ease'}
 						animationDuration={sampling}
 						isAnimationActive={true}

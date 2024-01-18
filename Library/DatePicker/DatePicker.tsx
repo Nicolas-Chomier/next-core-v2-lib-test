@@ -98,6 +98,7 @@ type TDatePickerProps = {
 	limitDateMax?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
+	open?: boolean;
 	disabled?: boolean;
 	size?: 'small' | 'standard';
 	className?: string;
@@ -113,6 +114,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	limitDateMax,
 	isSubmit,
 	isValid,
+	open = false,
 	disabled = false,
 	size = 'standard',
 	className,
@@ -126,7 +128,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	const [endDate, setEndDate] = useState<string>('');
 	// Refs & State hooks for logic / animation
 	const swapDate = useRef(true); // Refs for alterante date selection
-	const [showCalendar, setShowCalendar] = useState(false);
+	const [showCalendar, setShowCalendar] = useState(open);
 	const [message, setMessage] = useState('');
 
 	const clickRef = useRef(null);
@@ -311,7 +313,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	return (
 		<div
 			ref={clickRef}
-			className={`datePicker-container  datePicker-format-${size} ${className}`}
+			className={`datePicker-container  datePicker-format-${size} ${className} glass-effect`}
 		>
 			<button
 				className='datePicker-inputs-wrapper'

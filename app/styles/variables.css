@@ -12,7 +12,7 @@
 	/* THEME COLOR LIGHT */
 	--background-color: rgb(245, 245, 245);
 	--background-color-mat: rgb(255, 255, 255);
-	--background-color-low-profile: rgba(255, 255, 255, 0.099);
+	--background-color-low-profile: rgba(255, 255, 255, 0.8);
 	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
 	--text-color: rgba(0, 0, 0, 0.9);
 	--box-shadow-color: var(--gray-a7);

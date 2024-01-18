@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import './LandingPage.css';
 import { PieChartEx } from '@/app/components/showRoomTest/PieChart';
 import { AreaChartEx } from '@/app/components/showRoomTest/AreaChart';
+import { ShowRoomForm } from '@/app/components/showRoomTest/ShowRoomForm';
 
 const colorTheme1 = {
 	gradient: ['rgb(192, 38, 211)', 'rgb(219, 39, 119)'],
@@ -28,7 +29,7 @@ const colorTheme4 = {
 	gradient: ['rgb(251, 113, 133)', 'rgb(253, 186, 116)'],
 	backGround: '#2b2b4b',
 };
-const sampling = 500;
+const sampling = 1000;
 
 const LandingPage = () => {
 	const [areaChartData, setAreaChartData] = useState({
@@ -50,9 +51,9 @@ const LandingPage = () => {
 			time += 1;
 			const newData = {
 				timeStamp: time,
-				convergence: getRandomNbs(200, 9000),
-				flux: getRandomNbs(-4200, 5800),
-				saturation: getRandomNbs(-200, -9000),
+				convergence: getRandomNbs(0, 3000),
+				flux: getRandomNbs(0, 3000),
+				saturation: getRandomNbs(0, 3000),
 			};
 
 			setAreaChartData(newData);
@@ -77,56 +78,41 @@ const LandingPage = () => {
 	}, []);
 
 	return (
-		<div className='container'>
-			<div className='user-infos'></div>
-			<div className='products-infos '>
-				<div className='products-n1'></div>
-				<div className='products-n2'></div>
-				<div className='products-n3'></div>
-				<div className='products-n4'></div>
+		<div className='super-container'>
+			<div className='container'>
+				<ShowRoomForm></ShowRoomForm>
 			</div>
-			<div className='side-bar '></div>
-			<div className='graph-1 border-effect'>
+			<div className='container pie-wrapper'>
 				<PieChartEx
-					label={'Taux de superposition α'}
+					label={'Superposition ε'}
+					value={pieChartData.pieChart4}
+					color={colorTheme4}
+					sampling={sampling}
+					id='pieChart4'
+				/>
+				<PieChartEx
+					label={'Superposition α'}
 					value={pieChartData.pieChart1}
 					color={colorTheme1}
 					sampling={sampling}
 					id='pieChart1'
 				/>
 				<PieChartEx
-					label={'Taux de superposition β'}
+					label={'Superposition β'}
 					value={pieChartData.pieChart2}
 					color={colorTheme2}
 					sampling={sampling}
 					id='pieChart2'
 				/>
 			</div>
-
-			<div className='graph-2 border-effect'>
-				<PieChartEx
-					label={'Taux de superposition G1'}
-					value={pieChartData.pieChart3}
-					color={colorTheme3}
-					sampling={sampling}
-					id='pieChart3'
-				/>
-				<PieChartEx
-					label={'Taux de superposition G2'}
-					value={pieChartData.pieChart4}
-					color={colorTheme4}
-					sampling={sampling}
-					id='pieChart4'
-				/>
-			</div>
-
-			<div className='table border-effect'>
+			<div className='container area-chart'>
 				<AreaChartEx
 					newData={areaChartData}
-					label='Convergence super-critique'
+					label='Courbe n°1'
 					sampling={sampling}
+					width='100%'
+					height='100%'
 				></AreaChartEx>
-				d
 			</div>
 		</div>
 	);

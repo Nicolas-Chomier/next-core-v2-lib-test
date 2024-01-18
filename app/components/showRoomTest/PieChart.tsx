@@ -10,24 +10,24 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import './PieChart.css';
 
 type TPieChartExProps = {
-	label: string;
 	value: number;
 	sampling: number;
 	color: { gradient: string[]; backGround: string };
+	label: string;
 	id: string;
 };
 
 export const PieChartEx: React.FC<TPieChartExProps> = ({
-	label,
 	value,
 	sampling,
 	color,
+	label,
 	id,
 }) => {
 	const linearGradientColor1 = color.gradient[0];
 	const linearGradientColor2 = color.gradient[1];
-	const neutralColor = color.backGround;
-	const pieColor = [`url(#colorUv-${id})`, neutralColor]; // 'url(#colorUv)',
+	//const neutralColor = color.backGround;
+	const pieColor = [`url(#colorUv-${id})`, 'transparent'];
 
 	const [pieData, setPieData] = useState([
 		{ name: 'Groupe A', value: 90 },
@@ -44,86 +44,83 @@ export const PieChartEx: React.FC<TPieChartExProps> = ({
 	}, [value]);
 
 	return (
-		<div className={'pie-chart-container'}>
-			<div className='pie-chart-title-wrapper'>
-				<div
-					className='pie-chart-globe'
-					style={{
-						background: `linear-gradient(to left, ${linearGradientColor1}, ${linearGradientColor2})`,
-					}}
-				></div>
-				<div className='pie-chart-title'>{label}</div>
-			</div>
-			<div className='pie-chart-pie-wrapper'>
-				<div className='pie-chart-value'>{`${value}%`}</div>
-				<ResponsiveContainer width={'100%'} height={'100%'}>
-					<PieChart>
-						<defs>
-							<linearGradient
-								id={`colorUv-${id}`}
-								x1='0'
-								y1='0'
-								x2='0'
-								y2='1'
-							>
-								<stop
-									offset='20%'
-									stopColor={linearGradientColor1}
-									stopOpacity={1}
-								/>
-								<stop
-									offset='80%'
-									stopColor={linearGradientColor2}
-									stopOpacity={1}
-								/>
-							</linearGradient>
-						</defs>
-						{/* <defs>
-						<RenderGradient color={color} id={id}></RenderGradient>
-					</defs> */}
-						<Pie
-							dataKey='value'
-							innerRadius={63}
-							outerRadius={70}
-							data={pieData}
-							stroke={neutralColor}
-							paddingAngle={4}
-							labelLine={false}
-							isAnimationActive={true}
-							animationDuration={sampling}
-							animationEasing={'ease-in-out'}
-						>
-							{pieData.map((entry, number) => (
-								<Cell
-									key={`cell-${number}`}
-									fill={pieColor[number]}
-								/>
-							))}
-						</Pie>
-						{/* Ajouter d'autres composants de graphique si nécessaire */}
-					</PieChart>
-				</ResponsiveContainer>
-			</div>
+		<div className={'pie-chart-container glass-effect  '}>
+			{/* picture-effect */}
+			<LabelBox
+				colorOne={linearGradientColor1}
+				colorTwo={linearGradientColor2}
+				label={label}
+			></LabelBox>
+			<div className='pie-chart-value'>{`${value}%`}</div>
+			<ResponsiveContainer
+				width={'100%'}
+				height={'100%'}
+				style={{ marginTop: '26%' }}
+			>
+				<PieChart>
+					<defs>
+						<RenderGradient
+							colorOne={linearGradientColor1}
+							colorTwo={linearGradientColor2}
+							id={id}
+						></RenderGradient>
+					</defs>
+					<Pie
+						dataKey='value'
+						innerRadius={61}
+						outerRadius={70}
+						data={pieData}
+						stroke={'transparent'}
+						paddingAngle={4}
+						labelLine={false}
+						isAnimationActive={true}
+						animationDuration={sampling}
+						animationEasing={'ease-in-out'}
+					>
+						{pieData.map((entry, number) => (
+							<Cell
+								key={`cell-${number}`}
+								fill={pieColor[number]}
+							/>
+						))}
+					</Pie>
+				</PieChart>
+			</ResponsiveContainer>
 		</div>
 	);
 };
 
-const RenderGradient = ({ color, id }: any) => {
-	const linearGradientColor1 = color.gradient[0];
-	const linearGradientColor2 = color.gradient[1];
+type TRenderGradientProps = {
+	colorOne: string;
+	colorTwo: string;
+	id: string;
+};
 
+const RenderGradient: React.FC<TRenderGradientProps> = ({
+	colorOne,
+	colorTwo,
+	id,
+}) => {
 	return (
 		<linearGradient id={`colorUv-${id}`} x1='0' y1='0' x2='0' y2='1'>
-			<stop
-				offset='20%'
-				stopColor={linearGradientColor1}
-				stopOpacity={1}
-			/>
-			<stop
-				offset='80%'
-				stopColor={linearGradientColor2}
-				stopOpacity={1}
-			/>
+			<stop offset='20%' stopColor={colorOne} stopOpacity={1} />
+			<stop offset='80%' stopColor={colorTwo} stopOpacity={1} />
 		</linearGradient>
+	);
+};
+
+type TLabelBoxProps = { colorOne: string; colorTwo: string; label: string };
+
+const LabelBox: React.FC<TLabelBoxProps> = ({ colorOne, colorTwo, label }) => {
+	return (
+		<div className='pie-chart-label-box-wrapper'>
+			<div
+				className='pie-chart-globe'
+				style={{
+					background: `linear-gradient(to left, ${colorOne}, ${colorTwo})`,
+				}}
+			></div>
+			<div className='pie-chart-title'>{label}</div>
+		</div>
 	);
 };
