@@ -101,6 +101,7 @@ type TDatePickerProps = {
 	open?: boolean;
 	disabled?: boolean;
 	size?: 'small' | 'standard';
+	isBeautiful?: boolean;
 	className?: string;
 	onFieldChange: (
 		value: [Date | undefined, Date | undefined] | undefined,
@@ -117,6 +118,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	open = false,
 	disabled = false,
 	size = 'standard',
+	isBeautiful = true,
 	className,
 	onFieldChange,
 }) => {
@@ -338,7 +340,11 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 			</button>
 
 			{showCalendar ? (
-				<div className='datePicker-panel'>
+				<div
+					className={`datePicker-panel ${
+						isBeautiful ? 'beautiful-background' : ''
+					} `}
+				>
 					<Displayer
 						monthList={months}
 						date={calendarDate}

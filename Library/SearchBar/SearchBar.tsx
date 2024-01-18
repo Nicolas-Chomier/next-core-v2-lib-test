@@ -21,6 +21,7 @@ type TSearchBarProps = {
 	isValid?: boolean;
 	overSizeLimit?: number;
 	disabled?: boolean;
+	isBeautiful?: boolean;
 	className?: string;
 	onFieldChange: (value: string | undefined) => void;
 };
@@ -34,6 +35,7 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	isValid,
 	overSizeLimit = 999,
 	disabled = false,
+	isBeautiful = true,
 	className,
 	onFieldChange,
 }) => {
@@ -199,7 +201,11 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 				{displayButtonActions(isValid, isPanelVisible, searchValue)}
 			</div>
 			{isPanelVisible ? (
-				<div className='searchBar-removable-panel'>
+				<div
+					className={`searchBar-removable-panel ${
+						isBeautiful ? 'beautiful-background' : ''
+					} `}
+				>
 					{isLargeList ? (
 						<LargeList
 							data={filteredData}

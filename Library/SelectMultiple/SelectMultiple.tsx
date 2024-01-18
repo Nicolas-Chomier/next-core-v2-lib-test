@@ -22,6 +22,7 @@ type TSelectMultipleProps = {
 	pickLimit?: number;
 	overSizeLimit?: number;
 	disabled?: boolean;
+	isBeautiful?: boolean;
 	className?: string;
 	onFieldChange: (value: string[]) => void;
 };
@@ -36,6 +37,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	pickLimit = 0,
 	overSizeLimit = 999,
 	disabled = false,
+	isBeautiful = true,
 	className,
 	onFieldChange,
 }) => {
@@ -254,7 +256,11 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 			</div>
 
 			{isPanelVisible ? (
-				<div className='selectMultiple-removable-panel'>
+				<div
+					className={`selectMultiple-removable-panel ${
+						isBeautiful ? 'beautiful-background' : ''
+					} `}
+				>
 					<ItemsBox
 						values={selectedValues}
 						handleClick={handleDelete}

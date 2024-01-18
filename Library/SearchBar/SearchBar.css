@@ -163,3 +163,13 @@
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 	transition: box-shadow 1s ease;
 }
+
+/* ######################################## */
+/* ############### BACKGROUD ############## */
+/* ######################################## */
+.beautiful-background {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-image: var(--image-link);
+}
