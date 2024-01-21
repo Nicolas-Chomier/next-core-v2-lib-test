@@ -4,15 +4,20 @@ import React, { useEffect, useState } from 'react';
 // External modules / Third-party libraries
 
 // Local components
-
-// Hooks and utilities
-
-// Configuration
-import './LandingPage.css';
 import { PieChartEx } from '@/app/components/showRoomTest/PieChart';
 import { AreaChartEx } from '@/app/components/showRoomTest/AreaChart';
 import { ShowRoomForm } from '@/app/components/showRoomTest/ShowRoomForm';
+import { UserProfile } from '@/Library/UserProfile/UserProfile';
+// Hooks and utilities
 
+// Configuration
+import settings from '@/settings/settings';
+// Styles
+import './LandingPage.css';
+import { MagicCard } from '@/Library/MagicCard/MagicCard';
+
+const IMGPATH = `/images/moi.jpg`;
+//
 const colorTheme1 = {
 	gradient: ['rgb(192, 38, 211)', 'rgb(219, 39, 119)'],
 	backGround: '#2b2b4b',
@@ -80,9 +85,12 @@ const LandingPage = () => {
 	return (
 		<div className='super-container'>
 			<div className='container'>
-				<ShowRoomForm></ShowRoomForm>
+				<MagicCard style={'background'} isShadow={false}>
+					<ShowRoomForm></ShowRoomForm>
+				</MagicCard>
 			</div>
-			<div className='container pie-wrapper'>
+
+			{/* <div className='container pie-wrapper'>
 				<PieChartEx
 					label={'Superposition ε'}
 					value={pieChartData.pieChart4}
@@ -113,7 +121,7 @@ const LandingPage = () => {
 					width='100%'
 					height='100%'
 				></AreaChartEx>
-			</div>
+			</div> */}
 		</div>
 	);
 };

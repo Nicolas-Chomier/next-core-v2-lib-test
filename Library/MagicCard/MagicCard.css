@@ -1,0 +1,84 @@
+/* ######################################## */
+/* ############### CONTAINER ############## */
+/* ######################################## */
+.magicCard-container {
+	padding: 22px;
+	border-radius: var(--magicCard-border-radius);
+}
+
+.magicCard-container-mandatory-style {
+	transition: all 1s ease;
+	position: relative;
+	z-index: 1;
+}
+
+.magicCard-no-style-selected {
+	background-color: var(--background-color-ultra-low-profile);
+}
+
+/* ######################################## */
+/* ################ SHADOW ################ */
+/* ######################################## */
+.magicCard-shadow-effect:hover {
+	box-shadow: 11px 11px 23px 0px rgba(0, 0, 0, 0.73);
+	-webkit-box-shadow: 11px 11px 23px 0px rgba(0, 0, 0, 0.73);
+	-moz-box-shadow: 11px 11px 23px 0px rgba(0, 0, 0, 0.73);
+	transition: all 1s ease;
+}
+
+.magicCard-shadow-border {
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+}
+/* ######################################## */
+/* ############ STYLED BORDER ############# */
+/* ######################################## */
+.magicCard-styled-border {
+	display: grid;
+	place-items: center;
+	position: relative;
+	overflow: hidden;
+	z-index: 2;
+	background-color: var(--background-color-mat);
+}
+
+.magicCard-styled-border::before {
+	position: absolute;
+	content: '';
+	width: 30%;
+	height: 300%;
+	transform: rotate(45deg);
+}
+
+.magicCard-styled-border:hover::before {
+	animation: rotation 4s linear infinite;
+	background-color: var(--magicCard-border-effect-color);
+}
+
+.magicCard-styled-border::after {
+	position: absolute;
+	content: '';
+	inset: 2px;
+	border-radius: var(--magicCard-border-radius);
+	background-color: var(--background-color-mat);
+}
+
+/* ######################################## */
+/* ############### BACKGROUD ############## */
+/* ######################################## */
+
+.magicCard-beautiful-background {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-image: var(--magicCard-image-link, '');
+}
+
+/* ANIMATION */
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

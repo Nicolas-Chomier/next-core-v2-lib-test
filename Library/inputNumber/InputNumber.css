@@ -18,6 +18,8 @@ input::-webkit-inner-spin-button {
 	margin: auto;
 	background-color: transparent;
 	position: relative;
+
+	z-index: 98;
 }
 
 .inputNumber-text-field {
@@ -25,13 +27,14 @@ input::-webkit-inner-spin-button {
 
 	text-align: center;
 	font-size: var(--input-font-size, 100%);
+	color: var(--text-color);
 
 	padding: 0 37px 0 21px;
 	border-radius: var(--input-border-radius, 22px);
 	background-color: var(--background-color);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 
-	transition: box-shadow 1s ease, border-radius 0.6s ease;
+	transition: all 1s ease;
 }
 
 .inputNumber-text-field:disabled {
@@ -61,6 +64,10 @@ input::-webkit-inner-spin-button {
 .inputNumber-valid-icon,
 .inputNumber-reset-icon {
 	transform: scale(var(--input-icon-size-scale, 1));
+}
+
+.inputNumber-ambiance-icon {
+	color: var(--text-color);
 }
 
 .inputNumber-valid-icon {

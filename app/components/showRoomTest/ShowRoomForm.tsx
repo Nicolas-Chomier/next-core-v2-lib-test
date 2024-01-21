@@ -70,7 +70,7 @@ export const ShowRoomForm = () => {
 						placeholder='JJ/MM/AAAA'
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						open={true}
+						open={false}
 						disabled={disabledStateTest}
 						onFieldChange={onChange}
 						size='standard'

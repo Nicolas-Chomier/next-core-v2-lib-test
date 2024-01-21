@@ -84,7 +84,7 @@ export const InputString: React.FC<TInputStringProps> = ({
 			default:
 				displayedIcon = (
 					<CaseLower
-						size={23}
+						size={25}
 						strokeWidth={1.2}
 						className={` inputString-text-icon ${
 							disabled ? 'inputString-icon-disabled' : ''

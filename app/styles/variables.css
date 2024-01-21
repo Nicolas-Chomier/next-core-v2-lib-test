@@ -9,18 +9,30 @@
 	--black-color: #131313;
 	--grey-color: #8d8d8d;
 	--anthracite-color: #353535;
+
 	/* THEME COLOR LIGHT */
 	--background-color: rgb(245, 245, 245);
+	--background-gradient: linear-gradient(
+		to left top,
+		rgb(77, 79, 82),
+		rgb(24, 26, 32),
+		rgb(26, 26, 26)
+	);
 	--background-color-mat: rgb(255, 255, 255);
 	--background-color-low-profile: rgba(255, 255, 255, 0.8);
 	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
 	--text-color: rgba(0, 0, 0, 0.9);
 	--box-shadow-color: var(--gray-a7);
-	/* BACKGROUND IMAGE FOR LIGHT THEME */
-	--image-link: url('../../public/images/dddepth-285.jpg');
+
+	/* USER PROFILE */
+	--userProfile-inlineSize: 70px;
+	--userProfile-border-radius: 99px;
+	--userProfile-image-link: url('../../public/images/dddepth-285.jpg');
+
 	/* DATE PICKER */
 	--datePicker-border-radius: 99px;
 	--datePicker-semi-border-radius: 22px;
+	--datePicker-image-link: url('../../public/images/dddepth-285.jpg');
 
 	/* SEARCH BAR */
 	--searchBar-height: 44px;
@@ -29,6 +41,7 @@
 	--searchBar-semi-border-radius: 22px;
 	--searchBar-font-size: 100%;
 	--searchBar-icon-size-scale: 1;
+	--searchBar-image-link: url('../../public/images/dddepth-285.jpg');
 
 	/* SELECT MULTIPLE */
 	--selectMultiple-height: 44px;
@@ -38,6 +51,7 @@
 	--selectMultiple-semi-border-radius: 22px;
 	--selectMultiple-font-size: 100%;
 	--selectMultiple-icon-size-scale: 1;
+	--selectMultiple-image-link: url('../../public/images/dddepth-285.jpg');
 
 	/* INPUT STRING / NUMBER */
 	--input-height: 44px;
@@ -53,6 +67,11 @@
 	--formButton-font-size: 100%;
 	--formButton-error-message-font-size: 80%;
 	--formButton-spinner-size: 25px;
+
+	/* MAGIC CARD */
+	--magicCard-border-effect-color: var(--second-accent-color);
+	--magicCard-border-radius: 30px;
+	--magicCard-image-link: url('../../public/images/dddepth-087.jpg');
 }
 
 .dark-theme {
@@ -62,16 +81,36 @@
 	--success-color: #71d083;
 	--warning-color: #f7cb65;
 	--danger-color: #e26249;
-	--white-color: #ececec;
+	--white-color: #ffffff;
 	--black-color: #131313;
 	--grey-color: #606060;
 	--anthracite-color: #3b3b3b;
+
 	/* THEME COLOR DARK */
 	--background-color: rgb(26, 26, 26);
+	--background-gradient: linear-gradient(
+		to left top,
+		rgb(77, 79, 82),
+		rgb(24, 26, 32),
+		rgb(26, 26, 26)
+	);
 	--background-color-mat: rgb(20, 20, 20);
 	--background-color-low-profile: rgba(0, 0, 0, 0.099);
 	--background-color-ultra-low-profile: rgba(0, 0, 0, 0.02);
-	--text-color: rgba(255, 255, 255, 0.9);
-	/* BACKGROUND IMAGE FOR DARK THEME */
-	--image-link: url('../../public/images/dddepth-242.jpg');
+	--text-color: rgb(241, 241, 241);
+
+	/* USER PROFILE */
+	--userProfile-image-link: url('../../public/images/dddepth-242.jpg');
+
+	/* DATE PICKER */
+	--datePicker-image-link: url('../../public/images/dddepth-242.jpg');
+
+	/* SEARCH BAR */
+	--searchBar-image-link: url('../../public/images/dddepth-242.jpg');
+
+	/* SELECT MULTIPLE */
+	--selectMultiple-image-link: url('../../public/images/dddepth-242.jpg');
+
+	/* MAGIC CARD */
+	--magicCard-image-link: url('../../public/images/dddepth-242.jpg');
 }

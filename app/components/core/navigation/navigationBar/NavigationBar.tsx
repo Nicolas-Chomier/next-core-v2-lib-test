@@ -13,12 +13,20 @@ import useMediaQuery from '@/app/hooks/useMediaQuery';
 import settings from '@/settings/settings';
 // Styles
 import styles from './NavigationBar.module.css';
+import { UserProfile } from '@/Library/UserProfile/UserProfile';
+import { useSession } from 'next-auth/react';
 
 export const NavigationBar = () => {
 	const isSmartphoneSize = useMediaQuery(settings.SMARTPHONE_BREAKPOINT);
 	const isTabletSize = useMediaQuery(settings.TABLET_BREAKPOINT);
 	const isLaptopSize = useMediaQuery(settings.SMALL_LAPTOP_BREAKPOINT);
 
+	const { data: session } = useSession();
+	const name = session?.user?.name;
+	const rank = session?.user?.rank;
+
+	const IMGPATH = `/images/moi.jpg`;
+	const FALLBACKAVATAR = `/images/fallback-img.png`;
 	return (
 		<div className={styles.container}>
 			{!isSmartphoneSize && (
@@ -32,11 +40,27 @@ export const NavigationBar = () => {
 
 				{(isSmartphoneSize || isTabletSize) && <MultiButtonFrame />}
 				{isSmartphoneSize && <LinkButton />}
-				{isTabletSize && <UserInfos />}
+				{isTabletSize && (
+					<UserProfile
+						imagePath={IMGPATH}
+						fallBackPath={FALLBACKAVATAR}
+						textTop={name}
+						textBottom={rank}
+						isBeautiful={false}
+						animation={true}
+					></UserProfile>
+				)}
 
 				{isLaptopSize && (
 					<div className={styles.navigation_element_sub_part}>
-						<UserInfos />
+						<UserProfile
+							imagePath={IMGPATH}
+							fallBackPath={FALLBACKAVATAR}
+							textTop={name}
+							textBottom={rank}
+							isBeautiful={false}
+							animation={true}
+						></UserProfile>
 						<MultiButtonFrame />
 					</div>
 				)}

@@ -18,10 +18,10 @@ const handler = NextAuth({
 				},
 			},
 			async authorize(credentials, req: any) {
-				const dev = process.env.NODE_ENV === 'production';
+				const prod = process.env.NODE_ENV === 'production';
 				let url;
 
-				if (dev) {
+				if (prod) {
 					const baseUrl = new URL(
 						req.headers['x-forwarded-proto'] +
 							'://' +

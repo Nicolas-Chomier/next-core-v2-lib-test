@@ -315,7 +315,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 	return (
 		<div
 			ref={clickRef}
-			className={`datePicker-container  datePicker-format-${size} ${className} glass-effect`}
+			className={`datePicker-container  datePicker-format-${size} ${className}`}
 		>
 			<button
 				className='datePicker-inputs-wrapper'
