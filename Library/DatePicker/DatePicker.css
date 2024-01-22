@@ -100,6 +100,7 @@
 
 	transition: box-shadow 1s ease;
 	z-index: 99;
+
 	/* DATE & INFORMATION DISPLAYER */
 	.datePicker-displayer {
 		flex-direction: row;

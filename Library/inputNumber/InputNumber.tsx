@@ -1,5 +1,5 @@
 // React core
-import { useCallback, useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // External modules / Third-party libraries
 import { Check, Hash, X } from 'lucide-react';
 // Styles

@@ -1,7 +1,5 @@
 // React core
 import React, { useCallback, useEffect, useState } from 'react';
-// Local components
-import Image from 'next/image';
 // Styles
 import './UserProfile.css';
 
@@ -45,17 +43,16 @@ export const UserProfile: React.FC<TUserProfileProps> = ({
 				isBeautiful ? 'beautiful-background' : ''
 			} ${className} `}
 		>
-			<Image
+			<img
 				src={currentImage}
-				width={38}
-				height={38}
-				loading='lazy'
-				quality={60}
 				alt={getFirstLetter(textTop)}
+				width={'38'}
+				height={'38'}
+				loading={'lazy'}
 				onClick={() => setIsDeployed(!isDeployed)}
 				onError={() => setCurrentImage(fallBackPath)}
 				className='userProfile-picture'
-			></Image>
+			></img>
 
 			<div
 				className={`userProfile-text-wrapper ${
