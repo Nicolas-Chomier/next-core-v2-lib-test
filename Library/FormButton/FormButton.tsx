@@ -33,6 +33,7 @@ export const FormButton: React.FC<TFormButtonProps> = ({
 
 	return (
 		<button
+			type='submit'
 			disabled={disabled || !isValid}
 			className={`formButton_container ${className}`}
 		>

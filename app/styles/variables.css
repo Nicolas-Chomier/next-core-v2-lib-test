@@ -72,6 +72,9 @@
 	--magicCard-border-effect-color: var(--second-accent-color);
 	--magicCard-border-radius: 30px;
 	--magicCard-image-link: url('../../public/images/dddepth-087.jpg');
+
+	/* CUSTOMIZABLE BUTTON */
+	--customizableButton: '';
 }
 
 .dark-theme {

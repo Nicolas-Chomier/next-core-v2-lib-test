@@ -15,6 +15,9 @@ import settings from '@/settings/settings';
 // Styles
 import './LandingPage.css';
 import { MagicCard } from '@/Library/MagicCard/MagicCard';
+import { CustomizableButton } from '@/Library/CustomizableButton/CustomizableButton';
+import { Moon, Sun, X } from 'lucide-react';
+import { useBoundStore } from '@/app/store/useBoundStore';
 
 const IMGPATH = `/images/moi.jpg`;
 //
@@ -37,20 +40,20 @@ const colorTheme4 = {
 const sampling = 1000;
 
 const LandingPage = () => {
-	const [areaChartData, setAreaChartData] = useState({
+	/*  const [areaChartData, setAreaChartData] = useState({
 		timeStamp: 1,
 		convergence: 3000,
 		flux: 1398,
-		saturation: 2210,
-	});
-	const [pieChartData, setPieChartData] = useState({
+		saturation: 2210, 
+	}); */
+	/* 	const [pieChartData, setPieChartData] = useState({
 		pieChart1: 10,
 		pieChart2: 80,
 		pieChart3: 10,
 		pieChart4: 10,
-	});
+	}); */
 	// Effect to
-	useEffect(() => {
+	/* 	useEffect(() => {
 		let time = 0;
 		const interval = setInterval(() => {
 			time += 1;
@@ -65,10 +68,10 @@ const LandingPage = () => {
 		}, sampling);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, []); */
 
 	// Effect to
-	useEffect(() => {
+	/* 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newPieData = {
 				pieChart1: getRandomNbs(50, 100),
@@ -80,7 +83,14 @@ const LandingPage = () => {
 		}, sampling * 2);
 
 		return () => clearInterval(interval);
-	}, []);
+	}, []); */
+
+	// Store
+	const toggleDarkMode = useBoundStore((state) => state.toggleDarkMode);
+
+	const handleClick = () => {
+		toggleDarkMode();
+	};
 
 	return (
 		<div className='super-container'>
@@ -89,7 +99,14 @@ const LandingPage = () => {
 					<ShowRoomForm></ShowRoomForm>
 				</MagicCard>
 			</div>
-
+			<CustomizableButton
+				disabled={false}
+				className={undefined}
+				handleClick={handleClick}
+			>
+				<Moon></Moon>
+				<Sun></Sun>
+			</CustomizableButton>
 			{/* <div className='container pie-wrapper'>
 				<PieChartEx
 					label={'Superposition ε'}

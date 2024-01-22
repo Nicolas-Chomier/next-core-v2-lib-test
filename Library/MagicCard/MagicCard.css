@@ -2,7 +2,7 @@
 /* ############### CONTAINER ############## */
 /* ######################################## */
 .magicCard-container {
-	padding: 22px;
+	padding: 25px 24px;
 	border-radius: var(--magicCard-border-radius);
 }
 

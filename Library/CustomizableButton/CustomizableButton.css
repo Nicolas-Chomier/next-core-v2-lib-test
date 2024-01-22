@@ -1,0 +1,26 @@
+.customizableButton-mandatory-class {
+	transition: all 0.7s ease;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.customizableButton-mandatory-class:disabled {
+	background-color: var(--background-color-ultra-low-profile);
+	cursor: not-allowed;
+}
+
+.customizableButton-button {
+	display: grid;
+	place-items: center;
+
+	height: 44px;
+	width: 44px;
+
+	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
+	background-color: var(--background-color);
+	border-radius: 100%;
+}
+
+.customizableButton-button:hover {
+	background-color: var(--accent-color);
+}
