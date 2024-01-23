@@ -1,1 +1,1 @@
-export * from './MagicCard';
+export * from './SearchBar';

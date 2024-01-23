@@ -14,10 +14,11 @@ import { UserProfile } from '@/Library/UserProfile/UserProfile';
 import settings from '@/settings/settings';
 // Styles
 import './LandingPage.css';
-import { MagicCard } from '@/Library/MagicCard/MagicCard';
 import { CustomizableButton } from '@/Library/CustomizableButton/CustomizableButton';
-import { Moon, Sun, X } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { useBoundStore } from '@/app/store/useBoundStore';
+/* import { MagicCard } from '@/Library/MagicCard/MagicCard'; */
+import { MagicCard } from 'my-library';
 
 const IMGPATH = `/images/moi.jpg`;
 //
@@ -95,7 +96,7 @@ const LandingPage = () => {
 	return (
 		<div className='super-container'>
 			<div className='container'>
-				<MagicCard style={'background'} isShadow={false}>
+				<MagicCard isShadow={false} style='background'>
 					<ShowRoomForm></ShowRoomForm>
 				</MagicCard>
 			</div>

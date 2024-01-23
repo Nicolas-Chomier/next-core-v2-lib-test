@@ -21,40 +21,37 @@
 	transition: all 1s ease;
 
 	cursor: pointer;
-
-	.userProfile-picture {
-		border-radius: var(--userProfile-border-radius, 99px);
-		margin: 3px;
-	}
-
-	.userProfile-text-wrapper-deploy,
-	.userProfile-text-wrapper {
-		width: 0;
-		flex-direction: column;
-		align-items: flex-start;
-		margin: 0;
-		opacity: 0;
-		transition: all 1s ease;
-	}
-
-	.userProfile-text-wrapper-deploy {
-		width: var(--userProfile-inlineSize);
-		margin: 0 17px 0 7px;
-		opacity: 1;
-
-		.userProfile-text-top {
-			color: var(--text-color);
-			font-size: 97%;
-		}
-
-		.userProfile-text-bot {
-			color: var(--accent-color);
-			font-size: 95%;
-			margin-top: -3px;
-		}
-	}
+}
+.userProfile-picture {
+	border-radius: var(--userProfile-border-radius, 99px);
+	margin: 3px;
 }
 
+.userProfile-text-wrapper-deploy,
+.userProfile-text-wrapper {
+	width: 0;
+	flex-direction: column;
+	align-items: flex-start;
+	margin: 0;
+	opacity: 0;
+	transition: all 1s ease;
+}
+
+.userProfile-text-wrapper-deploy {
+	width: var(--userProfile-inlineSize);
+	margin: 0 17px 0 7px;
+	opacity: 1;
+}
+.userProfile-text-top {
+	color: var(--text-color);
+	font-size: 97%;
+}
+
+.userProfile-text-bot {
+	color: var(--accent-color);
+	font-size: 95%;
+	margin-top: -3px;
+}
 .userProfile-container:hover {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 	transition: all 1s ease;
