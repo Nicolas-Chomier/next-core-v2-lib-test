@@ -7,11 +7,35 @@
 .datePicker-displayer,
 .datePicker-panel,
 .datePicker-inputs-wrapper,
+.datePicker-super-container,
+.datePicker-label-wrapper,
 .datePicker-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+
+/* LABEL */
+.datePicker-label-wrapper {
+	flex-direction: row;
+	width: 100%;
+}
+
+.datePicker-label-small,
+.datePicker-label-standard {
+	width: 50%;
+	color: var(--text-color);
+	text-align: center;
+}
+
+.datePicker-label-standard {
+	font-size: calc(var(--input-font-size, 100%) + 4%);
+	padding: 0 4px 3px 4px;
+}
+
+.datePicker-label-small {
+	font-size: var(--input-font-size, 100%);
 }
 
 /* ######################################## */
@@ -24,7 +48,7 @@
 	margin: auto;
 	background-color: transparent;
 
-	z-index: 99;
+	z-index: 999;
 }
 
 /* ######################################## */
@@ -70,6 +94,11 @@
 	margin: 0 -3px;
 	transform: rotate(90deg);
 }
+
+.datePicker-inputs-wrapper-valid-style {
+	box-shadow: inset 0 0 0 2px var(--success-color);
+}
+
 .datePicker-inputs-wrapper:focus-within .datePicker-middle-icon {
 	color: var(--accent-color);
 }
@@ -96,7 +125,7 @@
 	position: absolute;
 	left: 0;
 
-	transition: box-shadow 1s ease;
+	transition: box-shadow 0.8s ease;
 	z-index: 99;
 }
 
@@ -190,7 +219,7 @@
 }
 
 .datePicker-panel:hover {
-	transition: box-shadow 1s ease;
+	transition: box-shadow 0.8s ease;
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 }
 

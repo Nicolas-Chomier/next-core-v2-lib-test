@@ -8,6 +8,8 @@ import './InputNumber.css';
 type TInputNumberProps = {
 	errors?: string;
 	placeholder?: string;
+	label?: string;
+	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
 	size?: number;
 	step?: string;
 	min?: string;
@@ -22,6 +24,8 @@ type TInputNumberProps = {
 
 export const InputNumber: React.FC<TInputNumberProps> = ({
 	placeholder = 'My number here!',
+	label,
+	labelPosition = 'center',
 	size = 16,
 	errors = '',
 	step = '1',
@@ -114,23 +118,38 @@ export const InputNumber: React.FC<TInputNumberProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`inputNumber-container ${className}`}>
-			<input
-				type='number'
-				step={step}
-				min={min}
-				max={max}
-				placeholder={placeholder}
-				onChange={handleInputChange}
-				value={inputValue}
-				disabled={disabled}
-				className='inputNumber-text-field'
-				style={{ inlineSize: `${size * 8.1}px` }}
-			/>
+		<div className={`inputNumber-super-container`}>
+			{label ? (
+				<label
+					className='inputNumber-label'
+					htmlFor={label}
+					style={{ textAlign: labelPosition }}
+				>
+					{label}
+				</label>
+			) : null}
 
-			{displayButtonActions(isValid, inputValue)}
+			<div className={`inputNumber-container ${className}`}>
+				<input
+					type='number'
+					name={label}
+					step={step}
+					min={min}
+					max={max}
+					placeholder={placeholder}
+					onChange={handleInputChange}
+					value={inputValue}
+					disabled={disabled}
+					className={`inputNumber-text-field ${
+						isValid ? 'inputNumber-text-field-valid-style' : null
+					}`}
+					style={{ inlineSize: `${size * 8.1}px` }}
+				/>
 
-			<TooltipErrorMessage message={errors} disabled={disabled} />
+				{displayButtonActions(isValid, inputValue)}
+
+				<TooltipErrorMessage message={errors} disabled={disabled} />
+			</div>
 		</div>
 	);
 };

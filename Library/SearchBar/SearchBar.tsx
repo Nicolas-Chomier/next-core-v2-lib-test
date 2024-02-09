@@ -16,6 +16,8 @@ import './SearchBar.css';
 type TSearchBarProps = {
 	data: string[];
 	placeholder?: string;
+	label?: string;
+	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
@@ -30,6 +32,8 @@ type TSearchBarProps = {
 export const SearchBar: React.FC<TSearchBarProps> = ({
 	data,
 	placeholder,
+	label,
+	labelPosition = 'center',
 	size = 31,
 	isSubmit,
 	isValid,
@@ -173,52 +177,68 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`searchBar-container ${className}`} ref={clickRef}>
-			<div
-				className={`${disabled && 'searchBar-content-wrapper-disabled'}
+		<div className={`searchBar-super-container`}>
+			{label ? (
+				<label
+					className='searchBar-label'
+					htmlFor={label}
+					style={{ textAlign: labelPosition }}
+				>
+					{label}
+				</label>
+			) : null}
+
+			<div className={`searchBar-container ${className}`} ref={clickRef}>
+				<div
+					className={`${
+						disabled && 'searchBar-content-wrapper-disabled'
+					}
 					${
 						isPanelVisible
 							? 'searchBar-content-wrapper-visible'
 							: 'searchBar-content-wrapper'
-					}`}
-			>
-				<button
-					onClick={openPanel}
-					className='searchBar-clickable-wrapper'
-					disabled={disabled}
+					}
+					${isValid ? 'searchBar-content-wrapper-valid-style' : null}`}
 				>
-					<input
-						className='searchBar-input-text'
-						type='text'
-						size={size < 21 ? 21 : size}
-						onChange={handleInputChange}
-						value={searchValue}
-						placeholder={placeholder}
+					<button
+						onClick={openPanel}
+						className='searchBar-clickable-wrapper'
 						disabled={disabled}
-					/>
-				</button>
+					>
+						<input
+							className='searchBar-input-text'
+							name={label}
+							type='text'
+							size={size < 21 ? 21 : size}
+							onChange={handleInputChange}
+							value={searchValue}
+							placeholder={placeholder}
+							disabled={disabled}
+						/>
+					</button>
 
-				{displayButtonActions(isValid, isPanelVisible, searchValue)}
-			</div>
-			{isPanelVisible ? (
-				<div
-					className={`searchBar-removable-panel ${
-						isBeautiful ? 'beautiful-background' : ''
-					} `}
-				>
-					{isLargeList ? (
-						<LargeList
-							data={filteredData}
-							handleClick={handleItemClick}
-						></LargeList>
-					) : (
-						<TinyList
-							data={filteredData}
-							handleClick={handleItemClick}
-						></TinyList>
-					)}
+					{displayButtonActions(isValid, isPanelVisible, searchValue)}
 				</div>
-			) : null}
+				{isPanelVisible ? (
+					<div
+						className={`searchBar-removable-panel ${
+							isBeautiful ? 'beautiful-background' : ''
+						} `}
+					>
+						{isLargeList ? (
+							<LargeList
+								data={filteredData}
+								handleClick={handleItemClick}
+							></LargeList>
+						) : (
+							<TinyList
+								data={filteredData}
+								handleClick={handleItemClick}
+							></TinyList>
+						)}
+					</div>
+				) : null}
+			</div>
 		</div>
 	);
 };

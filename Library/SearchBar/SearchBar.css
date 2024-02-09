@@ -3,12 +3,14 @@
 .searchBar-content-wrapper,
 .searchBar-content-wrapper-visible,
 .searchBar-icon-wrapper,
+.searchBar-super-container,
 .searchBar-removable-panel {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	background-color: var(--background-color);
 }
+
 /* ######################################## */
 /* ##### SEARCH BAR MAIN FRAME ####### */
 /* ######################################## */
@@ -21,20 +23,27 @@
 	position: relative;
 }
 
+.searchBar-label {
+	width: 86%;
+	color: var(--text-color);
+	font-size: calc(var(--input-font-size, 100%) + 4%);
+	padding: 0 4px 3px 4px;
+}
+
 /* ######################################## */
 /* ######## SEARCH BAR CONTENT ####### */
 /* ######################################## */
 .searchBar-content-wrapper-visible,
 .searchBar-content-wrapper {
 	font-size: var(--searchBar-font-size, inherit);
-
+	flex-direction: row;
 	height: var(--searchBar-height, 44px);
 
 	border-radius: var(--searchBar-semi-border-radius, 22px);
 	background-color: var(--background-color);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 
-	transition: all 1s ease;
+	transition: all 0.8s ease;
 	z-index: 98;
 }
 
@@ -87,13 +96,14 @@
 .searchBar-icon-wrapper:disabled {
 	cursor: not-allowed;
 }
+
 .searchBar-content-wrapper-visible {
 	border-radius: var(--searchBar-semi-border-radius)
 		var(--searchBar-semi-border-radius) 0 0;
 
 	box-shadow: inset 0 0 0 2px var(--accent-color);
 
-	transition: border-radius 1s ease, box-shadow 1s ease;
+	transition: border-radius 0.8s ease, box-shadow 0.8s ease;
 }
 
 .searchBar-content-wrapper-disabled {
@@ -103,6 +113,10 @@
 
 .searchBar-content-wrapper:focus-within {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
+}
+
+.searchBar-content-wrapper-valid-style {
+	box-shadow: inset 0 0 0 2px var(--success-color);
 }
 
 /* ######################################## */
@@ -125,7 +139,7 @@
 	z-index: 99;
 
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
-	transition: box-shadow 1s ease;
+	transition: box-shadow 0.8s ease;
 }
 /* ITEMS LIST */
 .searchBar-item-list {
@@ -163,7 +177,7 @@
 
 .searchBar-removable-panel:hover {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
-	transition: box-shadow 1s ease;
+	transition: box-shadow 0.8s ease;
 }
 
 /* ######################################## */

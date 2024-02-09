@@ -40,7 +40,7 @@ const constants = {
 		'(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(\\d{4})',
 	),
 	errorMessage: 'Ordre des dates erroné !',
-	limitMessage: 'La date est hors des limites définies !',
+	limitMessage: 'Dates hors limites !',
 	locales: 'fr-FR',
 };
 
@@ -94,6 +94,7 @@ const TODAY: string = new Date().toLocaleDateString();
 
 type TDatePickerProps = {
 	placeholder?: string;
+	label?: [string, string];
 	limitDateMin?: number;
 	limitDateMax?: number;
 	isSubmit?: boolean;
@@ -111,6 +112,7 @@ type TDatePickerProps = {
 //+ DATE PICKER (Fr)
 export const DatePicker: React.FC<TDatePickerProps> = ({
 	placeholder = 'jj/mm/aaaa',
+	label,
 	limitDateMin,
 	limitDateMax,
 	isSubmit,
@@ -173,7 +175,7 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 			return (
 				<CalendarCheck
 					size={19}
-					strokeWidth={1.4}
+					strokeWidth={1.8}
 					className='datePicker-middle-icon-valid'
 				/>
 			);
@@ -313,98 +315,113 @@ export const DatePicker: React.FC<TDatePickerProps> = ({
 
 	//+ TSX
 	return (
-		<div
-			ref={clickRef}
-			className={`datePicker-container  datePicker-format-${size} ${className}`}
-		>
-			<button
-				className='datePicker-inputs-wrapper'
-				disabled={disabled}
-				onClick={openPanel}
-			>
-				<Input
-					placeholder={placeholder}
-					initialValue={startDate}
-					disabled={disabled}
-					onValueChange={handleChangeStartDate}
-				></Input>
-
-				{calendarIcon(isValid, size)}
-
-				<Input
-					placeholder={placeholder}
-					initialValue={endDate}
-					disabled={disabled}
-					onValueChange={handleChangeEndDate}
-				></Input>
-			</button>
-
-			{showCalendar ? (
-				<div
-					className={`datePicker-panel ${
-						isBeautiful ? 'beautiful-background' : ''
-					} `}
-				>
-					<Displayer
-						monthList={months}
-						date={calendarDate}
-						message={message}
-					></Displayer>
-
-					<Calendar
-						limitDateMin={limitDateMin}
-						limitDateMax={limitDateMax}
-						targetDate={calendarDate}
-						startDate={startDate}
-						endDate={endDate}
-						handleClick={handleClick}
-					></Calendar>
-
-					<div className='datePicker-button-wrapper'>
-						<button
-							className='datePicker-action-button'
-							onClick={(e) => changeYear(e, -1)}
-						>
-							<ChevronsLeft size={22} strokeWidth={1.4} />
-						</button>
-						<button
-							className='datePicker-action-button'
-							onClick={(e) => changeMonth(e, -1)}
-						>
-							<ChevronLeft size={25} strokeWidth={1.3} />
-						</button>
-
-						<button
-							className='datePicker-reset-button'
-							onClick={handleReset}
-						>
-							{size === 'small' ? (
-								<X
-									size={19}
-									strokeWidth={1.3}
-									className='datePicker-reset-button-content'
-								/>
-							) : (
-								<div className='datePicker-reset-button-content'>
-									Reset
-								</div>
-							)}
-						</button>
-						<button
-							className='datePicker-action-button'
-							onClick={(e) => changeMonth(e, 1)}
-						>
-							<ChevronRight size={25} strokeWidth={1.3} />
-						</button>
-						<button
-							className='datePicker-action-button'
-							onClick={(e) => changeYear(e, 1)}
-						>
-							<ChevronsRight size={22} strokeWidth={1.4} />
-						</button>
-					</div>
+		<div className={`datePicker-super-container`}>
+			{label ? (
+				<div className='datePicker-label-wrapper'>
+					<span className={`datePicker-label-${size}`}>
+						{label[0]}
+					</span>
+					<span className={`datePicker-label-${size}`}>
+						{label[1]}
+					</span>
 				</div>
 			) : null}
+
+			<div
+				ref={clickRef}
+				className={`datePicker-container datePicker-format-${size} ${className}`}
+			>
+				<button
+					className={`datePicker-inputs-wrapper ${
+						isValid ? 'datePicker-inputs-wrapper-valid-style' : null
+					}`}
+					disabled={disabled}
+					onClick={openPanel}
+				>
+					<Input
+						placeholder={placeholder}
+						initialValue={startDate}
+						disabled={disabled}
+						onValueChange={handleChangeStartDate}
+					></Input>
+
+					{calendarIcon(isValid, size)}
+
+					<Input
+						placeholder={placeholder}
+						initialValue={endDate}
+						disabled={disabled}
+						onValueChange={handleChangeEndDate}
+					></Input>
+				</button>
+
+				{showCalendar ? (
+					<div
+						className={`datePicker-panel ${
+							isBeautiful ? 'beautiful-background' : ''
+						} `}
+					>
+						<Displayer
+							monthList={months}
+							date={calendarDate}
+							message={message}
+						></Displayer>
+
+						<Calendar
+							limitDateMin={limitDateMin}
+							limitDateMax={limitDateMax}
+							targetDate={calendarDate}
+							startDate={startDate}
+							endDate={endDate}
+							handleClick={handleClick}
+						></Calendar>
+
+						<div className='datePicker-button-wrapper'>
+							<button
+								className='datePicker-action-button'
+								onClick={(e) => changeYear(e, -1)}
+							>
+								<ChevronsLeft size={22} strokeWidth={1.4} />
+							</button>
+							<button
+								className='datePicker-action-button'
+								onClick={(e) => changeMonth(e, -1)}
+							>
+								<ChevronLeft size={25} strokeWidth={1.3} />
+							</button>
+
+							<button
+								className='datePicker-reset-button'
+								onClick={handleReset}
+							>
+								{size === 'small' ? (
+									<X
+										size={19}
+										strokeWidth={1.3}
+										className='datePicker-reset-button-content'
+									/>
+								) : (
+									<div className='datePicker-reset-button-content'>
+										Reset
+									</div>
+								)}
+							</button>
+							<button
+								className='datePicker-action-button'
+								onClick={(e) => changeMonth(e, 1)}
+							>
+								<ChevronRight size={25} strokeWidth={1.3} />
+							</button>
+							<button
+								className='datePicker-action-button'
+								onClick={(e) => changeYear(e, 1)}
+							>
+								<ChevronsRight size={22} strokeWidth={1.4} />
+							</button>
+						</div>
+					</div>
+				) : null}
+			</div>
 		</div>
 	);
 };

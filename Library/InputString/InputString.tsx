@@ -10,6 +10,8 @@ type TInputStringProps = {
 	regex?: RegExp;
 	errors?: string;
 	placeholder?: string;
+	label?: string;
+	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
@@ -22,6 +24,8 @@ export const InputString: React.FC<TInputStringProps> = ({
 	type = 'text',
 	regex = undefined,
 	placeholder = 'My text here!',
+	label,
+	labelPosition = 'center',
 	errors = '',
 	size = 16,
 	isSubmit = false,
@@ -145,20 +149,35 @@ export const InputString: React.FC<TInputStringProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`inputString-container ${className}`}>
-			<input
-				type={type}
-				placeholder={placeholder}
-				onChange={handleInputChange}
-				value={inputValue}
-				size={size < 10 ? 10 : size}
-				disabled={disabled}
-				className='inputString-text-field'
-			/>
+		<div className={`inputString-super-container`}>
+			{label ? (
+				<label
+					className='inputString-label'
+					htmlFor={label}
+					style={{ textAlign: labelPosition }}
+				>
+					{label}
+				</label>
+			) : null}
 
-			{displayButtonActions(isValid, inputValue)}
+			<div className={`inputString-container ${className}`}>
+				<input
+					type={type}
+					name={label}
+					placeholder={placeholder}
+					onChange={handleInputChange}
+					value={inputValue}
+					size={size < 10 ? 10 : size}
+					disabled={disabled}
+					className={`inputString-text-field ${
+						isValid ? 'inputString-text-field-valid-style' : null
+					}`}
+				/>
 
-			<TooltipErrorMessage message={errors} disabled={disabled} />
+				{displayButtonActions(isValid, inputValue)}
+
+				<TooltipErrorMessage message={errors} disabled={disabled} />
+			</div>
 		</div>
 	);
 };

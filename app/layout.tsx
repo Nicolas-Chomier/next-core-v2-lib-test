@@ -12,7 +12,7 @@ import '@radix-ui/themes/styles.css';
 import '@/app/styles/globals.css';
 import '@/app/styles/backGround.css';
 import '@/app/styles/variables.css';
-import 'my-library/dist/style.css';
+/* import 'my-library/dist/style.css'; */
 
 export default function RootLayout({
 	children,

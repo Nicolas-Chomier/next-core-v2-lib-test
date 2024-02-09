@@ -16,6 +16,8 @@ import './SelectMultiple.css';
 type TSelectMultipleProps = {
 	data: string[];
 	placeholder?: string;
+	label?: string;
+	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
 	size?: number;
 	isSubmit?: boolean;
 	isValid?: boolean;
@@ -31,6 +33,8 @@ type TSelectMultipleProps = {
 export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	data,
 	placeholder,
+	label,
+	labelPosition = 'center',
 	size = 31,
 	isSubmit,
 	isValid,
@@ -225,62 +229,80 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 
 	//+ TSX
 	return (
-		<div className={`selectMultiple-container ${className}`} ref={clickRef}>
+		<div className={`selectMultiple-super-container`}>
+			{label ? (
+				<label
+					className='selectMultiple-label'
+					htmlFor={label}
+					style={{ textAlign: labelPosition }}
+				>
+					{label}
+				</label>
+			) : null}
+
 			<div
-				className={`${
-					disabled && 'selectMultiple-content-wrapper-disabled'
-				}
+				className={`selectMultiple-container ${className}`}
+				ref={clickRef}
+			>
+				<div
+					className={`${
+						disabled && 'selectMultiple-content-wrapper-disabled'
+					}
 					${
 						isPanelVisible
 							? 'selectMultiple-content-wrapper-visible'
 							: 'selectMultiple-content-wrapper'
-					}`}
-			>
-				<button
-					onClick={openPanel}
-					className='selectMultiple-clickable-wrapper'
-					disabled={disabled}
+					}
+					${isValid ? 'selectMultiple-content-wrapper-valid-style' : null}
+					`}
 				>
-					<input
-						className='selectMultiple-input-text'
-						type='text'
-						size={size < 21 ? 21 : size}
-						onChange={handleInputChange}
-						value={searchValue}
-						placeholder={pickedItemInfos || placeholder}
+					<button
+						onClick={openPanel}
+						className='selectMultiple-clickable-wrapper'
 						disabled={disabled}
-					/>
-				</button>
+					>
+						<input
+							className='selectMultiple-input-text'
+							name={label}
+							type='text'
+							size={size < 21 ? 21 : size}
+							onChange={handleInputChange}
+							value={searchValue}
+							placeholder={pickedItemInfos || placeholder}
+							disabled={disabled}
+						/>
+					</button>
 
-				{displayButtonActions(isValid, isPanelVisible, searchValue)}
-			</div>
-
-			{isPanelVisible ? (
-				<div
-					className={`selectMultiple-removable-panel ${
-						isBeautiful ? 'beautiful-background' : ''
-					} `}
-				>
-					<ItemsBox
-						values={selectedValues}
-						handleClick={handleDelete}
-					></ItemsBox>
-
-					<div className='selectMultiple-list-container'>
-						{isLargeList ? (
-							<LargeList
-								data={filteredData}
-								handleClick={handleItemClick}
-							></LargeList>
-						) : (
-							<TinyList
-								data={filteredData}
-								handleClick={handleItemClick}
-							></TinyList>
-						)}
-					</div>
+					{displayButtonActions(isValid, isPanelVisible, searchValue)}
 				</div>
-			) : null}
+
+				{isPanelVisible ? (
+					<div
+						className={`selectMultiple-removable-panel ${
+							isBeautiful ? 'beautiful-background' : ''
+						} `}
+					>
+						<ItemsBox
+							values={selectedValues}
+							handleClick={handleDelete}
+						></ItemsBox>
+
+						<div className='selectMultiple-list-container'>
+							{isLargeList ? (
+								<LargeList
+									data={filteredData}
+									handleClick={handleItemClick}
+								></LargeList>
+							) : (
+								<TinyList
+									data={filteredData}
+									handleClick={handleItemClick}
+								></TinyList>
+							)}
+						</div>
+					</div>
+				) : null}
+			</div>
 		</div>
 	);
 };

@@ -87,9 +87,10 @@ const LandingPage = () => {
 						limitDateMin={-10}
 						limitDateMax={10}
 						placeholder='JJ/MM/AAAA'
+						label={['début', 'fin']}
 						isSubmit={isSubmitting}
 						isValid={isValid}
-						open={true}
+						open={false}
 						disabled={disabledStateTest}
 						onFieldChange={onChange}
 						size='standard'
@@ -107,6 +108,8 @@ const LandingPage = () => {
 					<SelectMultiple
 						data={randomIds}
 						placeholder='Multiple'
+						label='Multiple'
+						labelPosition='justify'
 						size={31}
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
@@ -128,6 +131,8 @@ const LandingPage = () => {
 						data={randomIds}
 						size={31}
 						placeholder='Search'
+						label='Search'
+						labelPosition='end'
 						overSizeLimit={999}
 						isSubmit={isSubmitting}
 						isValid={isValid}
@@ -147,6 +152,8 @@ const LandingPage = () => {
 						type={'text'}
 						regex={regexString}
 						placeholder='My text here!'
+						label='String'
+						labelPosition='start'
 						errors={errors['myText']?.message}
 						size={31}
 						isSubmit={isSubmitting}
@@ -166,6 +173,8 @@ const LandingPage = () => {
 				render={({ field: { onChange } }) => (
 					<InputNumber
 						placeholder='My number here!'
+						label='Number'
+						labelPosition='center'
 						size={30}
 						errors={errors['myNumber']?.message}
 						step='0.1'

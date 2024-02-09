@@ -1,5 +1,6 @@
 .inputString-container,
 .inputString-text-field,
+.inputString-super-container,
 .inputString-icon-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -16,6 +17,13 @@
 	z-index: 98;
 }
 
+.inputString-label {
+	width: 86%;
+	color: var(--text-color);
+	font-size: calc(var(--input-font-size, 100%) + 4%);
+	padding: 0 4px 3px 4px;
+}
+
 .inputString-text-field {
 	height: var(--input-height, 44px);
 
@@ -28,7 +36,7 @@
 	background-color: var(--background-color);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 
-	transition: all 1s ease;
+	transition: all 0.8s ease;
 }
 
 .inputString-text-field:disabled {
@@ -53,6 +61,10 @@
 
 .inputString-text-field:focus {
 	box-shadow: inset 0 0 0 2px var(--accent-color);
+}
+
+.inputString-text-field-valid-style {
+	box-shadow: inset 0 0 0 2px var(--success-color);
 }
 
 .inputString-valid-icon,
@@ -97,5 +109,5 @@
 	top: var(--input-height, 44px);
 	z-index: 5;
 
-	transition: box-shadow 1s ease, border-radius 0.6s ease;
+	transition: box-shadow 0.8s ease, border-radius 0.6s ease;
 }
