@@ -132,6 +132,8 @@
 	max-height: var(--searchBar-panel-max-height, 350px);
 	width: 100%;
 
+	background-color: var(--background-color);
+
 	position: absolute;
 	top: calc(var(--searchBar-height, 44px) + 2px);
 	left: 0;

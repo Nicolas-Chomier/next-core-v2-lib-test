@@ -1,6 +1,6 @@
 :root {
 	/* MAIN THEME COLOR */
-	--accent-color: #7b61ff;
+	--accent-color: #5b5bd6;
 	--second-accent-color: #e93d82;
 	--success-color: #46a758;
 	--warning-color: #ffba18;
@@ -13,35 +13,37 @@
 	/* THEME COLOR LIGHT */
 	--background-color: rgb(245, 245, 245);
 	--background-gradient: linear-gradient(
-		to left top,
-		rgb(77, 79, 82),
-		rgb(24, 26, 32),
-		rgb(26, 26, 26)
+		to right bottom,
+		rgb(199, 210, 254),
+		rgb(254, 202, 202),
+		rgb(254, 249, 195)
 	);
 	--background-color-mat: rgb(255, 255, 255);
-	--background-color-low-profile: rgba(255, 255, 255, 0.8);
+	--background-color-low-profile: rgba(255, 255, 255, 0.1);
 	--background-color-ultra-low-profile: rgba(255, 255, 255, 0.02);
 	--text-color: rgba(0, 0, 0, 0.9);
 	--box-shadow-color: var(--gray-a7);
+	--general-component-img-link: ''
+		/* url('../../public/images/dddepth-086.jpg') */;
 
 	/* USER PROFILE */
-	--userProfile-inlineSize: 70px;
+	--userProfile-inlineSize: 55px;
 	--userProfile-border-radius: 99px;
-	--userProfile-image-link: url('../../public/images/dddepth-285.jpg');
+	--userProfile-image-link: var(--general-component-img-link);
 
 	/* DATE PICKER */
 	--datePicker-border-radius: 99px;
 	--datePicker-semi-border-radius: 22px;
-	--datePicker-image-link: url('../../public/images/dddepth-285.jpg');
+	--datePicker-image-link: var(--general-component-img-link);
 
 	/* SEARCH BAR */
 	--searchBar-height: 44px;
-	--searchBar-panel-max-height: 250px;
+	--searchBar-panel-max-height: 300px;
 	--searchBar-border-radius: 99px;
 	--searchBar-semi-border-radius: 22px;
 	--searchBar-font-size: 100%;
 	--searchBar-icon-size-scale: 1;
-	--searchBar-image-link: url('../../public/images/dddepth-285.jpg');
+	--searchBar-image-link: var(--general-component-img-link);
 
 	/* SELECT MULTIPLE */
 	--selectMultiple-height: 44px;
@@ -51,7 +53,7 @@
 	--selectMultiple-semi-border-radius: 22px;
 	--selectMultiple-font-size: 100%;
 	--selectMultiple-icon-size-scale: 1;
-	--selectMultiple-image-link: url('../../public/images/dddepth-285.jpg');
+	--selectMultiple-image-link: var(--general-component-img-link);
 
 	/* INPUT STRING / NUMBER */
 	--input-height: 44px;
@@ -61,7 +63,7 @@
 	--input-icon-size-scale: 1;
 
 	/* FORM BUTTON */
-	--formButton-inline-size: 150px;
+	--formButton-inline-size: 180px;
 	--formButton-height: 44px;
 	--formButton-border-radius: 22px;
 	--formButton-font-size: 100%;
@@ -71,15 +73,15 @@
 	/* MAGIC CARD */
 	--magicCard-border-effect-color: var(--second-accent-color);
 	--magicCard-border-radius: 30px;
-	--magicCard-image-link: url('../../public/images/dddepth-087.jpg');
+	--magicCard-image-link: var(--general-component-img-link);
 
-	/* CUSTOMIZABLE BUTTON */
-	--customizableButton: '';
+	/* PROJECT */
+	--project-margin: 18px;
 }
 
 .dark-theme {
 	/* MAIN THEME COLOR */
-	--accent-color: #6883f0;
+	--accent-color: #b1a9ff;
 	--second-accent-color: #e54666;
 	--success-color: #71d083;
 	--warning-color: #f7cb65;
@@ -90,30 +92,30 @@
 	--anthracite-color: #3b3b3b;
 
 	/* THEME COLOR DARK */
-	--background-color: rgb(26, 26, 26);
+	--background-color: rgba(22, 22, 22, 0.9);
 	--background-gradient: linear-gradient(
-		to left top,
-		rgb(77, 79, 82),
-		rgb(24, 26, 32),
-		rgb(26, 26, 26)
+		to right bottom,
+		rgb(17, 24, 39),
+		rgb(75, 85, 99)
 	);
 	--background-color-mat: rgb(20, 20, 20);
-	--background-color-low-profile: rgba(0, 0, 0, 0.099);
+	--background-color-low-profile: rgba(0, 0, 0, 0.1);
 	--background-color-ultra-low-profile: rgba(0, 0, 0, 0.02);
 	--text-color: rgb(241, 241, 241);
+	--general-component-img-link: '' /* url('../../public/images/000.jpg') */;
 
 	/* USER PROFILE */
-	--userProfile-image-link: url('../../public/images/dddepth-242.jpg');
+	--userProfile-image-link: var(--general-component-img-link);
 
 	/* DATE PICKER */
-	--datePicker-image-link: url('../../public/images/dddepth-242.jpg');
+	--datePicker-image-link: var(--general-component-img-link);
 
 	/* SEARCH BAR */
-	--searchBar-image-link: url('../../public/images/dddepth-242.jpg');
+	--searchBar-image-link: var(--general-component-img-link);
 
 	/* SELECT MULTIPLE */
-	--selectMultiple-image-link: url('../../public/images/dddepth-242.jpg');
+	--selectMultiple-image-link: var(--general-component-img-link);
 
 	/* MAGIC CARD */
-	--magicCard-image-link: url('../../public/images/dddepth-242.jpg');
+	--magicCard-image-link: var(--general-component-img-link);
 }
