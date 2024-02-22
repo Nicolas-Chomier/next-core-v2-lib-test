@@ -77,7 +77,7 @@ export const InputString: React.FC<TInputStringProps> = ({
 			case 'email':
 				displayedIcon = (
 					<AtSign
-						size={19}
+						size={18}
 						strokeWidth={1.6}
 						className={` inputString-email-icon ${
 							disabled ? 'inputString-icon-disabled' : ''
