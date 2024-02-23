@@ -14,7 +14,7 @@ import './SearchBar.css';
 
 // Props type for SearchBar component
 type TSearchBarProps = {
-	data: string[];
+	data?: string[];
 	placeholder?: string;
 	label?: string;
 	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
@@ -54,12 +54,15 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 
 	// Memo to remove duplicate string in data (avoid key problem on JSX render)
 	const cleanData = useMemo(() => {
+		if (!data) return null;
 		return [...new Set(data)];
 	}, [data]);
 
 	// Memo for decide which kind of list display
 	const isLargeList = useMemo(() => {
-		return cleanData.length > overSizeLimit;
+		if (cleanData) {
+			return cleanData.length > overSizeLimit;
+		}
 	}, [overSizeLimit, cleanData]);
 
 	// Managing input changes
@@ -90,10 +93,17 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 	);
 
 	// Panel openning
-	const openPanel = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setIsPanelVisible(true);
-		event.preventDefault();
-	};
+	const openPanel = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			if (!cleanData) {
+				alert('No datas available !');
+			} else {
+				setIsPanelVisible(true);
+				event.preventDefault();
+			}
+		},
+		[cleanData],
+	);
 
 	// Display action buttons
 	const displayButtonActions = useCallback(
@@ -140,16 +150,18 @@ export const SearchBar: React.FC<TSearchBarProps> = ({
 				</button>
 			);
 		},
-		[handleReset, disabled],
+		[handleReset, openPanel, disabled],
 	);
 
 	// Effect to update filtered list
 	useEffect(() => {
-		setFilteredData(
-			cleanData.filter((item) =>
-				item.toLowerCase().includes(searchValue.toLowerCase()),
-			),
-		);
+		if (cleanData) {
+			setFilteredData(
+				cleanData.filter((item) =>
+					item.toLowerCase().includes(searchValue.toLowerCase()),
+				),
+			);
+		}
 	}, [searchValue, cleanData]);
 
 	// Effect to reset after submission

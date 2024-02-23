@@ -47,7 +47,6 @@
 
 	margin: auto;
 	background-color: transparent;
-
 	z-index: 9999;
 }
 
@@ -126,7 +125,6 @@
 	left: 0;
 
 	transition: box-shadow 0.8s ease;
-	z-index: 99;
 }
 
 /* DATE & INFORMATION DISPLAYER */

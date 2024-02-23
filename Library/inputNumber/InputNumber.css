@@ -59,6 +59,8 @@ input::-webkit-inner-spin-button {
 	width: var(--self-icon-size);
 	height: var(--self-icon-size);
 
+	background-color: transparent;
+
 	position: absolute;
 	top: 4px;
 	right: 4px;

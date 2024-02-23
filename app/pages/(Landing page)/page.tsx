@@ -23,7 +23,8 @@ import { Moon, Sun } from 'lucide-react';
 const generateRandomIds = (count: number, length: number) =>
 	Array.from({ length: count }, () => nanoid(length));
 
-const randomIds = generateRandomIds(50, 8);
+const randomIdsMultiple = generateRandomIds(5, 8);
+const randomIds = generateRandomIds(10, 8);
 const disabledStateTest = false;
 const regexString = /[^a-zA-Z0-9@.]/g;
 
@@ -106,7 +107,7 @@ const LandingPage = () => {
 				name='multiple'
 				render={({ field: { onChange } }) => (
 					<SelectMultiple
-						data={randomIds}
+						data={randomIdsMultiple}
 						placeholder='Multiple'
 						label='Multiple'
 						labelPosition='justify'

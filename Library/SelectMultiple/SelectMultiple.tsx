@@ -14,7 +14,7 @@ import './SelectMultiple.css';
 
 // Props type for SelectMultiple component
 type TSelectMultipleProps = {
-	data: string[];
+	data?: string[];
 	placeholder?: string;
 	label?: string;
 	labelPosition?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify';
@@ -62,6 +62,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 
 	// Memo to remove duplicate item and selected item from main data
 	const cleanData = useMemo(() => {
+		if (!data) return null;
 		const removeSelectedData = data.filter(
 			(value) => selectedValues.includes(value) === false,
 		);
@@ -70,7 +71,9 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 
 	// Memo for decide which kind of list display
 	const isLargeList = useMemo(() => {
-		return cleanData.length > overSizeLimit;
+		if (cleanData) {
+			return cleanData.length > overSizeLimit;
+		}
 	}, [overSizeLimit, cleanData]);
 
 	// Managing input changes
@@ -116,10 +119,17 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 	);
 
 	// Panel openning
-	const openPanel = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setIsPanelVisible(true);
-		event.preventDefault();
-	};
+	const openPanel = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			if (!cleanData) {
+				alert('No datas available !');
+			} else {
+				setIsPanelVisible(true);
+				event.preventDefault();
+			}
+		},
+		[cleanData],
+	);
 
 	// Display action buttons
 	const displayButtonActions = useCallback(
@@ -180,7 +190,7 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 				</button>
 			);
 		},
-		[disabled, handleReset],
+		[disabled, openPanel, handleReset],
 	);
 
 	// Effect to reset after submission
@@ -203,11 +213,13 @@ export const SelectMultiple: React.FC<TSelectMultipleProps> = ({
 
 	// Effect to update filtered list
 	useEffect(() => {
-		setFilteredData(
-			cleanData.filter((item) =>
-				item.toLowerCase().includes(searchValue.toLowerCase()),
-			),
-		);
+		if (cleanData) {
+			setFilteredData(
+				cleanData.filter((item) =>
+					item.toLowerCase().includes(searchValue.toLowerCase()),
+				),
+			);
+		}
 	}, [searchValue, cleanData]);
 
 	// Effect to send updated result
