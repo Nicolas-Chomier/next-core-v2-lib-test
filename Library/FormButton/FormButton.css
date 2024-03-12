@@ -6,7 +6,7 @@
 	width: var(--formButton-inline-size, 150px);
 	height: var(--formButton-height, 44px);
 
-	margin: auto;
+	/* margin: auto; */
 	border-radius: var(--formButton-border-radius, 22px);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 	background-color: var(--background-color);
