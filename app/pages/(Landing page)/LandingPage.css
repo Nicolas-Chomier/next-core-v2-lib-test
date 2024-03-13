@@ -28,3 +28,17 @@
 	width: 920px;
 	height: 250px;
 }
+
+/* TEST RESPONSIVE COMPONENTS */
+.responsiveBox {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: rgba(255, 0, 0, 0.3);
+
+	width: 500px;
+	gap: 10px;
+
+	flex-wrap: wrap;
+}

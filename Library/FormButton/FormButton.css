@@ -1,19 +1,22 @@
-.formButton_container {
+.formButton_container_default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	width: var(--formButton-inline-size, 150px);
 	height: var(--formButton-height, 44px);
 
-	/* margin: auto; */
 	border-radius: var(--formButton-border-radius, 22px);
 	box-shadow: inset 0 0 0 1px var(--box-shadow-color);
 	background-color: var(--background-color);
 
-	transition: all 1s ease;
+	transition: all 0.8s ease;
 
 	z-index: 98;
+}
+
+.formButton_container_auto_size {
+	width: var(--formButton-inline-size, 150px);
+	flex: 1 0 auto;
 }
 
 .formButton_text {

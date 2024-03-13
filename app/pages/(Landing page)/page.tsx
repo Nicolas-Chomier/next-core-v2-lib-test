@@ -68,138 +68,169 @@ const LandingPage = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(submitData)} className={'container'}>
-			{/* ############################################## */}
-			{/* ############################################## */}
+		<>
+			<form onSubmit={handleSubmit(submitData)} className={'container'}>
+				<CustomizableButton handleClick={handleClick}>
+					<Moon></Moon>
+					<Sun></Sun>
+				</CustomizableButton>
 
-			<CustomizableButton handleClick={handleClick}>
-				<Moon></Moon>
-				<Sun></Sun>
-			</CustomizableButton>
+				<Controller
+					control={control}
+					name='dateRange'
+					render={({ field: { onChange } }) => (
+						<DatePicker
+							limitDateMin={-10}
+							limitDateMax={10}
+							placeholder='JJ/MM/AAAA'
+							label={['début', 'fin']}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							open={false}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+							size='standard'
+							className='testDatePicker'
+						></DatePicker>
+					)}
+				/>
 
-			{/* ############################################## */}
-			{/* ############################################## */}
+				<Controller
+					control={control}
+					name='multiple'
+					render={({ field: { onChange } }) => (
+						<SelectMultiple
+							data={randomIdsMultiple}
+							placeholder='Multiple'
+							label='Multiple'
+							labelPosition='justify'
+							size={31}
+							overSizeLimit={999}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							pickLimit={3}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></SelectMultiple>
+					)}
+				/>
 
-			<Controller
-				control={control}
-				name='dateRange'
-				render={({ field: { onChange } }) => (
-					<DatePicker
-						limitDateMin={-10}
-						limitDateMax={10}
-						placeholder='JJ/MM/AAAA'
-						label={['début', 'fin']}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						open={false}
-						disabled={disabledStateTest}
-						onFieldChange={onChange}
-						size='standard'
-						className='testDatePicker'
-					></DatePicker>
-				)}
-			/>
+				<Controller
+					control={control}
+					name='searchBar'
+					render={({ field: { onChange } }) => (
+						<SearchBar
+							data={randomIds}
+							size={31}
+							placeholder='Search'
+							label='Search'
+							labelPosition='end'
+							overSizeLimit={999}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></SearchBar>
+					)}
+				/>
 
-			{/* ############################################## */}
-			{/* ############################################## */}
-			<Controller
-				control={control}
-				name='multiple'
-				render={({ field: { onChange } }) => (
-					<SelectMultiple
-						data={randomIdsMultiple}
-						placeholder='Multiple'
-						label='Multiple'
-						labelPosition='justify'
-						size={31}
-						overSizeLimit={999}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						pickLimit={3}
-						disabled={disabledStateTest}
-						onFieldChange={onChange}
-					></SelectMultiple>
-				)}
-			/>
+				<Controller
+					control={control}
+					name='myText'
+					render={({ field: { onChange } }) => (
+						<InputString
+							type={'text'}
+							regex={regexString}
+							placeholder='My text here!'
+							label='String'
+							labelPosition='start'
+							errors={errors['myText']?.message}
+							size={31}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></InputString>
+					)}
+				/>
 
-			{/* ############################################## */}
-			{/* ############################################## */}
-			<Controller
-				control={control}
-				name='searchBar'
-				render={({ field: { onChange } }) => (
-					<SearchBar
-						data={randomIds}
-						size={31}
-						placeholder='Search'
-						label='Search'
-						labelPosition='end'
-						overSizeLimit={999}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						disabled={disabledStateTest}
-						onFieldChange={onChange}
-					></SearchBar>
-				)}
-			/>
+				<Controller
+					control={control}
+					name='myNumber'
+					render={({ field: { onChange } }) => (
+						<InputNumber
+							placeholder='My number here!'
+							label='Number'
+							labelPosition='center'
+							size={30}
+							errors={errors['myNumber']?.message}
+							step='0.1'
+							min='-20'
+							max='20'
+							outputNumber={true}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></InputNumber>
+					)}
+				/>
 
-			{/* ############################################## */}
-			{/* ############################################## */}
-			<Controller
-				control={control}
-				name='myText'
-				render={({ field: { onChange } }) => (
-					<InputString
-						type={'text'}
-						regex={regexString}
-						placeholder='My text here!'
-						label='String'
-						labelPosition='start'
-						errors={errors['myText']?.message}
-						size={31}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						disabled={disabledStateTest}
-						onFieldChange={onChange}
-					></InputString>
-				)}
-			/>
-
-			{/* ############################################## */}
-			{/* ############################################## */}
-
-			<Controller
-				control={control}
-				name='myNumber'
-				render={({ field: { onChange } }) => (
-					<InputNumber
-						placeholder='My number here!'
-						label='Number'
-						labelPosition='center'
-						size={30}
-						errors={errors['myNumber']?.message}
-						step='0.1'
-						min='-20'
-						max='20'
-						outputNumber={true}
-						isSubmit={isSubmitting}
-						isValid={isValid}
-						disabled={disabledStateTest}
-						onFieldChange={onChange}
-					></InputNumber>
-				)}
-			/>
-
-			{/* ############################################## */}
-			{/* ############################################## */}
-
-			<FormButton
-				isValid={isValid}
-				isSubmit={isSubmitting}
-				disabled={disabledStateTest}
-				placeholder={'Validation'}
-			></FormButton>
-		</form>
+				<FormButton
+					isValid={isValid}
+					isSubmit={isSubmitting}
+					disabled={disabledStateTest}
+					placeholder={'Validation'}
+				></FormButton>
+			</form>
+			<br />
+			<form
+				onSubmit={handleSubmit(submitData)}
+				className={'responsiveBox'}
+			>
+				<Controller
+					control={control}
+					name='multiple'
+					render={({ field: { onChange } }) => (
+						<SelectMultiple
+							data={randomIdsMultiple}
+							placeholder='Multiple'
+							size={30}
+							overSizeLimit={999}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							pickLimit={3}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></SelectMultiple>
+					)}
+				/>
+				<Controller
+					control={control}
+					name='myText'
+					render={({ field: { onChange } }) => (
+						<InputString
+							type={'text'}
+							regex={regexString}
+							placeholder='My text here!'
+							errors={errors['myText']?.message}
+							size={30}
+							isSubmit={isSubmitting}
+							isValid={isValid}
+							disabled={disabledStateTest}
+							onFieldChange={onChange}
+						></InputString>
+					)}
+				/>
+				<FormButton
+					size={30}
+					isValid={isValid}
+					isSubmit={isSubmitting}
+					disabled={disabledStateTest}
+					placeholder={'Validation'}
+				></FormButton>
+			</form>
+		</>
 	);
 };
 export default LandingPage;

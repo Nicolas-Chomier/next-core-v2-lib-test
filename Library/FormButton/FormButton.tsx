@@ -4,6 +4,7 @@ import React from 'react';
 import './FormButton.css';
 
 type TFormButtonProps = {
+	size?: number | 'auto';
 	isSubmit?: boolean;
 	isValid?: boolean;
 	placeholder?: string;
@@ -12,12 +13,14 @@ type TFormButtonProps = {
 };
 
 export const FormButton: React.FC<TFormButtonProps> = ({
+	size = 'auto',
 	isValid,
 	isSubmit,
 	placeholder = 'Validation',
 	disabled = false,
 	className,
 }) => {
+	const btnSize = size !== 'auto' ? { width: `${size * 9.8}px` } : {};
 	// Content based on the button's state
 	const buttonContent = isSubmit ? (
 		<span className='formButton_spinner'></span>
@@ -35,7 +38,10 @@ export const FormButton: React.FC<TFormButtonProps> = ({
 		<button
 			type='submit'
 			disabled={disabled || !isValid}
-			className={`formButton_container ${className}`}
+			style={{ ...btnSize }}
+			className={`${className ?? 'formButton_container_default'} ${
+				size === 'auto' ? 'formButton_container_auto_size' : ''
+			}`}
 		>
 			{buttonContent}
 		</button>
