@@ -1,0 +1,6 @@
+.deleteIcon {
+	min-width: 28px;
+	min-height: 28px;
+	color: var(--color);
+	margin: auto;
+}

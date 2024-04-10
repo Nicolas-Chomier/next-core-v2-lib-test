@@ -7,9 +7,9 @@ import { NavigationBar } from '@/app/components/core/navigation/navigationBar/Na
 // Hooks and utilities
 // Configuration
 // Font
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Tilt_Neon } from 'next/font/google';
 
-const customFont = Plus_Jakarta_Sans({
+const customFont = Tilt_Neon({
 	subsets: ['latin'],
 	weight: '400',
 	style: ['normal'],
@@ -18,7 +18,7 @@ const customFont = Plus_Jakarta_Sans({
 const LandingLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<main className={customFont.className}>
-			<NavigationBar />
+			{/* <NavigationBar /> */}
 			<div>{children}</div>
 		</main>
 	);

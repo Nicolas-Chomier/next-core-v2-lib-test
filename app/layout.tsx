@@ -11,7 +11,7 @@ import settings from '@/settings/settings';
 import '@radix-ui/themes/styles.css';
 import '@/app/styles/globals.css';
 import '@/app/styles/backGround.css';
-import '@/app/styles/variables.css';
+import '@/app/styles/theme.css';
 /* import 'my-library/dist/style.css'; */
 
 export default function RootLayout({

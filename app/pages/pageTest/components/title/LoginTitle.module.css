@@ -1,0 +1,35 @@
+.container {
+	container-type: inline-size;
+	container-name: product;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.container > h1 {
+	letter-spacing: 3px;
+	word-spacing: 8px;
+}
+
+@container product (width <= 320px) {
+	.container > h1 {
+		font-size: 1.9rem;
+	}
+}
+
+@container product (width > 320px) and (width <= 600px) {
+	.container > h1 {
+		font-size: 2.7rem;
+	}
+}
+
+@container product (width > 600px) {
+	.container > h1 {
+		font-size: 3.1rem;
+	}
+}

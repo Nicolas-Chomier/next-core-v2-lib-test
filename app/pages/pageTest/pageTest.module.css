@@ -1,0 +1,208 @@
+/* Styles par défaut & pour extra-petits appareils */
+.container,
+.container > div > div:first-of-type {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+.container {
+	--MainFrame-padding: 14px;
+	--MainFrame-bg: #ffffff42;
+	--MainFrame-bg-hover: #f7f7f7;
+	--MainFrame-border-color: rgb(255, 255, 255);
+	--Login-theme-color-1: #f19081;
+	--Login-theme-color-2: #f0d8a4;
+
+	border: none;
+
+	width: calc(100vw - var(--MainFrame-padding) * 2);
+	height: calc(100vh - var(--MainFrame-padding) * 2);
+
+	padding: var(--MainFrame-padding);
+}
+
+.container > div {
+	width: 100%;
+	height: 100%;
+
+	border-radius: 18px;
+	background: var(--MainFrame-bg);
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.623),
+		inset 0 0 0 2px var(--MainFrame-border-color);
+
+	transition: background 0.8s ease;
+
+	overflow: hidden;
+}
+
+.container > div:hover {
+	background: var(--MainFrame-bg-hover);
+}
+
+/* Styles pour la structure de la login frame */
+.container > div > div:first-of-type {
+	width: 100%;
+	height: 20%;
+
+	opacity: 0;
+	transition: opacity 0.8s ease;
+}
+
+.container > div > div:nth-of-type(2) {
+	width: 100%;
+	height: 60%;
+
+	opacity: 0;
+	transition: opacity 0.8s ease;
+
+	background-color: rgba(255, 0, 0, 0.158);
+}
+
+.container > div > div:nth-of-type(3) {
+	width: 100%;
+	height: 20%;
+
+	opacity: 0;
+	transition: opacity 0.8s ease;
+
+	background-image: url('/images/svg.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.container > div:hover > div:first-of-type {
+	opacity: 1;
+}
+.container > div:hover > div:nth-of-type(2) {
+	opacity: 1;
+}
+.container > div:hover > div:nth-of-type(3) {
+	opacity: 1;
+}
+
+/* Médias queries pour petits appareils */
+@media (min-width: 576px) {
+	.container {
+		justify-content: center;
+	}
+
+	.container > div {
+		width: 90vw;
+		max-width: 584px;
+		height: 48vh;
+		background: var(--MainFrame-bg);
+	}
+
+	.container > div > div:first-of-type {
+		height: 25%;
+	}
+
+	.container > div > div:nth-of-type(2) {
+		height: 49%;
+	}
+	.container > div > div:nth-of-type(3) {
+		height: 26%;
+	}
+}
+
+/* Médias queries pour tablettes */
+@media (min-width: 768px) {
+	.container {
+		justify-content: center;
+	}
+
+	.container > div {
+		width: 90vw;
+		max-width: 600px;
+		height: 66vh;
+		background: var(--MainFrame-bg);
+	}
+
+	.container > div > div:first-of-type {
+		height: 22%;
+	}
+
+	.container > div > div:nth-of-type(2) {
+		height: 55%;
+	}
+	.container > div > div:nth-of-type(3) {
+		height: 23%;
+	}
+}
+
+/* Médias queries pour ordinateurs de bureau */
+@media (min-width: 992px) {
+	.container {
+		justify-content: center;
+	}
+
+	.container > div {
+		width: 90vw;
+		max-width: 700px;
+		height: 68vh;
+		background: var(--MainFrame-bg);
+	}
+
+	.container > div > div:first-of-type {
+		height: 20%;
+	}
+
+	.container > div > div:nth-of-type(2) {
+		height: 58%;
+	}
+	.container > div > div:nth-of-type(3) {
+		height: 22%;
+	}
+}
+
+/* Médias queries pour grands écrans */
+@media (min-width: 1200px) {
+	.container {
+		justify-content: flex-start;
+	}
+
+	.container > div {
+		width: 50vw;
+		max-width: 700px;
+		height: 98vh;
+		background: var(--MainFrame-bg);
+	}
+
+	.container > div > div:first-of-type {
+		height: 17%;
+	}
+
+	.container > div > div:nth-of-type(2) {
+		height: 63%;
+	}
+	.container > div > div:nth-of-type(3) {
+		height: 20%;
+	}
+}
+
+/* Exemple de médias queries pour orientations spécifiques */
+/* @media (min-width: 768px) and (orientation: landscape) {
+	.container {
+		justify-content: flex-start;
+	}
+	.container > div {
+		width: 50vw;
+		max-width: 640px;
+		height: 96vh;
+		background: var(--MainFrame-bg);
+	}
+} */
+
+.testFrame {
+	width: 40px;
+	height: 40px;
+
+	background-color: rgb(205, 50, 50);
+}
+
+.testFrame[data-isValid='true'] {
+	/* styles quand isValid est true */
+	background-color: yellowgreen;
+}

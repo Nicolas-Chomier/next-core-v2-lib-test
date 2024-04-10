@@ -1,0 +1,14 @@
+:root {
+	--main: rgb(34, 34, 34);
+	--background-color: #444446;
+	--color: rgb(238, 238, 238);
+	--theme: rgb(99, 147, 252);
+	--danger: #ec6142;
+	--warning: gold;
+	--success: #3dd68c;
+	--disabled: rgba(100, 100, 100, 0.2);
+}
+
+.dark {
+	--background-color: rgb(231, 231, 231);
+}
